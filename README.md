@@ -19,6 +19,7 @@ Inspired from https://github.com/JasonGT/NorthwindTraders
   * [ ] Add user and roles
   * [ ] Add a nice angular spa with material from ngx template (https://github.com/ngx-rocket/generator-ngx-rocket)
   * [ ] User Health checks https://medium.com/it-dead-inside/implementing-health-checks-in-asp-net-core-a8331d16a180
+  * [ ] Add Swashbuckle Auth information https://mattfrear.com/2018/07/21/add-an-authorization-header-to-your-swagger-ui-with-swashbuckle-revisited/
 
 ### Maybes
 
