@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using FluentValidation.AspNetCore;
 using MediatR;
@@ -34,7 +35,7 @@ namespace Tusk.Story
         public void ConfigureServices(IServiceCollection services)
         {
             // Add MediatR
-            services.AddMediatR();
+            services.AddMediatR(Assembly.GetExecutingAssembly());
 
             // Add Swagger
             services.AddSwaggerGen(c =>
