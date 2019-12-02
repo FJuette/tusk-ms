@@ -10,6 +10,7 @@ namespace Tusk.Story.Health
             HealthCheckContext context,
             CancellationToken cancellationToken = new CancellationToken())
         {
+            await Task.Delay(100, cancellationToken); // Fake waiting time
             return HealthCheckResult.Healthy("Database connection is working.");
         }
     }

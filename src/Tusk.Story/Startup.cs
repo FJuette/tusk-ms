@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Swashbuckle.AspNetCore.Swagger;
@@ -40,7 +42,7 @@ namespace Tusk.Story
             // Add Swagger
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "Tusk API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Tusk API", Version = "v1" });
             });
 
             // Add Health Checks
@@ -51,8 +53,7 @@ namespace Tusk.Story
             services.AddDbContext<TuskDbContext>(options =>
                 options.UseInMemoryDatabase(new Guid().ToString()));
 
-            services.AddMvc(options => options.Filters.Add(typeof(CustomExceptionFilter)))
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+            services.AddControllers(options => options.Filters.Add(typeof(CustomExceptionFilter)))
                 .AddFluentValidation(fv =>
                 {
                     fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
@@ -61,7 +62,7 @@ namespace Tusk.Story
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -84,7 +85,11 @@ namespace Tusk.Story
                 ResponseWriter = WriteHealthCheckResponse
             });
 
-            app.UseMvc();
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
 
         private static Task WriteHealthCheckResponse(
@@ -98,7 +103,7 @@ namespace Tusk.Story
                     result.Entries.Select(pair =>
                     new JProperty(pair.Key, new JObject(
                         new JProperty("status", pair.Value.Status.ToString()),
-                        new JProperty("exception", pair.Value.Exception.Message),
+                        new JProperty("exception", pair.Value.Exception?.Message),
                         new JProperty("description", pair.Value.Description),
                         new JProperty("data", new JObject(pair.Value.Data.Select(
                             p => new JProperty(p.Key, p.Value)))
