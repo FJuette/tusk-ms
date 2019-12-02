@@ -2,6 +2,8 @@
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Tusk.Story.Models;
+using Tusk.Story.Persistance;
 
 namespace Tusk.Story.Tests.Common
 {
@@ -21,15 +23,17 @@ namespace Tusk.Story.Tests.Common
             return result;
         }
 
-        //public static void InitializeDbForTests(ITuskDbContext context)
-        //{
-        //    context.Projects.Add(
-        //        new Project
-        //        {
-        //            Name = "Example Project"
-        //        }
-        //    );
-        //    context.SaveChanges();
-        //}
+        public static void InitializeDbForTests(TuskDbContext context)
+        {
+            context.Stories.Add(new UserStory
+            {
+                AcceptanceCriteria = "Provide long text here",
+                BusinessValue = 1000,
+                Priority = 1,
+                Text = "Info",
+                Title = "My demo user story"
+            });
+            context.SaveChanges();
+        }
     }
 }

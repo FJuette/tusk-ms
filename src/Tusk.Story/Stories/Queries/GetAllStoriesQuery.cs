@@ -29,14 +29,7 @@ namespace Tusk.Story.Stories.Queries
             // Example logging call
             Log.Information("Get all Stories called");
             // Use async calls if possible
-            var stories = await _ctx.Stories.ToListAsync();
-            stories.Add(new UserStory{
-                AcceptanceCriteria = "bal",
-                BusinessValue = 1000,
-                Priority = 1,
-                Text = "Info",
-                Title = "my new story"
-            });
+            var stories = await _ctx.Stories.ToListAsync(cancellationToken: cancellationToken);
             return new UserStoryViewModel
             {
                 Stories = stories
