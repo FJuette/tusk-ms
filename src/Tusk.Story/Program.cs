@@ -21,7 +21,7 @@ namespace Tusk.Story
             try
             {
                 Log.Information("Starting web host");
-                CreateWebHostBuilder(args).Build().Run();
+                CreateHostBuilder(args).Build().Run();
                 return 0;
             }
             catch (Exception ex)
@@ -36,13 +36,13 @@ namespace Tusk.Story
 
         }
 
-        public static IHostBuilder CreateWebHostBuilder(string[] args) =>
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .UseSerilog()
                 .ConfigureWebHostDefaults(
                     webBuilder =>
                     {
-                        webBuilder.UseStartup<Startup>(); 
+                        webBuilder.UseStartup<Startup>();
 
                     });
     }

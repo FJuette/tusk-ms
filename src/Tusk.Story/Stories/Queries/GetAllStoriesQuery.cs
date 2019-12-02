@@ -47,6 +47,6 @@ namespace Tusk.Story.Stories.Queries
 
     public class UserStoryViewModel
     {
-        public IEnumerable Stories { get; set; }
+        public IEnumerable<UserStory> Stories { get; set; }
     }
 }
