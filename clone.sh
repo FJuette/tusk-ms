@@ -1,6 +1,6 @@
 #!/bin/bash
 OLDNAME='Tusk'
-NEWNAME='Visages'
+NEWNAME='Magnus'
 rm -Rf ./../$NEWNAME
 cp -rf ./../tusk-ms ./../$NEWNAME
 cd ./../$NEWNAME
