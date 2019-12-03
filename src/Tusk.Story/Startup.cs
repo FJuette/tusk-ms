@@ -18,7 +18,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Tusk.Story.Filters;
 using Tusk.Story.Health;
-using Tusk.Story.Persistance;
+using Tusk.Story.Persistence;
+using Tusk.Story.Stories.Commands;
 
 namespace Tusk.Story
 {
@@ -55,7 +56,7 @@ namespace Tusk.Story
                 .AddFluentValidation(fv =>
                 {
                     fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
-                    //fv.RegisterValidatorsFromAssemblyContaining<CreateStoryValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<CreateStoryCommand>();
                 });
         }
 

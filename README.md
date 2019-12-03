@@ -17,9 +17,9 @@ Inspired from https://github.com/JasonGT/NorthwindTraders
 
 ## TODOs
 
-  * [ ] Add useful xunit unit tests with fluentassertations
-  * [ ] Add userful xunit integration tests (api calls)
-  * [ ] Add business logic example
+  * Add business logic example and an example test
+  * Add FluentValidation example (create command)
+  * Add token controller to make jwt api token
   
 
 ## License

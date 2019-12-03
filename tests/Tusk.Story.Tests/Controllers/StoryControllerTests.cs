@@ -2,6 +2,8 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
+using Tusk.Story.Models;
+using Tusk.Story.Stories.Commands;
 using Tusk.Story.Stories.Queries;
 using Tusk.Story.Tests.Common;
 using Xunit;
@@ -28,6 +30,40 @@ namespace Tusk.Story.Tests.Controllers
 
             // Assert
             vm.Stories.Count().Should().BeGreaterThan(0);
+            vm.Stories.First().Importance.Should().Be(UserStory.Relevance.ShouldHave);
+        }
+
+        [Fact]
+        public async Task Create_Success_ReturnsStoryId()
+        {
+            // Act
+            var response = await _client.PostAsJsonAsync("api/stories", new CreateStoryCommand
+            {
+                Importance = UserStory.Relevance.CouldHave,
+                Text = "My demo post user story",
+                Title = "Demo post"
+            });
+            response.EnsureSuccessStatusCode();
+
+            var result = await Utilities.GetResponseContent<int>(response);
+
+            // Assert
+            result.Should().BeGreaterOrEqualTo(0);
+        }
+
+        [Fact]
+        public async Task Create_InvalidImportance_ReturnsValidationError()
+        {
+            // Act
+            var response = await _client.PostAsJsonAsync("api/stories", new
+            {
+                Importance = 5,
+                Text = "My demo post user story",
+                Title = "Demo post"
+            });
+
+            // Assert
+            response.StatusCode.Should().Be(400);
         }
     }
 }

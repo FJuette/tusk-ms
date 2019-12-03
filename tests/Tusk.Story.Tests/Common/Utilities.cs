@@ -3,7 +3,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Tusk.Story.Models;
-using Tusk.Story.Persistance;
+using Tusk.Story.Persistence;
 
 namespace Tusk.Story.Tests.Common
 {
@@ -31,7 +31,8 @@ namespace Tusk.Story.Tests.Common
                 BusinessValue = 1000,
                 Priority = 1,
                 Text = "Info",
-                Title = "My demo user story"
+                Title = "My demo user story",
+                Importance = UserStory.Relevance.ShouldHave
             });
             context.SaveChanges();
         }

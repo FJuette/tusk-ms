@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Serilog;
 using Tusk.Story.Models;
-using Tusk.Story.Persistance;
+using Tusk.Story.Persistence;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Collections;

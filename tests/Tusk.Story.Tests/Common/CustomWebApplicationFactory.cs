@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Tusk.Story.Persistance;
+using Tusk.Story.Persistence;
 
 namespace Tusk.Story.Tests.Common
 {
@@ -30,30 +30,24 @@ namespace Tusk.Story.Tests.Common
 
 
                 // see https://docs.microsoft.com/de-de/aspnet/core/test/integration-tests?view=aspnetcore-3.0 for more
-                // Create a scope to obtain a reference to the database
-                // context (NorthwindDbContext)
-                using (var scope = sp.CreateScope())
+                using var scope = sp.CreateScope();
+                var scopedServices = scope.ServiceProvider;
+                var context = scopedServices.GetRequiredService<TuskDbContext>();
+                var logger = scopedServices
+                    .GetRequiredService<ILogger<CustomWebApplicationFactory<TStartup>>>();
+                
+                // Ensure the database is created.
+                context.Database.EnsureCreated();
+
+                try
                 {
-                    var scopedServices = scope.ServiceProvider;
-                    var context = scopedServices.GetRequiredService<TuskDbContext>();
-                    var logger = scopedServices
-                        .GetRequiredService<ILogger<CustomWebApplicationFactory<TStartup>>>();
-
-                    var concreteContext = (TuskDbContext)context;
-
-                    // Ensure the database is created.
-                    concreteContext.Database.EnsureCreated();
-
-                    try
-                    {
-                        // Seed the database with test data.
-                        Utilities.InitializeDbForTests(concreteContext);
-                    }
-                    catch (Exception ex)
-                    {
-                        logger.LogError(ex, $"An error occurred seeding the " +
-                                            "database with test messages. Error: {ex.Message}");
-                    }
+                    // Seed the database with test data.
+                    Utilities.InitializeDbForTests(context);
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex, $@"An error occurred seeding the
+                                        database with test data. Error: {ex.Message}");
                 }
             }).UseEnvironment("Testing");
         }
