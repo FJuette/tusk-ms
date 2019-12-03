@@ -18,7 +18,6 @@ Inspired from https://github.com/JasonGT/NorthwindTraders
 ## TODOs
 
   * Add business logic example and an example test
-  * Add FluentValidation example (create command)
   * Add token controller to make jwt api token
   
 
