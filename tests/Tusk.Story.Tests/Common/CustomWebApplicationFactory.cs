@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +20,11 @@ namespace Tusk.Story.Tests.Common
                 var serviceProvider = new ServiceCollection()
                     .AddEntityFrameworkInMemoryDatabase()
                     .BuildServiceProvider();
-                
+
+                // remove the existing context configuration. In testing we only want the InMemory database
+                var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<TuskDbContext>));
+                if (descriptor != null)
+                    services.Remove(descriptor);
                 services.AddDbContext<TuskDbContext>(options =>
                 {
                     options.UseInMemoryDatabase(new Guid().ToString());

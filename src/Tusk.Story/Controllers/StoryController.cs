@@ -1,7 +1,6 @@
-using System.Collections.Generic;
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Tusk.Story.Models;
 using Tusk.Story.Stories.Commands;
 using Tusk.Story.Stories.Queries;
 
@@ -9,29 +8,52 @@ namespace Tusk.Story.Controllers
 {
     public class StoryController : BaseController
     {
+        /// <summary>
+        /// Get all stories
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("api/stories")]
         [ProducesResponseType(200)]
-        public async Task<ActionResult<UserStoryViewModel>> Stories()
+        public async Task<ActionResult<UserStoryViewModel>> GetAllStories()
         {
             return Ok(await Mediator.Send(new GetAllStoriesQuery()));
         }
 
+        /// <summary>
+        /// Create a user story
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     {
+        ///         "title": "My first story",
+        ///         "text": "This is the very long content of my first story",
+        ///         "importance": 1
+        ///     }
+        /// </remarks>
+        /// <param name="command"></param>
+        /// <returns>Id for the new user story</returns>
+        /// <response code="201">Returns the id of the new user story</response>
+        /// <response code="400">A request which cannot be handles properly returns a 400 with a detailed error message</response>
         [HttpPost("api/stories")]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public async Task<ActionResult<int>> Create([FromBody] CreateStoryCommand command)
+        public async Task<ActionResult<int>> CreateStory([FromBody] CreateStoryCommand command)
         {
             var storyId = await Mediator.Send(command);
-            return Ok(storyId);
+            return CreatedAtAction("GetStory", new {id = storyId },  storyId);
+        }
+
+        [HttpGet("api/stories/{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<UserStoryViewModel>> GetStory(int id)
+        {
+            // TODO implement
+            return Ok(await Mediator.Send(new GetAllStoriesQuery()));
         }
         /* 
-                [HttpGet("api/projects/{id}")]
-                [ProducesResponseType(200)]
-                [ProducesResponseType(404)]
-                public async Task<ActionResult<ProjectsListViewModel>> Project(int id)
-                {
-                    return Ok(await Mediator.Send(new GetProjectQuery(id)));
-                }
+                
 
 
 

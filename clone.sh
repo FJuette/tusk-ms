@@ -15,3 +15,4 @@ mv Tusk.sln Magnus.sln
 find . -type d -name '*Tusk.Story*' -print0 | xargs -0 -n1 bash -c 'mv "$0" "${0/Tusk.Story/Magnus.Api}"'
 find . -type f -name '*Tusk.Story*' -print0 | xargs -0 -n1 bash -c 'mv "$0" "${0/Tusk.Story/Magnus.Api}"'
 find . -type f -name '*' -exec sed -i "" 's/Tusk\.Story/Magnus\.Api/g' {} +
+find . -type f -name '*' -exec sed -i "" 's/Tusk/Magnus/g' {} +
