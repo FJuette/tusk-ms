@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
+using Tusk.Story.Extensions;
 
 namespace Tusk.Story
 {
@@ -21,7 +22,7 @@ namespace Tusk.Story
             try
             {
                 Log.Information("Starting web host");
-                CreateHostBuilder(args).Build().Run();
+                CreateHostBuilder(args).Build().MigrateDatabase().Run();
                 return 0;
             }
             catch (Exception ex)
