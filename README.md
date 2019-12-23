@@ -26,6 +26,7 @@ I did not added a respository / UoW pattern because in my opinion its to heavy f
 ## References
 
 * <https://medium.com/agilix/entity-framework-core-enums-ee0f8f4063f2>
+* <https://code-maze.com/migrations-and-seed-data-efcore/>
 
 ## License
 
