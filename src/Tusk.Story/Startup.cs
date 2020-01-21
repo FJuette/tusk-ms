@@ -57,6 +57,7 @@ namespace Tusk.Story
 
             // Add Health Checks
             services.AddHealthChecks()
+                //.AddSqlServer("") //TODO add for real mssql db server
                 .AddCheck<ApiHealthCheck>("api");
 
             // Add DbContext using SQL Server Provider
