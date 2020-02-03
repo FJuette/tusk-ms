@@ -10,8 +10,8 @@ namespace Tusk.Story.Stories.Commands
 {
     public class CreateStoryCommand : IRequest<int>
     {
-        public string Title { get; set; }
-        public string Text { get; set; }
+        public string Title { get; set; } = "";
+        public string Text { get; set; } = "";
         public UserStory.Relevance Importance { get; set; }
     }
 

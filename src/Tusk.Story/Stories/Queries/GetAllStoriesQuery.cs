@@ -5,9 +5,7 @@ using MediatR;
 using Serilog;
 using Tusk.Story.Models;
 using Tusk.Story.Persistence;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using System.Collections;
 
 namespace Tusk.Story.Stories.Queries
 {
@@ -30,16 +28,18 @@ namespace Tusk.Story.Stories.Queries
             Log.Information("Get all Stories called");
             // Use async calls if possible
             var stories = await _ctx.Stories.ToListAsync(cancellationToken: cancellationToken);
-            return new UserStoryViewModel
-            {
-                Stories = stories
-            };
+            return new UserStoryViewModel(stories);
 
         }
     }
 
     public class UserStoryViewModel
     {
-        public IEnumerable<UserStory> Stories { get; set; }
+        public UserStoryViewModel(List<UserStory> stories)
+        {
+            Stories = stories;
+        }
+
+        public IEnumerable<UserStory> Stories { get; }
     }
 }

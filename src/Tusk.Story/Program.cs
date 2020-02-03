@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -41,10 +40,6 @@ namespace Tusk.Story
             Host.CreateDefaultBuilder(args)
                 .UseSerilog()
                 .ConfigureWebHostDefaults(
-                    webBuilder =>
-                    {
-                        webBuilder.UseStartup<Startup>();
-
-                    });
+                    webBuilder => webBuilder.UseStartup<Startup>());
     }
 }

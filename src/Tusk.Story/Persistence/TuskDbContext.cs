@@ -6,6 +6,7 @@ namespace Tusk.Story.Persistence
 {
     public class TuskDbContext : DbContext
     {
+        #nullable disable
         public TuskDbContext(DbContextOptions options) : base(options)
         {
         }
@@ -31,8 +32,8 @@ namespace Tusk.Story.Persistence
                     .HasConversion<int>(); // 'string' ist possible too, for more see https://medium.com/agilix/entity-framework-core-enums-ee0f8f4063f2
 
                 // Generate some demo data
-                GenFu.A.Configure<UserStory>().Fill(p => p.Id).WithinRange(1, 100000);
-                GenFu.A.Configure<UserStory>().Fill(p => p.AcceptanceCriteria).AsLoremIpsumSentences(2);
+                GenFu.GenFu.Configure<UserStory>().Fill(p => p.Id).WithinRange(1, 100000);
+                GenFu.GenFu.Configure<UserStory>().Fill(p => p.AcceptanceCriteria).AsLoremIpsumSentences(2);
                 var story = A.ListOf<UserStory>(5);
                 b.HasData(story);
             });
