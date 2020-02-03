@@ -27,6 +27,7 @@ namespace Tusk.Story.Tests.Common
         {
             context.Stories.Add(new UserStory
             {
+                Id = 1,
                 AcceptanceCriteria = "Provide long text here",
                 BusinessValue = 1000,
                 Priority = 1,

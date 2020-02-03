@@ -26,11 +26,11 @@ namespace Tusk.Story.Tests.Controllers
             var response = await _client.GetAsync("api/stories");
             response.EnsureSuccessStatusCode();
 
-            var vm = await Utilities.GetResponseContent<UserStoryViewModel>(response);
+            var vm = await Utilities.GetResponseContent<UserStoriesViewModel>(response);
 
             // Assert
             vm.Stories.Count().Should().BeGreaterThan(0);
-            vm.Stories.First().Importance.Should().Be(UserStory.Relevance.ShouldHave);
+            vm.Stories.First().Importance.Should().Be(UserStory.Relevance.MustHave);
         }
 
         [Fact]
@@ -64,6 +64,29 @@ namespace Tusk.Story.Tests.Controllers
 
             // Assert
             response.StatusCode.Should().Be(400);
+        }
+
+        [Fact]
+        public async Task Story_Success_ProjectFound()
+        {
+            // Act
+            var response = await _client.GetAsync("api/stories/1");
+            response.EnsureSuccessStatusCode();
+
+            var vm = await Utilities.GetResponseContent<UserStoryViewModel>(response);
+
+            // Assert
+            vm.Story.Should().NotBeNull();
+        }
+
+        [Fact]
+        public async Task Story_InvalidId_ProjectNotFound()
+        {
+            // Act
+            var response = await _client.GetAsync("api/stories/-100");
+
+            // Assert
+            response.StatusCode.Should().Be(404);
         }
     }
 }

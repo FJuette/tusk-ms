@@ -14,7 +14,7 @@ namespace Tusk.Story.Controllers
         /// <returns></returns>
         [HttpGet("api/stories")]
         [ProducesResponseType(200)]
-        public async Task<ActionResult<UserStoryViewModel>> GetAllStories()
+        public async Task<ActionResult<UserStoriesViewModel>> GetAllStories()
         {
             return Ok(await Mediator.Send(new GetAllStoriesQuery()));
         }
@@ -49,8 +49,7 @@ namespace Tusk.Story.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<UserStoryViewModel>> GetStory(int id)
         {
-            // TODO implement
-            return Ok(await Mediator.Send(new GetAllStoriesQuery()));
+            return Ok(await Mediator.Send(new GetStoryQuery(id)));
         }
         /* 
                 

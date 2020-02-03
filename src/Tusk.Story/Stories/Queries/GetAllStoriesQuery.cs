@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Tusk.Story.Stories.Queries
 {
-    public class GetAllStoriesQuery : IRequest<UserStoryViewModel>
+    public class GetAllStoriesQuery : IRequest<UserStoriesViewModel>
     {
     }
 
-    public class GetAllStoriesQueryHandler : IRequestHandler<GetAllStoriesQuery, UserStoryViewModel>
+    public class GetAllStoriesQueryHandler : IRequestHandler<GetAllStoriesQuery, UserStoriesViewModel>
     {
         private readonly TuskDbContext _ctx;
 
@@ -22,20 +22,20 @@ namespace Tusk.Story.Stories.Queries
             _ctx = ctx;
         }
 
-        public async Task<UserStoryViewModel> Handle(GetAllStoriesQuery request, CancellationToken cancellationToken)
+        public async Task<UserStoriesViewModel> Handle(GetAllStoriesQuery request, CancellationToken cancellationToken)
         {
             // Example logging call
             Log.Information("Get all Stories called");
             // Use async calls if possible
             var stories = await _ctx.Stories.ToListAsync(cancellationToken: cancellationToken);
-            return new UserStoryViewModel(stories);
+            return new UserStoriesViewModel(stories);
 
         }
     }
 
-    public class UserStoryViewModel
+    public class UserStoriesViewModel
     {
-        public UserStoryViewModel(List<UserStory> stories)
+        public UserStoriesViewModel(List<UserStory> stories)
         {
             Stories = stories;
         }

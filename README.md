@@ -29,6 +29,7 @@ I did not added a respository / UoW pattern because in my opinion its to heavy f
 * <https://code-maze.com/migrations-and-seed-data-efcore/>
 * <https://dev.to/integerman/eliminating-nulls-in-c-with-functional-programming-iaa>
 * <https://medium.com/swlh/safer-code-with-c-8-non-null-reference-types-cd5241e5714>
+* <https://medium.com/swlh/getting-lazy-in-c-ccc5fd59cb7c>
 
 ## License
 
