@@ -4,8 +4,8 @@ My template for new small projects in the world of microservices.
 
 ## Technologies
 
-* .Net Core 3.0
-* EF Core 3.0
+* .Net Core 3.1
+* EF Core 3.1
 * FluentValidation and .net core default validation disabled
 * AutoMapper
 * MediatR for CQRS
@@ -30,6 +30,7 @@ I did not added a respository / UoW pattern because in my opinion its to heavy f
 * <https://dev.to/integerman/eliminating-nulls-in-c-with-functional-programming-iaa>
 * <https://medium.com/swlh/safer-code-with-c-8-non-null-reference-types-cd5241e5714>
 * <https://medium.com/swlh/getting-lazy-in-c-ccc5fd59cb7c>
+* <https://herbertograca.com/2017/10/19/from-cqs-to-cqrs/>
 
 ## License
 

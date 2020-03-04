@@ -7,7 +7,7 @@ namespace Tusk.Story.Persistence
     public class TuskDbContext : DbContext
     {
         #nullable disable
-        public TuskDbContext(DbContextOptions options) : base(options)
+        public TuskDbContext(DbContextOptions<TuskDbContext> options) : base(options)
         {
         }
 
