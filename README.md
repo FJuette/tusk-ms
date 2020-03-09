@@ -31,6 +31,7 @@ I did not added a respository / UoW pattern because in my opinion its to heavy f
 * <https://medium.com/swlh/safer-code-with-c-8-non-null-reference-types-cd5241e5714>
 * <https://medium.com/swlh/getting-lazy-in-c-ccc5fd59cb7c>
 * <https://herbertograca.com/2017/10/19/from-cqs-to-cqrs/>
+* <http://docs.automapper.org/en/stable/Queryable-Extensions.html>
 
 ## License
 

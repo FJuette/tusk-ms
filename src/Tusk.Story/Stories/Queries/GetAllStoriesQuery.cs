@@ -28,6 +28,9 @@ namespace Tusk.Story.Stories.Queries
             Log.Information("Get all Stories called");
             // Use async calls if possible
             var stories = await _ctx.Stories.ToListAsync(cancellationToken: cancellationToken);
+            // TODO use automapper projection, e.g.:
+            // return context.OrderLines.Where(ol => ol.OrderId == orderId)
+            // .ProjectTo<OrderLineDTO>().ToList();
             return new UserStoriesViewModel(stories);
 
         }
