@@ -46,7 +46,7 @@ namespace Tusk.Story
                 {
                     Version = "v1",
                     Title = "Tusk API",
-                    Description = "Microservice REST API based ob .net core 3"
+                    Description = "Microservice REST API based on .net core 3"
                 });
 
                 // Set the comments path for the Swagger JSON and UI.
