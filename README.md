@@ -22,6 +22,7 @@ I did not added a respository / UoW pattern because in my opinion its to heavy f
 
 * Add business logic example and an example test
 * Add token controller to make jwt api token
+* Test GraphQL: <https://github.com/lukemurray/EntityGraphQL>
 
 ## References
 
