@@ -22,7 +22,6 @@ I did not added a respository / UoW pattern because in my opinion its to heavy f
 
 * Add business logic example and an example test
 * Add token controller to make jwt api token
-* Test GraphQL: <https://github.com/lukemurray/EntityGraphQL>
 
 ## References
 
@@ -33,6 +32,7 @@ I did not added a respository / UoW pattern because in my opinion its to heavy f
 * <https://medium.com/swlh/getting-lazy-in-c-ccc5fd59cb7c>
 * <https://herbertograca.com/2017/10/19/from-cqs-to-cqrs/>
 * <http://docs.automapper.org/en/stable/Queryable-Extensions.html>
+* <https://herbertograca.com/2017/11/16/explicit-architecture-01-ddd-hexagonal-onion-clean-cqrs-how-i-put-it-all-together/>
 
 ## License
 
