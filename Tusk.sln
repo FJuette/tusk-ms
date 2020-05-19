@@ -9,14 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tusk.Api", "src\Tusk.Api\Tu
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FB0DB9F0-87E8-47BE-90AA-63617369A1AC}"
 	ProjectSection(SolutionItems) = preProject
-		clone.sh = clone.sh
 		README.md = README.md
 		update-packages.sh = update-packages.sh
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{5D8A23AD-0153-434D-8550-F8D76AE760F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tusk.Api.Tests", "tests\Tusk.Api.Tests\Tusk.Api.Tests.csproj", "{04FDB816-48CE-4F4B-9C7A-A6E80E5E6184}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tusk.Api.Tests", "tests\Tusk.Api.Tests\Tusk.Api.Tests.csproj", "{04FDB816-48CE-4F4B-9C7A-A6E80E5E6184}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

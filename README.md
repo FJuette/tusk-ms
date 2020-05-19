@@ -1,39 +1,40 @@
-# Tusk demo/reference application
+# C# Web-Api template in DDD-Style for Microservices
 
-My template for new small projects in the world of microservices.
+My template for new projects in the world of microservices.
 
 ## Technologies
 
 * .Net Core 3.1
 * EF Core 3.1
-* FluentValidation and .net core default validation disabled
+* FluentValidation and .Net Core default validation disabled
 * AutoMapper
 * MediatR for CQRS
 * Swashbuckle Swagger with xml documention enabled
 * Serilog with default console output
+* Unit and Integration Tests with XUnit
+* DDD-Style Model Classes and Onion Architecture
 
-Inspired from <https://github.com/JasonGT/NorthwindTraders>
+Mainly inspired by <https://github.com/JasonGT/NorthwindTraders> and Vladimir Khorikov (<https://github.com/vkhorikov>)
 
-## Remarks
 
-I did not added a respository / UoW pattern because in my opinion its to heavy for microservices.
-
-## Template
+## Install / Use
 
 Local install (osx, linux)
 > dotnet new -i ./
 
+Local install (Windows)
+> dotnet new -i .\
+
 Find entry to uninstall
 > dotnet new -u
 
-Create example command
+Create example command (-n to provide new name of the solution)
 > dotnet new ddd-api -n Magnus
 
 
-## TODOs
+## Remarks
 
-* Add business logic example and an example test
-* Add token controller to make jwt api token
+I did not added a respository / UoW pattern because in my opinion its to heavy for microservices.
 
 ## References
 
