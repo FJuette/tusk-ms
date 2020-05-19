@@ -10,11 +10,14 @@ namespace Tusk.Api.Persistence
     #nullable disable
     public class TuskDbContext : DbContext
     {
+        private static readonly Type[] EnumerationTypes = {  }; // e.g. typeof(Cluster)
+        private readonly string _userId;
         private readonly IWebHostEnvironment _env;
 
-        public TuskDbContext(IWebHostEnvironment env)
+        public TuskDbContext(IWebHostEnvironment env, IGetClaimsProvider userData)
         {
             _env = env;
+            _userId = userData.UserId;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

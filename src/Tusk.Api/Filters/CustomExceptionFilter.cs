@@ -16,6 +16,10 @@ namespace Tusk.Api.Filters
             {
                 code = HttpStatusCode.NotFound;
             }
+            if (context.Exception is InvalidOperationException)
+            {
+                code = HttpStatusCode.BadRequest;
+            }
             context.HttpContext.Response.ContentType = "application/json";
             context.HttpContext.Response.StatusCode = (int)code;
             context.Result = new JsonResult(new

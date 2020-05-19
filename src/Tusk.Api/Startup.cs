@@ -105,6 +105,9 @@ namespace Tusk.Api
                 o.MemoryBufferThreshold = int.MaxValue;
             });
 
+            // Add my own services here
+            services.AddScoped<IGetClaimsProvider, GetClaimsFromUser>();
+
             services.AddControllers(options => options.Filters.Add(typeof(CustomExceptionFilter)))
                 .AddFluentValidation(fv =>
                 {

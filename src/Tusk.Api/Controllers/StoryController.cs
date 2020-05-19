@@ -51,24 +51,5 @@ namespace Tusk.Api.Controllers
         {
             return Ok(await Mediator.Send(new GetStoryQuery(id)));
         }
-        /*
-
-
-
-
-                [HttpDelete("api/projects/{id}")]
-                public async Task<ActionResult<int>> Delete(int id)
-                {
-                    var projectId = await Mediator.Send(new DeleteProjectCommand(id));
-                    return Ok(projectId);
-                }
-
-                [HttpPut("api/projects")]
-                public async Task<ActionResult<int>> Update([FromBody] UpdateProjectCommand command)
-                {
-                    var projectId = await Mediator.Send(command);
-                    return Ok(projectId);
-                }
-                */
     }
 }

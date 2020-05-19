@@ -10,12 +10,23 @@ namespace Tusk.Api.Models
             CouldHave
         }
 
-        public int Priority { get; set; }
-        public int BusinessValue { get; set; }
-        public string Title { get; set; } = "";
-        public string Text { get; set; } = "";
-        public string AcceptanceCriteria { get; set; } = "";
-        public Relevance Importance { get; set; }
+        // TODO here
+        public UserStory()
+        {
+
+        }
+
+        public UserStory(string title)
+        {
+            Title = title;
+        }
+
+        public int? Priority { get; }
+        public int? BusinessValue { get; }
+        public string Title { get; }
+        public string? Text { get; }
+        public string? AcceptanceCriteria { get; }
+        public Relevance Importance { get; } = Relevance.CouldHave;
     }
 
 }
