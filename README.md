@@ -13,6 +13,7 @@ My template for new projects in the world of microservices.
 * Serilog with default console output
 * Unit and Integration Tests with XUnit
 * DDD-Style Model Classes and Onion Architecture
+* C# 8 Features enabled with nullable compiler checks
 
 Mainly inspired by <https://github.com/JasonGT/NorthwindTraders> and Vladimir Khorikov (<https://github.com/vkhorikov>)
 
@@ -29,7 +30,7 @@ Find entry to uninstall
 > dotnet new -u
 
 Create example command (-n to provide new name of the solution)
-> dotnet new ddd-api -n Magnus
+> dotnet new ddd-webapi -n Magnus
 
 
 ## Remarks

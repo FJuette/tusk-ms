@@ -2,23 +2,29 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 using FluentValidation.AspNetCore;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Tusk.Api.Filters;
 using Tusk.Api.Health;
+using Tusk.Api.Infrastructure;
 using Tusk.Api.Persistence;
 using Tusk.Api.Stories.Commands;
 
@@ -33,11 +39,41 @@ namespace Tusk.Api
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add MediatR
+            // Add MediatR - must be first
             services.AddMediatR(Assembly.GetExecutingAssembly());
+
+            #if (!DisableAuthentication)
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = Configuration["Jwt:Issuer"],
+                        ValidAudience = Configuration["Jwt:Issuer"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                    });
+
+            // At least a module claim is required to use any protected endpoint
+            services.AddAuthorization(
+                auth => auth.DefaultPolicy = new AuthorizationPolicyBuilder()
+                    .RequireClaim("modules", "claim-module-name")
+                    .Build());
+            #endif
+
+            services.AddCors(options =>
+                options.AddPolicy("Locations",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200");
+                        builder.AllowAnyMethod();
+                        builder.AllowAnyHeader();
+                        builder.AllowAnyOrigin(); //TODO remove in production and add to origin list
+                    }));
 
             // Add Swagger
             services.AddSwaggerGen(c =>
@@ -46,7 +82,7 @@ namespace Tusk.Api
                 {
                     Version = "v1",
                     Title = "Tusk API",
-                    Description = "Microservice REST API based on .net core 3"
+                    Description = "Microservice REST API based on .Net Core 3.1"
                 });
 
                 // Set the comments path for the Swagger JSON and UI.
@@ -57,12 +93,17 @@ namespace Tusk.Api
 
             // Add Health Checks
             services.AddHealthChecks()
-                //.AddSqlServer("") //TODO add for real mssql db server
+                //.AddSqlServer(EnvFactory.GetConnectionString()) //TODO Enable if real MSSQL-Server is given
                 .AddCheck<ApiHealthCheck>("api");
+            
+            services.AddScoped<TuskDbContext>();
 
-            // Add DbContext using SQL Server Provider
-            services.AddDbContext<TuskDbContext>(options =>
-                options.UseInMemoryDatabase(new Guid().ToString()));
+            // Avoid the MultiPartBodyLength error
+            services.Configure<FormOptions>(o => {
+                o.ValueLengthLimit = int.MaxValue;
+                o.MultipartBodyLengthLimit = int.MaxValue;
+                o.MemoryBufferThreshold = int.MaxValue;
+            });
 
             services.AddControllers(options => options.Filters.Add(typeof(CustomExceptionFilter)))
                 .AddFluentValidation(fv =>
@@ -97,10 +138,11 @@ namespace Tusk.Api
             });
 
             app.UseRouting();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            #if (!DisableAuthentication)
+            app.UseAuthentication();
+            app.UseAuthorization();
+            #endif
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
 
         private static Task WriteHealthCheckResponse(

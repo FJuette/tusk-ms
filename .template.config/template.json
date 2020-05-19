@@ -5,11 +5,27 @@
     "identity": "FJuette.Template.WebApi",
     "groupIdentity": "FJuette.Template",
     "name": "MS WebApi template in ddd style",
-    "shortName": "ddd-api",
+    "shortName": "ddd-webapi",
     "tags": {
-      "language": "C#",
-      "type": "project"
+        "language": "C#",
+        "type": "project"
     },
     "sourceName": "Tusk",
-    "preferNameDirectory": true
-  }
+    "preferNameDirectory": true,
+    "sources": [
+        {
+            "modifiers": [
+                {
+                    "exclude": [ ".vs/**", ".git/**", "bin/**", "obj/**", "Tusk.v3.ncrunchsolution.user" ]
+                }
+            ]
+        }
+    ],
+    "symbols": {
+        "DisableAuthentication": {
+            "type": "parameter",
+            "datatype": "bool",
+            "defaultValue": "false"
+        }
+    }
+}

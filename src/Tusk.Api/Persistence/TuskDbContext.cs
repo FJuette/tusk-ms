@@ -1,23 +1,37 @@
+using System;
 using GenFu;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Tusk.Api.Infrastructure;
 using Tusk.Api.Models;
 
 namespace Tusk.Api.Persistence
 {
+    #nullable disable
     public class TuskDbContext : DbContext
     {
-        #nullable disable
-        public TuskDbContext(DbContextOptions<TuskDbContext> options) : base(options)
+        private readonly IWebHostEnvironment _env;
+
+        public TuskDbContext(IWebHostEnvironment env)
         {
+            _env = env;
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (_env.EnvironmentName == "Production")
+                optionsBuilder.UseSqlServer(EnvFactory.GetConnectionString());
+            else
+            {
+                optionsBuilder.UseInMemoryDatabase(new Guid().ToString());
+                optionsBuilder.EnableSensitiveDataLogging();
+            }
+                
+            base.OnConfiguring(optionsBuilder);
         }
 
         public DbSet<UserStory> Stories { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
-            optionsBuilder.EnableSensitiveDataLogging();
-        }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<UserStory>(b =>
