@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29424.173
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DFAE970D-B7F4-49FA-BEED-8F64E5C901E2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tusk.Story", "src\Tusk.Story\Tusk.Story.csproj", "{0286CD5B-911F-4877-89D9-1CF3A02469D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tusk.Api", "src\Tusk.Api\Tusk.Api.csproj", "{0286CD5B-911F-4877-89D9-1CF3A02469D9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FB0DB9F0-87E8-47BE-90AA-63617369A1AC}"
 	ProjectSection(SolutionItems) = preProject
@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{5D8A23AD-0153-434D-8550-F8D76AE760F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tusk.Story.Tests", "tests\Tusk.Story.Tests\Tusk.Story.Tests.csproj", "{04FDB816-48CE-4F4B-9C7A-A6E80E5E6184}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tusk.Api.Tests", "tests\Tusk.Api.Tests\Tusk.Api.Tests.csproj", "{04FDB816-48CE-4F4B-9C7A-A6E80E5E6184}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

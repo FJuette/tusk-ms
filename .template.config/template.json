@@ -1,0 +1,15 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    "author": "Fabian Juette",
+    "classifications": [ "DDD-Api", "C#8" ],
+    "identity": "FJuette.Template.WebApi",
+    "groupIdentity": "FJuette.Template",
+    "name": "MS WebApi template in ddd style",
+    "shortName": "ddd-api",
+    "tags": {
+      "language": "C#",
+      "type": "project"
+    },
+    "sourceName": "Tusk",
+    "preferNameDirectory": true
+  }

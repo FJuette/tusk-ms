@@ -18,6 +18,18 @@ Inspired from <https://github.com/JasonGT/NorthwindTraders>
 
 I did not added a respository / UoW pattern because in my opinion its to heavy for microservices.
 
+## Template
+
+Local install (osx, linux)
+> dotnet new -i ./
+
+Find entry to uninstall
+> dotnet new -u
+
+Create example command
+> dotnet new ddd-api -n Magnus
+
+
 ## TODOs
 
 * Add business logic example and an example test
