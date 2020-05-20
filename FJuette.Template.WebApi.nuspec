@@ -2,14 +2,20 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>FJuette.Template.WebApi</id>
-    <version>1.0</version>
+    <version>1.0.1</version>
     <authors>Fabian Juette</authors>
-    <description>DDD-Style WebApi template</description>
+    <description>
+      .Net Core 3.1 WebApi template with ddd example model classes.
+      Preconfigured with Automapper, MediatR, FluentValidation, XUnit, FluentAssertations, Health Checks,
+      JwtAuthentication, FxCopAnalyzers, EF Core 3.1, Serilog and Swagger.
+    </description>
     <packageTypes>
       <packageType name="Template" />
     </packageTypes>
+    <projectUrl>https://github.com/FJuette/tusk-ms</projectUrl>
     <license type="expression">Apache-2.0</license>
-
+    <releaseNotes>First release with complete nuspec</releaseNotes>
+    <copyright>Fabian Juette</copyright>
   </metadata>
   <files>
     <file src=".template.config/template.json" target="content/.template.config" />
