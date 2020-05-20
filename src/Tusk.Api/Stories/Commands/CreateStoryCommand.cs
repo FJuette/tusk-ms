@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
@@ -10,9 +9,15 @@ namespace Tusk.Api.Stories.Commands
 {
     public class CreateStoryCommand : IRequest<int>
     {
-        public string Title { get; set; } = "";
-        public string Text { get; set; } = "";
-        public UserStory.Relevance Importance { get; set; }
+        public CreateStoryCommand(string title, string text, UserStory.Relevance importance)
+        {
+            Title = title;
+            Text = text;
+            Importance = importance;
+        }
+        public string Title { get; }
+        public string Text { get; }
+        public UserStory.Relevance Importance { get; }
     }
 
     public class CreateStoryCommandHandler : IRequestHandler<CreateStoryCommand, int>
@@ -26,14 +31,10 @@ namespace Tusk.Api.Stories.Commands
 
         public async Task<int> Handle(CreateStoryCommand request, CancellationToken cancellationToken)
         {
-            var story = new UserStory
-            {
-                Title = request.Title,
-                Text = request.Text,
-                Importance = request.Importance
-            };
+            var story = new UserStory(request.Title, Priority.Create(1).Value, request.Text, "");
 
-            var result = await _context.Stories.AddAsync(story, cancellationToken);
+            // Prefer attach over add/update
+            var result = _context.Stories.Attach(story);
             await _context.SaveChangesAsync(cancellationToken);
             return result.Entity.Id;
         }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -95,8 +96,10 @@ namespace Tusk.Api
             services.AddHealthChecks()
                 //.AddSqlServer(EnvFactory.GetConnectionString()) //TODO Enable if real MSSQL-Server is given
                 .AddCheck<ApiHealthCheck>("api");
-            
+
             services.AddScoped<TuskDbContext>();
+
+            services.AddAutoMapper(typeof(Startup));
 
             // Avoid the MultiPartBodyLength error
             services.Configure<FormOptions>(o => {
