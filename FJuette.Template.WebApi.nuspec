@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>FJuette.Template.WebApi</id>
+    <version>1.0</version>
+    <authors>Fabian Juette</authors>
+    <description>DDD-Style WebApi template</description>
+    <packageTypes>
+      <packageType name="Template" />
+    </packageTypes>
+    <license type="expression">Apache-2.0</license>
+
+  </metadata>
+  <files>
+    <file src=".template.config/template.json" target="content/.template.config" />
+    <file src="src/**" target="content/src/" />
+    <file src="tests/**" target="content/tests" />
+    <file src=".editorconfig" target="content/" />
+    <file src=".gitignore" target="content/" />
+    <file src="LICENSE" target="content/" />
+    <file src="README.md" target="content/" />
+    <file src="Tusk.sln" target="content/" />
+    <file src="update-packages.sh" target="content/" />
+  </files>
+</package>

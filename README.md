@@ -17,21 +17,16 @@ My template for new projects in the world of microservices.
 
 Mainly inspired by <https://github.com/JasonGT/NorthwindTraders> and Vladimir Khorikov (<https://github.com/vkhorikov>)
 
+## Usage
 
-## Install / Use
+Install the template from nuget
+> dotnet new --install FJuette.Template.WebApi
 
-Local install (osx, linux)
-> dotnet new -i ./
-
-Local install (Windows)
-> dotnet new -i .\
-
-Find entry to uninstall
-> dotnet new -u
-
-Create example command (-n to provide new name of the solution)
+Create a new project from the template
 > dotnet new ddd-webapi -n Magnus
 
+Remove the template
+> dotnet new -u FJuette.Template.WebApi
 
 ## Remarks
 
