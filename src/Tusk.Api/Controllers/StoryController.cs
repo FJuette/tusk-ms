@@ -39,7 +39,6 @@ namespace Tusk.Api.Controllers
         [HttpPost("api/stories")]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        [Authorize]
         public async Task<ActionResult<int>> CreateStory([FromBody] CreateStoryCommand command)
         {
             var storyId = await Mediator.Send(command);
