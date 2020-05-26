@@ -1,6 +1,6 @@
 # C# Web-Api template in DDD-Style for Microservices
 
-My template for new projects in the world of microservices.
+My template for new REST-API projects in a microservice style.
 
 ## Technologies
 
