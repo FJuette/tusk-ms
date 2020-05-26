@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tusk.Api.Stories.Commands;
 using Tusk.Api.Stories.Queries;
@@ -38,6 +39,7 @@ namespace Tusk.Api.Controllers
         [HttpPost("api/stories")]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
+        [Authorize]
         public async Task<ActionResult<int>> CreateStory([FromBody] CreateStoryCommand command)
         {
             var storyId = await Mediator.Send(command);
