@@ -19,6 +19,8 @@ Mainly inspired by <https://github.com/JasonGT/NorthwindTraders> and Vladimir Kh
 
 ## Usage
 
+Nuget Package: <https://www.nuget.org/packages/FJuette.Template.WebApi/>
+
 Install the template from nuget
 > dotnet new --install FJuette.Template.WebApi
 
