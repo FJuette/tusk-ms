@@ -10,7 +10,7 @@
         "language": "C#",
         "type": "project"
     },
-    "sourceName": "Tusk",
+    "sourceName": "Tusk.Api",
     "preferNameDirectory": true,
     "sources": [
         {

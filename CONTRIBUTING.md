@@ -19,7 +19,7 @@ Create example command (-n to provide new name of the solution)
 ## Packing
 
 Creating the nuget package
-> nuget pack
+> nuget pack -NoDefaultExcludes
 
 Install the nuget package locally
 > dotnet new -i ./FJuette.Template.WebApi.1.0.0.nupkg

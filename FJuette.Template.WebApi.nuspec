@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>FJuette.Template.WebApi</id>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <authors>Fabian Juette</authors>
     <description>
       .Net Core 3.1 WebApi template with ddd example model classes.
@@ -14,13 +14,13 @@
     </packageTypes>
     <projectUrl>https://github.com/FJuette/tusk-ms</projectUrl>
     <license type="expression">Apache-2.0</license>
-    <releaseNotes>All packages are updated to the last stable version.</releaseNotes>
+    <releaseNotes>Fixed template installtion.</releaseNotes>
     <copyright>Fabian Juette</copyright>
   </metadata>
   <files>
     <file src=".template.config/template.json" target="content/.template.config" />
-    <file src="src/**" target="content/src/" />
-    <file src="tests/**" target="content/tests" />
+    <file src="src/**" target="content/src/" exclude="src/Tusk.Api/bin/**;src/Tusk.Api/obj/**" />
+    <file src="tests/**" target="content/tests" exclude="tests/Tusk.Api.Tests/bin/**;tests/Tusk.Api.Tests/obj/**" />
     <file src=".editorconfig" target="content/" />
     <file src=".gitignore" target="content/" />
     <file src="LICENSE" target="content/" />
