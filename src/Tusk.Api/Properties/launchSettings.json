@@ -4,7 +4,9 @@
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "JWT_ISSUER": "http://example.org",
+        "JWT_KEY": "34905893405839340578208926527934534"
       },
       "applicationUrl": "http://localhost:5000"
     }

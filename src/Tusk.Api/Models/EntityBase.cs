@@ -4,9 +4,8 @@ namespace Tusk.Api.Models
 {
     public interface IOwnedBy
     {
-        //This holds the UserId of the person who created it
+        // This holds the ID of the person/institution who own the entity
         string OwnedBy { get; }
-        //This the method to set it
         void SetOwnedBy(string protectKey);
     }
 

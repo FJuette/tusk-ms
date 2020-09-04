@@ -7,13 +7,28 @@ namespace Tusk.Api.Infrastructure
     {
         public static string GetConnectionString()
         {
-            var envConn = Environment.GetEnvironmentVariable("CONNECTION_STRING");
-            if (string.IsNullOrEmpty(envConn))
-            {
-                throw new MissingEnvException("CONNECTION_STRING");
-            }
-
-            return envConn;
+            return TryGetEnv("CONNECTION_STRING");
         }
+
+        public static string GetJwtIssuer()
+        {
+            return TryGetEnv("JWT_ISSUER");
+        }
+
+        public static string GetJwtKey()
+        {
+            return TryGetEnv("JWT_KEY");
+        }
+
+        private static string TryGetEnv(string name)
+        {
+            var env = Environment.GetEnvironmentVariable(name);
+            if (string.IsNullOrEmpty(env))
+            {
+                throw new MissingEnvException(name);
+            }
+            return env;
+        }
+
     }
 }

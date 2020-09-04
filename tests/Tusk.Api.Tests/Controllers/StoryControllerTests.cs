@@ -30,7 +30,6 @@ namespace Tusk.Api.Tests.Controllers
 
             // Assert
             vm.Stories.Count().Should().BeGreaterThan(0);
-            //vm.Stories.First().Importance.Should().Be(UserStory.Relevance.MustHave);
         }
 
         [Fact]

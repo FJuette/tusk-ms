@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Tusk.Api.Infrastructure;
 using Tusk.Api.Models;
+using Microsoft.Extensions.Hosting;
 
 namespace Tusk.Api.Persistence
 {
@@ -26,7 +27,7 @@ namespace Tusk.Api.Persistence
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (_env.EnvironmentName == "Production")
+            if (_env.IsProduction())
                 optionsBuilder.UseSqlServer(EnvFactory.GetConnectionString());
             else
             {
@@ -50,8 +51,10 @@ namespace Tusk.Api.Persistence
                     .HasMaxLength(100);
                 b.Property(e => e.AcceptanceCriteria)
                     .HasMaxLength(int.MaxValue);
+
+                // 'string' ist possible too, for more see https://medium.com/agilix/entity-framework-core-enums-ee0f8f4063f2
                 b.Property(c => c.Importance)
-                    .HasConversion<int>(); // 'string' ist possible too, for more see https://medium.com/agilix/entity-framework-core-enums-ee0f8f4063f2
+                    .HasConversion<int>();
                 b.HasMany(e => e.StoryTasks)
                     .WithOne()
                     .OnDelete(DeleteBehavior.Cascade);
@@ -76,16 +79,14 @@ namespace Tusk.Api.Persistence
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             MarkEnumTypesAsUnchanged();
-            // TODO FILL ID FROM user
-            this.MarkCreatedItemAsOwnedBy("Admin");
+            this.MarkCreatedItemAsOwnedBy(_userId);
             return base.SaveChangesAsync(cancellationToken);
         }
 
         public override int SaveChanges()
         {
             MarkEnumTypesAsUnchanged();
-            // TODO FILL ID FROM user
-            this.MarkCreatedItemAsOwnedBy("Admin");
+            this.MarkCreatedItemAsOwnedBy(_userId);
             return base.SaveChanges();
         }
 

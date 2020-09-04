@@ -50,9 +50,9 @@ namespace Tusk.Api
                         ValidateAudience = true,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer = Configuration["Jwt:Issuer"],
-                        ValidAudience = Configuration["Jwt:Issuer"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                        ValidIssuer = EnvFactory.GetJwtIssuer(),
+                        ValidAudience = EnvFactory.GetJwtIssuer(),
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(EnvFactory.GetJwtKey()))
                     });
 
             // At least a module claim is required to use any protected endpoint
@@ -98,7 +98,7 @@ namespace Tusk.Api
                 .AddFluentValidation(fv =>
                 {
                     fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
-                    fv.RegisterValidatorsFromAssemblyContaining<CreateStoryCommand>();
+                    fv.RegisterValidatorsFromAssemblyContaining<Startup>();
                 }).AddNewtonsoftJson();
         }
 

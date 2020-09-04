@@ -1,6 +1,6 @@
 namespace Tusk.Api.Models
 {
-    // Dummy to show 1:n relation
+    // Dummy to show 1:n relation with UserStories
     public class StoryTask : EntityBase
     {
         protected StoryTask()

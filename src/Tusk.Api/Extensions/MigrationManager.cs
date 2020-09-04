@@ -1,4 +1,5 @@
 using System;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,8 +17,13 @@ namespace Tusk.Api.Extensions
                 {
                     try
                     {
+                        var env = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
                         appContext.Database.EnsureCreated();
-                        // appContext.Database.Migrate(); // not working with in memory dbs atm
+                        if (env.IsProduction())
+                        {
+                            // not working with in memory dbs atm
+                            appContext.Database.Migrate();
+                        }
                     }
                     catch (Exception ex)
                     {

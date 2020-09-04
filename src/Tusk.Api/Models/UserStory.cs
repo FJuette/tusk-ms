@@ -5,7 +5,7 @@ namespace Tusk.Api.Models
 {
     public class UserStory : EntityBase
     {
-        // Enum example with usage in ef
+        // Enum example with usage in ef core
         // Can replaced by EnumerationPattern
         public enum Relevance
         {
