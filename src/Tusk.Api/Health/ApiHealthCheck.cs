@@ -17,8 +17,13 @@ namespace Tusk.Api.Health
             HealthCheckContext context,
             CancellationToken cancellationToken = new CancellationToken())
         {
-            await _ctx.Database.CanConnectAsync(cancellationToken);
-            return HealthCheckResult.Healthy("Database connection is working.");
+            var canConnect = await _ctx.Database.CanConnectAsync(cancellationToken);
+            if (canConnect)
+            {
+                return HealthCheckResult.Healthy("Database connection is working.");
+            }
+            return HealthCheckResult.Unhealthy("Database connection is not working.");
+
         }
     }
 }

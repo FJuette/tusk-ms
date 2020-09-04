@@ -29,7 +29,7 @@ namespace Tusk.Api.Tests.Controllers
             var vm = await Utilities.GetResponseContent<UserStoriesViewModel>(response);
 
             // Assert
-            vm.Stories.Count().Should().BeGreaterThan(0);
+            vm.Data.Count().Should().BeGreaterThan(0);
         }
 
         [Fact]

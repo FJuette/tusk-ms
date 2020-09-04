@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Linq;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
 namespace Tusk.Api.Infrastructure
 {
@@ -11,15 +13,18 @@ namespace Tusk.Api.Infrastructure
     {
         public GetClaimsFromUser(IHttpContextAccessor accessor)
         {
-            UserId = "Admin"; // Dummy value
-            // TODO get id and optional more data from the user claims
-            /*
-            var user = accessor.HttpContext?
-                .User;
-            UserId = accessor.HttpContext?
+            var username = accessor.HttpContext?
                 .User.Claims.SingleOrDefault(x =>
                     x.Type == ClaimTypes.Name)?.Value;
-                    */
+
+            if (string.IsNullOrEmpty(username))
+            {
+                UserId = "Admin"; // Dummy value if no user id found in the jwt token from the request
+            }
+            else
+            {
+                UserId = username;
+            }
         }
 
         public string UserId { get; private set; }

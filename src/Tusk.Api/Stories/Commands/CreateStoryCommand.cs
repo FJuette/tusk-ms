@@ -44,6 +44,8 @@ namespace Tusk.Api.Stories.Commands
     {
         public CreateStoryValidator()
         {
+            RuleFor(x => x.Title).NotEmpty()
+                .WithMessage("Title is required");
             RuleFor(x => x.Importance).IsInEnum()
                 .WithMessage("Provide a valid importance value (e.g. 0, 1, 2)");
         }

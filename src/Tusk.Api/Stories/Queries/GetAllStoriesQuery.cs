@@ -69,11 +69,11 @@ namespace Tusk.Api.Stories.Queries
 
     public class UserStoriesViewModel
     {
-        public UserStoriesViewModel(List<UserStoriesDto> stories)
+        public UserStoriesViewModel(List<UserStoriesDto> data)
         {
-            Stories = stories;
+            Data = data;
         }
 
-        public IEnumerable<UserStoriesDto> Stories { get; }
+        public IEnumerable<UserStoriesDto> Data { get; }
     }
 }
