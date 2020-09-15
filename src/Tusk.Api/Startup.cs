@@ -91,6 +91,7 @@ namespace Tusk.Api
 
             // Add my own services here
             services.AddScoped<IGetClaimsProvider, GetClaimsFromUser>();
+            services.AddSingleton<IDateTime, MachineDateTime>();
 
             services.AddControllers(options => options.Filters.Add(typeof(CustomExceptionFilter)))
                 .AddFluentValidation(fv =>

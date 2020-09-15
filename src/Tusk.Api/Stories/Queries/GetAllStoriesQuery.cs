@@ -8,6 +8,7 @@ using Tusk.Api.Persistence;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Tusk.Api.Infrastructure;
 
 namespace Tusk.Api.Stories.Queries
 {
@@ -19,18 +20,20 @@ namespace Tusk.Api.Stories.Queries
     {
         private readonly TuskDbContext _ctx;
         private readonly IMapper _mapper;
+        private readonly IDateTime _dt;
 
-        public GetAllStoriesQueryHandler(TuskDbContext ctx, IMapper mapper)
+        public GetAllStoriesQueryHandler(TuskDbContext ctx, IMapper mapper, IDateTime dt)
         {
             _ctx = ctx;
             _mapper = mapper;
+            _dt = dt;
         }
 
         public async Task<UserStoriesViewModel> Handle(GetAllStoriesQuery request, CancellationToken cancellationToken)
         {
             // Use async calls if possible
             // Example logging call
-            Log.Information("Get all Stories called");
+            Log.Information($"Get all Stories called at {_dt.Now:dd.MM.yyyy}");
             // Using the ProjectTo<T> from automapper to optimise the resulting sql query
             var stories = await _ctx.Stories
                 .Include(e => e.StoryTasks) // Include if needed
