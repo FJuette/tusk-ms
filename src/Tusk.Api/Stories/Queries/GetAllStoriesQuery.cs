@@ -37,8 +37,8 @@ namespace Tusk.Api.Stories.Queries
                 .ProjectTo<UserStoriesDto>(_mapper.ConfigurationProvider)
                 .AsNoTracking()
                 .ToListAsync(cancellationToken: cancellationToken);
-            return new UserStoriesViewModel(stories);
 
+            return new UserStoriesViewModel(stories);
         }
     }
 
@@ -63,7 +63,9 @@ namespace Tusk.Api.Stories.Queries
         public UserStoriesProfile()
         {
             CreateMap<UserStory, UserStoriesDto>()
-                .ForMember(d => d.Priority, opt => opt.MapFrom(c => c.Priority.Value));
+                .ForMember(d => d.Priority,
+                    opt =>
+                        opt.MapFrom(c => c.Priority.Value));
         }
     }
 

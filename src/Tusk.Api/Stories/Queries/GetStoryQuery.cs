@@ -19,7 +19,6 @@ namespace Tusk.Api.Stories.Queries
         {
             Id = id;
         }
-
         public int Id { get; }
     }
 
@@ -46,13 +45,10 @@ namespace Tusk.Api.Stories.Queries
                 .ProjectTo<UserStoryDto>(_mapper.ConfigurationProvider)
                 .AsNoTracking()
                 .SingleOrDefaultAsync(cancellationToken);
-            if (story is null)
-            {
-                throw new NotFoundException("Story", request.Id);
-            }
+
+            _ = story ?? throw new NotFoundException("Story", request.Id);
 
             return new UserStoryViewModel(story);
-
         }
     }
 

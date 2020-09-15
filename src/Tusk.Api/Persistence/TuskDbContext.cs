@@ -32,7 +32,7 @@ namespace Tusk.Api.Persistence
             else
             {
                 optionsBuilder.UseInMemoryDatabase(new Guid().ToString());
-                optionsBuilder?.EnableSensitiveDataLogging();
+                optionsBuilder.EnableSensitiveDataLogging();
             }
 
             base.OnConfiguring(optionsBuilder);
