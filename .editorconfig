@@ -155,6 +155,8 @@ csharp_space_between_square_brackets = false
 
 # Analyzers
 dotnet_code_quality.ca1802.api_surface = private, internal
+dotnet_code_quality.CA2007.output_kind = DynamicallyLinkedLibrary
+
 
 # C++ Files
 [*.{cpp,h,in}]

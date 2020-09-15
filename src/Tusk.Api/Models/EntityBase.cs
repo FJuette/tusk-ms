@@ -30,7 +30,7 @@ namespace Tusk.Api.Models
             OwnedBy = protectKey;
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (!(obj is EntityBase other))
                 return false;
@@ -65,14 +65,14 @@ namespace Tusk.Api.Models
 
         public override int GetHashCode()
         {
-            return (GetRealType().ToString() + Id).GetHashCode();
+            return (GetRealType().ToString() + Id).GetHashCode(StringComparison.InvariantCulture);
         }
 
         private Type GetRealType()
         {
             Type type = GetType();
 
-            if (type.ToString().Contains("Castle.Proxies.") && type.BaseType != null)
+            if (type.ToString().Contains("Castle.Proxies.", StringComparison.InvariantCulture) && type.BaseType != null)
                 return type.BaseType;
 
             return type;

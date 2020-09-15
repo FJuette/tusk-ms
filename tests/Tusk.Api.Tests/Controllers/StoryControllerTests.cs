@@ -3,7 +3,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Tusk.Api.Models;
-using Tusk.Api.Stories.Commands;
 using Tusk.Api.Stories.Queries;
 using Tusk.Api.Tests.Common;
 using Xunit;
@@ -40,7 +39,8 @@ namespace Tusk.Api.Tests.Controllers
             {
                 Importance = UserStory.Relevance.CouldHave,
                 Text = "My demo post user story",
-                Title = "Demo post"
+                Title = "Demo post",
+                BusinessValue = 1
             });
             response.EnsureSuccessStatusCode();
 
@@ -58,7 +58,24 @@ namespace Tusk.Api.Tests.Controllers
             {
                 Importance = 5,
                 Text = "My demo post user story",
-                Title = "Demo post"
+                Title = "Demo post",
+                BusinessValue = 1
+            });
+
+            // Assert
+            response.StatusCode.Should().Be(400);
+        }
+
+        [Fact]
+        public async Task Create_InvalidBusinessValue_ReturnsValidationError()
+        {
+            // Act
+            var response = await _client.PostAsJsonAsync("api/stories", new
+            {
+                Importance = UserStory.Relevance.CouldHave,
+                Text = "My demo post user story",
+                Title = "Demo post",
+                BusinessValue = 10
             });
 
             // Assert

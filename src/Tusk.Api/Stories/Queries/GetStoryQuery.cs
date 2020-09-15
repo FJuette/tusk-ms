@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -40,7 +41,8 @@ namespace Tusk.Api.Stories.Queries
             // Use async calls if possible
             var story = await _ctx.Stories
                 .Where(e => e.Id == request.Id)
-                .Include(e => e.StoryTasks) // Include if needed
+                .Include(e => e.StoryTasks)
+                .Include(e => e.BusinessValue)
                 .ProjectTo<UserStoryDto>(_mapper.ConfigurationProvider)
                 .AsNoTracking()
                 .SingleOrDefaultAsync(cancellationToken);
@@ -48,6 +50,7 @@ namespace Tusk.Api.Stories.Queries
             {
                 throw new NotFoundException("Story", request.Id);
             }
+
             return new UserStoryViewModel(story);
 
         }
@@ -56,20 +59,23 @@ namespace Tusk.Api.Stories.Queries
     // Example Dto
     public class UserStoryDto
     {
-        public UserStoryDto(int id, string title, string text, string acceptanceCriteria)
+        public UserStoryDto(int id, string title, string text, string acceptanceCriteria, int priority, string businessValue)
         {
             Id = id;
             Title = title;
             Text = text;
             AcceptanceCriteria = acceptanceCriteria;
+            Priority = priority;
+            BusinessValue = businessValue;
         }
 
         public int Id { get; }
         public string Title { get; }
         public string Text { get; }
         public string AcceptanceCriteria { get; }
-        // Not a clean design with setter, but actually I am unable to tell automapper to use my defined mapping in the constructor
-        public int Priority { get; set; }
+        public int Priority { get; }
+        public string BusinessValue { get; }
+        public List<string>? Tasks { get; private set; }
     }
 
     // Automapper Profile for this Dto
@@ -78,7 +84,17 @@ namespace Tusk.Api.Stories.Queries
         public UserStoryProfile()
         {
             CreateMap<UserStory, UserStoryDto>()
-                .ForMember(d => d.Priority, opt => opt.MapFrom(c => c.Priority.Value));
+                .ForCtorParam(
+                    "priority",
+                    opt => opt.MapFrom(
+                        c => c.Priority.Value))
+                .ForCtorParam(
+                    "businessValue",
+                    opt => opt.MapFrom(
+                        c => c.BusinessValue.Name))
+                .ForMember(d => d.Tasks,
+                    opt => opt.MapFrom(
+                        c => c.StoryTasks.Select(e => $"[{(e.IsDone ? 'x' : ' ')}] {e.Description}" )));
         }
     }
 

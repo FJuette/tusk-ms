@@ -43,7 +43,7 @@ namespace Tusk.Api.Infrastructure
                         Id = "Bearer"
                     }
                     },
-                    new string[] { }
+                    Array.Empty<string>()
                     }
                 });
             });

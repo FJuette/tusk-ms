@@ -25,7 +25,13 @@ namespace Tusk.Api.Tests.Common
 
         public static void InitializeDbForTests(TuskDbContext context)
         {
-            context.Stories.Add(new UserStory("My demo user story", Priority.Create(1).Value, "Info", "Provide long text here"));
+            context.Stories.Add(
+                new UserStory(
+                    "My demo user story",
+                    Priority.Create(1).Value,
+                    "Info",
+                    "Provide long text here",
+                    BusinessValue.BV900));
             context.SaveChanges();
         }
     }

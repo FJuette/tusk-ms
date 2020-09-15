@@ -11,22 +11,16 @@ namespace Tusk.Api.Infrastructure
 
     public class GetClaimsFromUser : IGetClaimsProvider
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
         public GetClaimsFromUser(IHttpContextAccessor accessor)
         {
             var username = accessor.HttpContext?
                 .User.Claims.SingleOrDefault(x =>
                     x.Type == ClaimTypes.Name)?.Value;
 
-            if (string.IsNullOrEmpty(username))
-            {
-                UserId = "Admin"; // Dummy value if no user id found in the jwt token from the request
-            }
-            else
-            {
-                UserId = username;
-            }
+            UserId = string.IsNullOrEmpty(username) ? "Admin" : username;
         }
 
-        public string UserId { get; private set; }
+        public string UserId { get; }
     }
 }

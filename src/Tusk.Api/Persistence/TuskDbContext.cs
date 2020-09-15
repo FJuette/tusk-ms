@@ -12,17 +12,17 @@ using Microsoft.Extensions.Hosting;
 
 namespace Tusk.Api.Persistence
 {
-#nullable disable
+    #nullable disable
     public class TuskDbContext : DbContext
     {
-        private static readonly Type[] EnumerationTypes = {  }; // e.g. typeof(Cluster)
+        private static readonly Type[] _enumerationTypes = { typeof(BusinessValue) };
         private readonly string _userId;
         private readonly IWebHostEnvironment _env;
 
         public TuskDbContext(IWebHostEnvironment env, IGetClaimsProvider userData)
         {
             _env = env;
-            _userId = userData.UserId;
+            _userId = userData?.UserId;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -32,7 +32,7 @@ namespace Tusk.Api.Persistence
             else
             {
                 optionsBuilder.UseInMemoryDatabase(new Guid().ToString());
-                optionsBuilder.EnableSensitiveDataLogging();
+                optionsBuilder?.EnableSensitiveDataLogging();
             }
 
             base.OnConfiguring(optionsBuilder);
@@ -40,15 +40,18 @@ namespace Tusk.Api.Persistence
 
         // No DbSet for UserTask here. They must set within a user story
         public DbSet<UserStory> Stories { get; set; }
+        public DbSet<BusinessValue> BusinessValues { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<UserStory>(b =>
+            builder?.Entity<UserStory>(b =>
             {
                 b.HasKey(e => e.Id);
                 b.Property(e => e.Title)
                     .IsRequired()
                     .HasMaxLength(100);
+                b.Property(e => e.Text)
+                    .HasMaxLength(int.MaxValue);
                 b.Property(e => e.AcceptanceCriteria)
                     .HasMaxLength(int.MaxValue);
 
@@ -58,19 +61,35 @@ namespace Tusk.Api.Persistence
                 b.HasMany(e => e.StoryTasks)
                     .WithOne()
                     .OnDelete(DeleteBehavior.Cascade);
+                b.HasOne(e => e.BusinessValue).WithMany();
 
                 // Mapping for ValueObject
-                b.Property(e => e.Priority).HasConversion(p => p.Value, p => Priority.Create(p).Value);
+                b.Property(e => e.Priority)
+                    .HasConversion(p => p.Value, p => Priority.Create(p).Value);
 
                 b.HasQueryFilter(x => x.OwnedBy == _userId);
 
-                b.HasData(new {
+            });
+
+            builder?.Entity<StoryTask>(b =>
+            {
+                b.Property(e => e.Description)
+                    .HasMaxLength(int.MaxValue);
+            });
+
+            builder?.Entity<BusinessValue>(b =>
+            {
+                b.Property(p => p.Name);
+                b.HasData(new
+                {
                     Id = 1,
-                    Title = "My first story",
-                    Priority = Priority.Create(1).Value,
-                    Text = "This is my content",
-                    AcceptanceCriteria = "This must be fulfilled",
-                    Importance = UserStory.Relevance.ShouldHave,
+                    Name = "Business Value 1000",
+                    OwnedBy = "Admin"
+                });
+                b.HasData(new
+                {
+                    Id = 2,
+                    Name = "Business Value 900",
                     OwnedBy = "Admin"
                 });
             });
@@ -93,7 +112,7 @@ namespace Tusk.Api.Persistence
         private void MarkEnumTypesAsUnchanged()
         {
             IEnumerable<EntityEntry> enumerationEntries =
-                ChangeTracker.Entries().Where(x => TuskDbContext.EnumerationTypes.Contains(x.Entity.GetType()));
+                ChangeTracker.Entries().Where(x => _enumerationTypes.Contains(x.Entity.GetType()));
 
             foreach (EntityEntry enumerationEntry in enumerationEntries)
             {
@@ -104,6 +123,7 @@ namespace Tusk.Api.Persistence
 
     public static class ContextExtensions
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
         public static void MarkCreatedItemAsOwnedBy(this DbContext context, string userId)
         {
             foreach (var entityEntry in context.ChangeTracker.Entries()

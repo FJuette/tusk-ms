@@ -17,17 +17,15 @@ namespace Tusk.Api.Filters
             _env = env;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
         public override void OnException(ExceptionContext context)
         {
-            var code = HttpStatusCode.InternalServerError;
-            if (context.Exception is InvalidOperationException)
+            var code = context.Exception switch
             {
-                code = HttpStatusCode.BadRequest;
-            }
-            if (context.Exception is NotFoundException)
-            {
-                code = HttpStatusCode.NotFound;
-            }
+                InvalidOperationException _ => HttpStatusCode.BadRequest,
+                NotFoundException _ => HttpStatusCode.NotFound,
+                _ => HttpStatusCode.InternalServerError
+            };
             context.HttpContext.Response.ContentType = "application/json";
             context.HttpContext.Response.StatusCode = (int)code;
             if (_env.IsProduction())

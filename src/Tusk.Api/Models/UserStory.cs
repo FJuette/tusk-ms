@@ -3,10 +3,12 @@ using System.Linq;
 
 namespace Tusk.Api.Models
 {
+#nullable disable
+    // Aggregate root entity
     public class UserStory : EntityBase
     {
         // Enum example with usage in ef core
-        // Can replaced by EnumerationPattern
+        // Can optionally replaced by EnumerationPattern
         public enum Relevance
         {
             MustHave,
@@ -14,22 +16,21 @@ namespace Tusk.Api.Models
             CouldHave
         }
 
-        protected UserStory()
-        {
-
-        }
+        protected UserStory() { }
 
         public UserStory(
             string title,
             Priority priority,
             string text,
             string acceptanceCriteria,
+            BusinessValue businessValue,
             Relevance relevance = Relevance.CouldHave) : this()
         {
             Title = title;
             Priority = priority;
             Text = text;
             AcceptanceCriteria = acceptanceCriteria;
+            BusinessValue = businessValue;
             Importance = relevance;
         }
 
@@ -38,27 +39,23 @@ namespace Tusk.Api.Models
         public string Text { get; }
         public string AcceptanceCriteria { get; }
         public Relevance Importance { get; }
+        public BusinessValue BusinessValue { get; }
 
         private readonly List<StoryTask> _storyTasks = new List<StoryTask>();
         public IReadOnlyList<StoryTask> StoryTasks => _storyTasks.ToList();
 
+#nullable enable
         // Some dummy examples to work with the relational data
         public void AddTask(StoryTask storyTask)
         {
             // Work with _storyTasks
-            // ...
+            _storyTasks.Add(storyTask);
         }
 
         public void RemoveTask(StoryTask storyTask)
         {
             // Work with _storyTasks
-            // ...
-        }
-
-        public void SetTaskDone(StoryTask storyTask)
-        {
-            // Work with _storyTasks
-            // ...
+            _storyTasks.Remove(storyTask);
         }
     }
 

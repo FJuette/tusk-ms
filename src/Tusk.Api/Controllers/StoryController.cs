@@ -52,5 +52,14 @@ namespace Tusk.Api.Controllers
         {
             return Ok(await Mediator.Send(new GetStoryQuery(id)));
         }
+
+        [HttpPut("api/stories/{storyId}/tasks/{taskId}/toggle-done")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<bool>> ToggleDone(int storyId, int taskId)
+        {
+            return Ok(await Mediator.Send(new ToggleDoneCommand(storyId, taskId)));
+        }
+
     }
 }
