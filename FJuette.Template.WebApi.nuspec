@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>FJuette.Template.WebApi</id>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
     <authors>Fabian Juette</authors>
     <description>
       .Net Core 3.1 WebApi template with ddd example model classes.
@@ -16,7 +16,13 @@
     </packageTypes>
     <projectUrl>https://github.com/FJuette/tusk-ms</projectUrl>
     <license type="expression">Apache-2.0</license>
-    <releaseNotes>Fixed template installtion.</releaseNotes>
+    <releaseNotes>
+      Update to latest package versions.
+      Fix some of the compiler warnings for nullable types.
+      Add an example of enumeration pattern class (Business Value).
+      Better data seeding in own migration class.
+      Add dockerfile to build API for production.
+    </releaseNotes>
     <copyright>Fabian Juette</copyright>
   </metadata>
   <files>
