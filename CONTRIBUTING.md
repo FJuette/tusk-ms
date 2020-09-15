@@ -22,7 +22,7 @@ Creating the nuget package
 > nuget pack -NoDefaultExcludes
 
 Install the nuget package locally
-> dotnet new -i ./FJuette.Template.WebApi.1.0.0.nupkg
+> dotnet new -i ./FJuette.Template.WebApi.1.0.X.nupkg
 
 On _DateTimeOffset_ error:
 > nuget locals all -clear
