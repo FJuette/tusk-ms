@@ -19,18 +19,21 @@ namespace Tusk.Api.Models
         {
         }
 
-        protected EntityBase(int id)
+        protected EntityBase(
+            int id)
             : this()
         {
             Id = id;
         }
 
-        public void SetOwnedBy(string protectKey)
+        public void SetOwnedBy(
+            string protectKey)
         {
             OwnedBy = protectKey;
         }
 
-        public override bool Equals(object? obj)
+        public override bool Equals(
+            object? obj)
         {
             if (!(obj is EntityBase other))
                 return false;
@@ -47,7 +50,9 @@ namespace Tusk.Api.Models
             return Id == other.Id;
         }
 
-        public static bool operator ==(EntityBase a, EntityBase b)
+        public static bool operator == (
+            EntityBase a,
+            EntityBase b)
         {
             if (a is null && b is null)
                 return true;
@@ -58,14 +63,17 @@ namespace Tusk.Api.Models
             return a.Equals(b);
         }
 
-        public static bool operator !=(EntityBase a, EntityBase b)
+        public static bool operator != (
+            EntityBase a,
+            EntityBase b)
         {
             return !(a == b);
         }
 
         public override int GetHashCode()
         {
-            return (GetRealType().ToString() + Id).GetHashCode(StringComparison.InvariantCulture);
+            return (GetRealType().ToString() + Id)
+                .GetHashCode(StringComparison.InvariantCulture);
         }
 
         private Type GetRealType()

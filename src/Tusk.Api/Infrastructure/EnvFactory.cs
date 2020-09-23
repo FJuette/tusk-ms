@@ -20,7 +20,8 @@ namespace Tusk.Api.Infrastructure
             return TryGetEnv("JWT_KEY");
         }
 
-        private static string TryGetEnv(string name)
+        private static string TryGetEnv(
+            string name)
         {
             var env = Environment.GetEnvironmentVariable(name);
             if (string.IsNullOrEmpty(env))

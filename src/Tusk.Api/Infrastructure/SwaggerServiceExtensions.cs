@@ -9,7 +9,8 @@ namespace Tusk.Api.Infrastructure
 {
     public static class SwaggerServiceExtensions
     {
-        public static IServiceCollection AddSwaggerDocumentation(this IServiceCollection services)
+        public static IServiceCollection AddSwaggerDocumentation(
+            this IServiceCollection services)
         {
             services.AddSwaggerGen(c =>
             {
@@ -52,7 +53,8 @@ namespace Tusk.Api.Infrastructure
             return services;
         }
 
-        public static IApplicationBuilder UseSwaggerDocumentation(this IApplicationBuilder app)
+        public static IApplicationBuilder UseSwaggerDocumentation(
+            this IApplicationBuilder app)
         {
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();

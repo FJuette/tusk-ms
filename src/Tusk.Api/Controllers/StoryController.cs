@@ -1,6 +1,4 @@
-using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tusk.Api.Stories.Commands;
 using Tusk.Api.Stories.Queries;
@@ -39,16 +37,21 @@ namespace Tusk.Api.Controllers
         [HttpPost("api/stories")]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public async Task<ActionResult<int>> CreateStory([FromBody] CreateStoryCommand command)
+        public async Task<ActionResult<int>> CreateStory(
+            [FromBody] CreateStoryCommand command)
         {
             var storyId = await Mediator.Send(command);
-            return CreatedAtAction("GetStory", new {id = storyId },  storyId);
+            return CreatedAtAction(
+                "GetStory",
+                new {id = storyId },
+                storyId);
         }
 
         [HttpGet("api/stories/{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<UserStoryViewModel>> GetStory(int id)
+        public async Task<ActionResult<UserStoryViewModel>> GetStory(
+            int id)
         {
             return Ok(await Mediator.Send(new GetStoryQuery(id)));
         }
@@ -56,7 +59,9 @@ namespace Tusk.Api.Controllers
         [HttpPut("api/stories/{storyId}/tasks/{taskId}/toggle-done")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<bool>> ToggleDone(int storyId, int taskId)
+        public async Task<ActionResult<bool>> ToggleDone(
+            int storyId,
+            int taskId)
         {
             return Ok(await Mediator.Send(new ToggleDoneCommand(storyId, taskId)));
         }

@@ -7,7 +7,8 @@ namespace Tusk.Api.Extensions
     {
         private readonly TuskDbContext _context;
 
-        public SampleDataSeeder(TuskDbContext context)
+        public SampleDataSeeder(
+            TuskDbContext context)
         {
             _context = context;
         }
@@ -21,9 +22,12 @@ namespace Tusk.Api.Extensions
                 "This must be fulfilled",
                 BusinessValue.BV900,
                 UserStory.Relevance.ShouldHave);
+
             story.AddTask(new StoryTask("Do this for me now!"));
             story.AddTask(new StoryTask("And now this!"));
+
             _context.Stories.Add(story);
+
             _context.Stories.Add(
                 new UserStory(
                     "Second Story",

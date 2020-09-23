@@ -12,7 +12,9 @@ namespace Tusk.Api.Controllers
 
         protected BaseController()
         {
-            _mediator = new Lazy<IMediator>(() => HttpContext.RequestServices.GetService<IMediator>(), true);
+            _mediator = new Lazy<IMediator>(
+                () => HttpContext.RequestServices.GetService<IMediator>(),
+                true);
         }
 
         protected IMediator Mediator => _mediator.Value;

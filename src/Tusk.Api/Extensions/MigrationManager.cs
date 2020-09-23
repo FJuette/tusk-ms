@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Tusk.Api.Models;
 using Tusk.Api.Persistence;
 
 namespace Tusk.Api.Extensions
@@ -11,7 +10,8 @@ namespace Tusk.Api.Extensions
     public static class MigrationManager
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
-        public static IHost MigrateDatabase(this IHost webHost)
+        public static IHost MigrateDatabase(
+            this IHost webHost)
         {
             using var scope = webHost.Services.CreateScope();
             using var appContext = scope.ServiceProvider.GetRequiredService<TuskDbContext>();

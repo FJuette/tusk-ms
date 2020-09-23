@@ -13,7 +13,10 @@ namespace Tusk.Api.Models
 
         protected BusinessValue() { }
 
-        private BusinessValue(int id, string name) : base(id)
+        private BusinessValue(
+            int id,
+            string name)
+            : base(id)
         {
             Name = name;
         }
@@ -22,7 +25,8 @@ namespace Tusk.Api.Models
 
         public static BusinessValue FromId(int id)
         {
-            return AllBusinessValues.SingleOrDefault(c => c.Id == id);
+            return AllBusinessValues
+                .SingleOrDefault(c => c.Id == id);
         }
     }
 }

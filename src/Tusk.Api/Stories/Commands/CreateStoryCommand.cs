@@ -10,7 +10,11 @@ namespace Tusk.Api.Stories.Commands
 {
     public class CreateStoryCommand : IRequest<int>
     {
-        public CreateStoryCommand(string title, string text, UserStory.Relevance importance, int businessValue)
+        public CreateStoryCommand(
+            string title,
+            string text,
+            UserStory.Relevance importance,
+            int businessValue)
         {
             Title = title;
             Text = text;
@@ -27,14 +31,22 @@ namespace Tusk.Api.Stories.Commands
     {
         private readonly TuskDbContext _context;
 
-        public CreateStoryCommandHandler(TuskDbContext context)
+        public CreateStoryCommandHandler(
+            TuskDbContext context)
         {
             _context = context;
         }
 
-        public async Task<int> Handle(CreateStoryCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(
+            CreateStoryCommand request,
+            CancellationToken cancellationToken)
         {
-            var story = new UserStory(request?.Title, Priority.Create(1).Value, request?.Text, "", BusinessValue.BV1000);
+            var story = new UserStory(
+                request?.Title,
+                Priority.Create(1).Value,
+                request?.Text,
+                "",
+                BusinessValue.BV1000);
 
             // Prefer attach over add/update
             var result = _context.Stories.Attach(story);

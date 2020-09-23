@@ -12,13 +12,15 @@ namespace Tusk.Api.Filters
     public class CustomExceptionFilter : ExceptionFilterAttribute
     {
         private readonly IWebHostEnvironment? _env;
-        public CustomExceptionFilter(IWebHostEnvironment env)
+        public CustomExceptionFilter(
+            IWebHostEnvironment env)
         {
             _env = env;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
-        public override void OnException(ExceptionContext context)
+        public override void OnException(
+            ExceptionContext context)
         {
             var code = context.Exception switch
             {

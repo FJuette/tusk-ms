@@ -8,7 +8,9 @@ namespace Tusk.Api.Health
     public class ApiHealthCheck : IHealthCheck
     {
         private readonly TuskDbContext _ctx;
-        public ApiHealthCheck(TuskDbContext ctx)
+
+        public ApiHealthCheck(
+            TuskDbContext ctx)
         {
             _ctx = ctx;
         }

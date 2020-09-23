@@ -8,7 +8,8 @@ namespace Tusk.Api.Models
         {
         }
 
-        public StoryTask(string description)
+        public StoryTask(
+            string description)
         {
             Description = description;
         }

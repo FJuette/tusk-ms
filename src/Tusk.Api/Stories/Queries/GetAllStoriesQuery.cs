@@ -22,7 +22,10 @@ namespace Tusk.Api.Stories.Queries
         private readonly IMapper _mapper;
         private readonly IDateTime _dt;
 
-        public GetAllStoriesQueryHandler(TuskDbContext ctx, IMapper mapper, IDateTime dt)
+        public GetAllStoriesQueryHandler(
+            TuskDbContext ctx,
+            IMapper mapper,
+            IDateTime dt)
         {
             _ctx = ctx;
             _mapper = mapper;

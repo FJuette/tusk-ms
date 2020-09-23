@@ -46,13 +46,15 @@ namespace Tusk.Api.Models
 
 #nullable enable
         // Some dummy examples to work with the relational data
-        public void AddTask(StoryTask storyTask)
+        public void AddTask(
+            StoryTask storyTask)
         {
             // Work with _storyTasks
             _storyTasks.Add(storyTask);
         }
 
-        public void RemoveTask(StoryTask storyTask)
+        public void RemoveTask(
+            StoryTask storyTask)
         {
             // Work with _storyTasks
             _storyTasks.Remove(storyTask);
