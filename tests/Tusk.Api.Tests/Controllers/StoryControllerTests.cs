@@ -9,11 +9,13 @@ using Xunit;
 
 namespace Tusk.Api.Tests.Controllers
 {
-    public class StoryControllerTests : IClassFixture<CustomWebApplicationFactory<Startup>>
+    public class StoryControllerTests
+        : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
         private readonly HttpClient _client;
 
-        public StoryControllerTests(CustomWebApplicationFactory<Startup> factory)
+        public StoryControllerTests(
+            CustomWebApplicationFactory<Startup> factory)
         {
             _client = factory.CreateClient();
         }

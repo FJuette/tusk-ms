@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,20 +27,18 @@ namespace Tusk.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        public Startup(IConfiguration configuration) => Configuration = configuration;
 
         public IConfiguration Configuration { get; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
-        public void ConfigureServices(IServiceCollection services)
+        [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
+        public void ConfigureServices(
+            IServiceCollection services)
         {
             // Add MediatR - must be first
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
-            #if (!DisableAuthentication)
+#if (!DisableAuthentication)
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                     options.TokenValidationParameters = new TokenValidationParameters
@@ -58,7 +57,7 @@ namespace Tusk.Api
                 auth => auth.DefaultPolicy = new AuthorizationPolicyBuilder()
                     .RequireClaim("modules", "claim-module-name")
                     .Build());
-            #endif
+#endif
 
             services.AddCors(options =>
                 options.AddPolicy("Locations",
@@ -83,7 +82,8 @@ namespace Tusk.Api
             services.AddAutoMapper(typeof(Startup));
 
             // Avoid the MultiPartBodyLength error
-            services.Configure<FormOptions>(o => {
+            services.Configure<FormOptions>(o =>
+            {
                 o.ValueLengthLimit = int.MaxValue;
                 o.MultipartBodyLengthLimit = int.MaxValue;
                 o.MemoryBufferThreshold = int.MaxValue;
@@ -102,21 +102,19 @@ namespace Tusk.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
-        public void Configure(IApplicationBuilder app)
+        [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
+        public void Configure(
+            IApplicationBuilder app)
         {
             app.UseSwaggerDocumentation();
 
-            app.UseHealthChecks("/health", new HealthCheckOptions()
-            {
-                ResponseWriter = WriteHealthCheckResponse
-            });
+            app.UseHealthChecks("/health", new HealthCheckOptions {ResponseWriter = WriteHealthCheckResponse});
 
             app.UseRouting();
-            #if (!DisableAuthentication)
+#if (!DisableAuthentication)
             app.UseAuthentication();
             app.UseAuthorization();
-            #endif
+#endif
             app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
 
@@ -125,18 +123,18 @@ namespace Tusk.Api
             HealthReport result)
         {
             httpContext.Response.ContentType = "application/json";
-            var json = new JObject(
+            JObject? json = new JObject(
                 new JProperty("status", result.Status.ToString()),
                 new JProperty("results", new JObject(
                     result.Entries.Select(pair =>
-                    new JProperty(pair.Key, new JObject(
-                        new JProperty("status", pair.Value.Status.ToString()),
-                        new JProperty("exception", pair.Value.Exception?.Message),
-                        new JProperty("description", pair.Value.Description),
-                        new JProperty("data", new JObject(pair.Value.Data.Select(
-                            p => new JProperty(p.Key, p.Value)))
-                        )
-                    )))
+                        new JProperty(pair.Key, new JObject(
+                            new JProperty("status", pair.Value.Status.ToString()),
+                            new JProperty("exception", pair.Value.Exception?.Message),
+                            new JProperty("description", pair.Value.Description),
+                            new JProperty("data", new JObject(pair.Value.Data.Select(
+                                p => new JProperty(p.Key, p.Value)))
+                            )
+                        )))
                 ))
             );
             return httpContext.Response.WriteAsync(

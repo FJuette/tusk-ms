@@ -1,24 +1,22 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
-using Serilog;
-using Tusk.Api.Models;
-using Tusk.Api.Persistence;
-using Tusk.Api.Exceptions;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
+using Serilog;
+using Tusk.Api.Exceptions;
+using Tusk.Api.Models;
+using Tusk.Api.Persistence;
 
 namespace Tusk.Api.Stories.Queries
 {
     public class GetStoryQuery : IRequest<UserStoryViewModel>
     {
-        public GetStoryQuery(int id)
-        {
-            Id = id;
-        }
+        public GetStoryQuery(int id) => Id = id;
+
         public int Id { get; }
     }
 
@@ -27,18 +25,22 @@ namespace Tusk.Api.Stories.Queries
         private readonly TuskDbContext _ctx;
         private readonly IMapper _mapper;
 
-        public GetStoryQueryHandler(TuskDbContext ctx, IMapper mapper)
+        public GetStoryQueryHandler(
+            TuskDbContext ctx,
+            IMapper mapper)
         {
             _ctx = ctx;
             _mapper = mapper;
         }
 
-        public async Task<UserStoryViewModel> Handle(GetStoryQuery request, CancellationToken cancellationToken)
+        public async Task<UserStoryViewModel> Handle(
+            GetStoryQuery request,
+            CancellationToken cancellationToken)
         {
             // Example logging call
             Log.Information("Get single story called");
             // Use async calls if possible
-            var story = await _ctx.Stories
+            UserStoryDto? story = await _ctx.Stories
                 .Where(e => e.Id == request.Id)
                 .Include(e => e.StoryTasks)
                 .Include(e => e.BusinessValue)
@@ -55,7 +57,13 @@ namespace Tusk.Api.Stories.Queries
     // Example Dto
     public class UserStoryDto
     {
-        public UserStoryDto(int id, string title, string text, string acceptanceCriteria, int priority, string businessValue)
+        public UserStoryDto(
+            int id,
+            string title,
+            string text,
+            string acceptanceCriteria,
+            int priority,
+            string businessValue)
         {
             Id = id;
             Title = title;
@@ -77,8 +85,7 @@ namespace Tusk.Api.Stories.Queries
     // Automapper Profile for this Dto
     public class UserStoryProfile : Profile
     {
-        public UserStoryProfile()
-        {
+        public UserStoryProfile() =>
             CreateMap<UserStory, UserStoryDto>()
                 .ForCtorParam(
                     "priority",
@@ -90,16 +97,12 @@ namespace Tusk.Api.Stories.Queries
                         c => c.BusinessValue.Name))
                 .ForMember(d => d.Tasks,
                     opt => opt.MapFrom(
-                        c => c.StoryTasks.Select(e => $"[{(e.IsDone ? 'x' : ' ')}] {e.Description}" )));
-        }
+                        c => c.StoryTasks.Select(e => $"[{(e.IsDone ? 'x' : ' ')}] {e.Description}")));
     }
 
     public class UserStoryViewModel
     {
-        public UserStoryViewModel(UserStoryDto story)
-        {
-            Story = story;
-        }
+        public UserStoryViewModel(UserStoryDto story) => Story = story;
 
         public UserStoryDto Story { get; }
     }
