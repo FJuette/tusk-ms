@@ -40,7 +40,7 @@ namespace Tusk.Api.Stories.Queries
             // Example logging call
             Log.Information("Get single story called");
             // Use async calls if possible
-            UserStoryDto? story = await _ctx.Stories
+            var story = await _ctx.Stories
                 .Where(e => e.Id == request.Id)
                 .Include(e => e.StoryTasks)
                 .Include(e => e.BusinessValue)

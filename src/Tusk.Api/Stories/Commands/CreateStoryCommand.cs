@@ -21,6 +21,7 @@ namespace Tusk.Api.Stories.Commands
             Importance = importance;
             BusinessValue = businessValue;
         }
+
         public string Title { get; }
         public string Text { get; }
         public UserStory.Relevance Importance { get; }
@@ -32,10 +33,8 @@ namespace Tusk.Api.Stories.Commands
         private readonly TuskDbContext _context;
 
         public CreateStoryCommandHandler(
-            TuskDbContext context)
-        {
+            TuskDbContext context) =>
             _context = context;
-        }
 
         public async Task<int> Handle(
             CreateStoryCommand request,

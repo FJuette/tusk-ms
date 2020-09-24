@@ -1,23 +1,22 @@
 using System;
-using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.Extensions.Hosting;
 using Tusk.Api.Infrastructure;
 using Tusk.Api.Models;
-using Microsoft.Extensions.Hosting;
 
 namespace Tusk.Api.Persistence
 {
-    #nullable disable
+#nullable disable
     public class TuskDbContext : DbContext
     {
-        private static readonly Type[] _enumerationTypes = { typeof(BusinessValue) };
-        private readonly string _userId;
+        private static readonly Type[] _enumerationTypes = {typeof(BusinessValue)};
         private readonly IWebHostEnvironment _env;
+        private readonly string _userId;
 
         public TuskDbContext(
             IWebHostEnvironment env,
@@ -27,11 +26,17 @@ namespace Tusk.Api.Persistence
             _userId = userData?.UserId;
         }
 
+        // No DbSet for UserTask here. They must set within a user story
+        public DbSet<UserStory> Stories { get; set; }
+        public DbSet<BusinessValue> BusinessValues { get; set; }
+
         protected override void OnConfiguring(
             DbContextOptionsBuilder optionsBuilder)
         {
             if (_env.IsProduction())
+            {
                 optionsBuilder.UseSqlServer(EnvFactory.GetConnectionString());
+            }
             else
             {
                 optionsBuilder.UseInMemoryDatabase(new Guid().ToString());
@@ -40,10 +45,6 @@ namespace Tusk.Api.Persistence
 
             base.OnConfiguring(optionsBuilder);
         }
-
-        // No DbSet for UserTask here. They must set within a user story
-        public DbSet<UserStory> Stories { get; set; }
-        public DbSet<BusinessValue> BusinessValues { get; set; }
 
         protected override void OnModelCreating(
             ModelBuilder builder)
@@ -72,7 +73,6 @@ namespace Tusk.Api.Persistence
                     .HasConversion(p => p.Value, p => Priority.Create(p).Value);
 
                 b.HasQueryFilter(x => x.OwnedBy == _userId);
-
             });
 
             builder?.Entity<StoryTask>(b =>
@@ -84,18 +84,8 @@ namespace Tusk.Api.Persistence
             builder?.Entity<BusinessValue>(b =>
             {
                 b.Property(p => p.Name);
-                b.HasData(new
-                {
-                    Id = 1,
-                    Name = "Business Value 1000",
-                    OwnedBy = "Admin"
-                });
-                b.HasData(new
-                {
-                    Id = 2,
-                    Name = "Business Value 900",
-                    OwnedBy = "Admin"
-                });
+                b.HasData(new {Id = 1, Name = "Business Value 1000", OwnedBy = "Admin"});
+                b.HasData(new {Id = 2, Name = "Business Value 900", OwnedBy = "Admin"});
             });
         }
 
@@ -116,10 +106,10 @@ namespace Tusk.Api.Persistence
 
         private void MarkEnumTypesAsUnchanged()
         {
-            IEnumerable<EntityEntry> enumerationEntries =
+            var enumerationEntries =
                 ChangeTracker.Entries().Where(x => _enumerationTypes.Contains(x.Entity.GetType()));
 
-            foreach (EntityEntry enumerationEntry in enumerationEntries)
+            foreach (var enumerationEntry in enumerationEntries)
             {
                 enumerationEntry.State = EntityState.Unchanged;
             }
@@ -128,13 +118,13 @@ namespace Tusk.Api.Persistence
 
     public static class ContextExtensions
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
+        [SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
         public static void MarkCreatedItemAsOwnedBy(
             this DbContext context,
             string userId)
         {
             foreach (var entityEntry in context.ChangeTracker.Entries()
-                        .Where(e => e.State == EntityState.Added))
+                .Where(e => e.State == EntityState.Added))
             {
                 if (entityEntry.Entity is IOwnedBy entityToMark)
                 {

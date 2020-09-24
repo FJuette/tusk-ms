@@ -106,6 +106,7 @@ namespace Tusk.Api
         public void Configure(
             IApplicationBuilder app)
         {
+            app.UseCors("Locations");
             app.UseSwaggerDocumentation();
 
             app.UseHealthChecks("/health", new HealthCheckOptions {ResponseWriter = WriteHealthCheckResponse});
@@ -123,7 +124,7 @@ namespace Tusk.Api
             HealthReport result)
         {
             httpContext.Response.ContentType = "application/json";
-            JObject? json = new JObject(
+            var json = new JObject(
                 new JProperty("status", result.Status.ToString()),
                 new JProperty("results", new JObject(
                     result.Entries.Select(pair =>

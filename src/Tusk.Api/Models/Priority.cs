@@ -6,20 +6,17 @@ namespace Tusk.Api.Models
     public sealed class Priority : ValueObject
     {
         private Priority(
-            int value)
-        {
+            int value) =>
             Value = value;
-        }
+
         public int Value { get; }
 
         public static Result<Priority> Create(
-            int priority)
-        {
+            int priority) =>
             // Make validation checks and return
-            return priority < 0 ?
-                Result.Failure<Priority>("Must be a positive number")
+            priority < 0
+                ? Result.Failure<Priority>("Must be a positive number")
                 : Result.Success(new Priority(priority));
-        }
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
@@ -28,9 +25,7 @@ namespace Tusk.Api.Models
 
         // Implicit cast from Priority back to int
         public static implicit operator int(
-            Priority priority)
-        {
-            return priority.Value;
-        }
+            Priority priority) =>
+            priority.Value;
     }
 }

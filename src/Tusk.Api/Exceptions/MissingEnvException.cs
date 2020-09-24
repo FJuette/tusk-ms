@@ -4,7 +4,7 @@ namespace Tusk.Api.Exceptions
 {
     public class MissingEnvException : Exception
     {
-        public MissingEnvException() : base()
+        public MissingEnvException()
         {
         }
 
@@ -20,6 +20,5 @@ namespace Tusk.Api.Exceptions
             : base($"ENV variable '{env}' missing.")
         {
         }
-
     }
 }

@@ -40,7 +40,7 @@ namespace Tusk.Api.Stories.Queries
             // Example logging call
             Log.Information($"Get all Stories called at {_dt.Now:dd.MM.yyyy}");
             // Using the ProjectTo<T> from automapper to optimise the resulting sql query
-            List<UserStoriesDto>? stories = await _ctx.Stories
+            var stories = await _ctx.Stories
                 .Include(e => e.StoryTasks) // Include if needed
                 .ProjectTo<UserStoriesDto>(_mapper.ConfigurationProvider)
                 .AsNoTracking()

@@ -8,10 +8,8 @@ namespace Tusk.Api.Extensions
         private readonly TuskDbContext _context;
 
         public SampleDataSeeder(
-            TuskDbContext context)
-        {
+            TuskDbContext context) =>
             _context = context;
-        }
 
         public void SeedAll()
         {

@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -12,13 +13,12 @@ namespace Tusk.Api.Filters
     public class CustomExceptionFilter : ExceptionFilterAttribute
     {
         private readonly IWebHostEnvironment? _env;
-        public CustomExceptionFilter(
-            IWebHostEnvironment env)
-        {
-            _env = env;
-        }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
+        public CustomExceptionFilter(
+            IWebHostEnvironment env) =>
+            _env = env;
+
+        [SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
         public override void OnException(
             ExceptionContext context)
         {
@@ -32,20 +32,15 @@ namespace Tusk.Api.Filters
             context.HttpContext.Response.StatusCode = (int)code;
             if (_env.IsProduction())
             {
-                context.Result = new JsonResult(new
-                {
-                    error = new[] { context.Exception.Message },
-                });
+                context.Result = new JsonResult(new {error = new[] {context.Exception.Message}});
             }
             else
             {
                 context.Result = new JsonResult(new
                 {
-                    error = new[] { context.Exception.Message },
-                    stackTrace = context.Exception.StackTrace
+                    error = new[] {context.Exception.Message}, stackTrace = context.Exception.StackTrace
                 });
             }
-
         }
     }
 }

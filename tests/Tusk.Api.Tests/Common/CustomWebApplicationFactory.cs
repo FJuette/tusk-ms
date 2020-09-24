@@ -22,12 +22,12 @@ namespace Tusk.Api.Tests.Common
             builder.ConfigureServices(services =>
             {
                 // Create a new service provider.
-                ServiceProvider serviceProvider = new ServiceCollection()
+                var serviceProvider = new ServiceCollection()
                     .AddEntityFrameworkInMemoryDatabase()
                     .BuildServiceProvider();
 
                 // remove the existing context configuration. In testing we only want the InMemory database
-                ServiceDescriptor descriptor =
+                var descriptor =
                     services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<TuskDbContext>));
                 if (descriptor != null)
                 {
@@ -40,14 +40,14 @@ namespace Tusk.Api.Tests.Common
                 });
 
                 // Build the service provider.
-                ServiceProvider sp = services.BuildServiceProvider();
+                var sp = services.BuildServiceProvider();
 
 
                 // see https://docs.microsoft.com/de-de/aspnet/core/test/integration-tests?view=aspnetcore-3.0 for more
-                using IServiceScope scope = sp.CreateScope();
-                IServiceProvider scopedServices = scope.ServiceProvider;
-                TuskDbContext context = scopedServices.GetRequiredService<TuskDbContext>();
-                ILogger<CustomWebApplicationFactory<TStartup>> logger = scopedServices
+                using var scope = sp.CreateScope();
+                var scopedServices = scope.ServiceProvider;
+                var context = scopedServices.GetRequiredService<TuskDbContext>();
+                var logger = scopedServices
                     .GetRequiredService<ILogger<CustomWebApplicationFactory<TStartup>>>();
 
                 // Ensure the database is created.

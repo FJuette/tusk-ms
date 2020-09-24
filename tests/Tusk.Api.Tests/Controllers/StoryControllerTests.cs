@@ -15,10 +15,8 @@ namespace Tusk.Api.Tests.Controllers
         private readonly HttpClient _client;
 
         public StoryControllerTests(
-            CustomWebApplicationFactory<Startup> factory)
-        {
+            CustomWebApplicationFactory<Startup> factory) =>
             _client = factory.CreateClient();
-        }
 
         [Fact]
         public async Task Stories_Success_ListOfStories()
@@ -37,13 +35,14 @@ namespace Tusk.Api.Tests.Controllers
         public async Task Create_Success_ReturnsStoryId()
         {
             // Act
-            var response = await _client.PostAsJsonAsync("api/stories", new
-            {
-                Importance = UserStory.Relevance.CouldHave,
-                Text = "My demo post user story",
-                Title = "Demo post",
-                BusinessValue = 1
-            });
+            var response = await _client.PostAsJsonAsync("api/stories",
+                new
+                {
+                    Importance = UserStory.Relevance.CouldHave,
+                    Text = "My demo post user story",
+                    Title = "Demo post",
+                    BusinessValue = 1
+                });
             response.EnsureSuccessStatusCode();
 
             var result = await Utilities.GetResponseContent<int>(response);
@@ -56,13 +55,8 @@ namespace Tusk.Api.Tests.Controllers
         public async Task Create_InvalidImportance_ReturnsValidationError()
         {
             // Act
-            var response = await _client.PostAsJsonAsync("api/stories", new
-            {
-                Importance = 5,
-                Text = "My demo post user story",
-                Title = "Demo post",
-                BusinessValue = 1
-            });
+            var response = await _client.PostAsJsonAsync("api/stories",
+                new {Importance = 5, Text = "My demo post user story", Title = "Demo post", BusinessValue = 1});
 
             // Assert
             response.StatusCode.Should().Be(400);
@@ -72,13 +66,14 @@ namespace Tusk.Api.Tests.Controllers
         public async Task Create_InvalidBusinessValue_ReturnsValidationError()
         {
             // Act
-            var response = await _client.PostAsJsonAsync("api/stories", new
-            {
-                Importance = UserStory.Relevance.CouldHave,
-                Text = "My demo post user story",
-                Title = "Demo post",
-                BusinessValue = 10
-            });
+            var response = await _client.PostAsJsonAsync("api/stories",
+                new
+                {
+                    Importance = UserStory.Relevance.CouldHave,
+                    Text = "My demo post user story",
+                    Title = "Demo post",
+                    BusinessValue = 10
+                });
 
             // Assert
             response.StatusCode.Should().Be(400);

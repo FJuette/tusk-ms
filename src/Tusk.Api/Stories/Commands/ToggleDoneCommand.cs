@@ -10,9 +10,6 @@ namespace Tusk.Api.Stories.Commands
 {
     public class ToggleDoneCommand : IRequest<bool>
     {
-        public int StoryId { get; }
-        public int TaskId { get; }
-
         public ToggleDoneCommand(
             int storyId,
             int taskId)
@@ -20,6 +17,9 @@ namespace Tusk.Api.Stories.Commands
             StoryId = storyId;
             TaskId = taskId;
         }
+
+        public int StoryId { get; }
+        public int TaskId { get; }
     }
 
     public class ToggleDoneCommandHandler : IRequestHandler<ToggleDoneCommand, bool>
@@ -27,10 +27,8 @@ namespace Tusk.Api.Stories.Commands
         private readonly TuskDbContext _context;
 
         public ToggleDoneCommandHandler(
-            TuskDbContext context)
-        {
+            TuskDbContext context) =>
             _context = context;
-        }
 
         public async Task<bool> Handle(
             ToggleDoneCommand request,
@@ -38,7 +36,7 @@ namespace Tusk.Api.Stories.Commands
         {
             var story = await _context.Stories
                 .Include(e => e.StoryTasks)
-                .SingleOrDefaultAsync(e => e.Id == request.StoryId, cancellationToken: cancellationToken);
+                .SingleOrDefaultAsync(e => e.Id == request.StoryId, cancellationToken);
             if (story is null)
             {
                 throw new NotFoundException("UserStory", request.StoryId);
@@ -52,9 +50,7 @@ namespace Tusk.Api.Stories.Commands
 
             task.ToggleDone();
             _context.Attach(story);
-            return (await _context.SaveChangesAsync(cancellationToken)) > 0;
-
-
+            return await _context.SaveChangesAsync(cancellationToken) > 0;
         }
     }
 }

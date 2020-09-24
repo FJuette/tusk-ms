@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,7 +10,7 @@ namespace Tusk.Api.Extensions
 {
     public static class MigrationManager
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
+        [SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
         public static IHost MigrateDatabase(
             this IHost webHost)
         {
@@ -24,6 +25,7 @@ namespace Tusk.Api.Extensions
                     // not working with in memory dbs
                     appContext.Database.Migrate();
                 }
+
                 new SampleDataSeeder(appContext).SeedAll();
             }
             catch (Exception ex)
