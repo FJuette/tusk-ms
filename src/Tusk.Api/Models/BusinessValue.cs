@@ -11,18 +11,20 @@ namespace Tusk.Api.Models
 
         public static readonly BusinessValue[] AllBusinessValues = {BV1000, BV900};
 
-        protected BusinessValue() { }
-
-        private BusinessValue(int id, string name) : base(id)
+        protected BusinessValue()
         {
-            Name = name;
         }
+
+        private BusinessValue(
+            int id,
+            string name)
+            : base(id) =>
+            Name = name;
 
         public string Name { get; }
 
-        public static BusinessValue FromId(int id)
-        {
-            return AllBusinessValues.SingleOrDefault(c => c.Id == id);
-        }
+        public static BusinessValue FromId(int id) =>
+            AllBusinessValues
+                .SingleOrDefault(c => c.Id == id);
     }
 }

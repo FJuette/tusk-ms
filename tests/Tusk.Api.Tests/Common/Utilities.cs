@@ -9,12 +9,12 @@ namespace Tusk.Api.Tests.Common
 {
     public class Utilities
     {
-        public static StringContent GetRequestContent(object obj)
-        {
-            return new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json");
-        }
+        public static StringContent GetRequestContent(
+            object obj) =>
+            new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json");
 
-        public static async Task<T> GetResponseContent<T>(HttpResponseMessage response)
+        public static async Task<T> GetResponseContent<T>(
+            HttpResponseMessage response)
         {
             var stringResponse = await response.Content.ReadAsStringAsync();
 
@@ -23,7 +23,8 @@ namespace Tusk.Api.Tests.Common
             return result;
         }
 
-        public static void InitializeDbForTests(TuskDbContext context)
+        public static void InitializeDbForTests(
+            TuskDbContext context)
         {
             context.Stories.Add(
                 new UserStory(

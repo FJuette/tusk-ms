@@ -8,10 +8,10 @@ namespace Tusk.Api.Health
     public class ApiHealthCheck : IHealthCheck
     {
         private readonly TuskDbContext _ctx;
-        public ApiHealthCheck(TuskDbContext ctx)
-        {
+
+        public ApiHealthCheck(
+            TuskDbContext ctx) =>
             _ctx = ctx;
-        }
 
         public async Task<HealthCheckResult> CheckHealthAsync(
             HealthCheckContext context,
@@ -22,8 +22,8 @@ namespace Tusk.Api.Health
             {
                 return HealthCheckResult.Healthy("Database connection is working.");
             }
-            return HealthCheckResult.Unhealthy("Database connection is not working.");
 
+            return HealthCheckResult.Unhealthy("Database connection is not working.");
         }
     }
 }

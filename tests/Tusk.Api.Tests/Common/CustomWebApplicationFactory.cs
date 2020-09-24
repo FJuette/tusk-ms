@@ -9,26 +9,31 @@ using Tusk.Api.Persistence;
 
 namespace Tusk.Api.Tests.Common
 {
-    public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class
+    public class CustomWebApplicationFactory<TStartup>
+        : WebApplicationFactory<TStartup>
+        where TStartup : class
     {
-
-        protected override void ConfigureWebHost(IWebHostBuilder builder)
+        protected override void ConfigureWebHost(
+            IWebHostBuilder builder)
         {
             Environment.SetEnvironmentVariable("JWT_ISSUER", "http://example.com");
             Environment.SetEnvironmentVariable("JWT_KEY", "123242321312321321323");
 
             builder.ConfigureServices(services =>
             {
-
                 // Create a new service provider.
                 var serviceProvider = new ServiceCollection()
                     .AddEntityFrameworkInMemoryDatabase()
                     .BuildServiceProvider();
 
                 // remove the existing context configuration. In testing we only want the InMemory database
-                var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<TuskDbContext>));
+                var descriptor =
+                    services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<TuskDbContext>));
                 if (descriptor != null)
+                {
                     services.Remove(descriptor);
+                }
+
                 services.AddDbContext<TuskDbContext>(options =>
                 {
                     options.UseInMemoryDatabase(new Guid().ToString());
