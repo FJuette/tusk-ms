@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet AS base
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 RUN apt-get update \
     && apt-get install -y --no-install-recommends libgdiplus libc6-dev \
     && apt-get clean \
@@ -8,7 +8,7 @@ RUN cd /usr/lib && ln -s libgdiplus.so gdiplus.dll
 WORKDIR /app
 EXPOSE 80
 
-FROM mcr.microsoft.com/dotnet/core/sdk AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /build
 COPY src/Tusk.Api/. .
 RUN dotnet restore -nowarn:msb3202,nu1503
