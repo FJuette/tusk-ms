@@ -13,12 +13,7 @@ using Tusk.Api.Persistence;
 
 namespace Tusk.Api.Stories.Queries
 {
-    public class GetStoryQuery : IRequest<UserStoryViewModel>
-    {
-        public GetStoryQuery(int id) => Id = id;
-
-        public int Id { get; }
-    }
+    public record GetStoryQuery(int Id) : IRequest<UserStoryViewModel>;
 
     public class GetStoryQueryHandler : IRequestHandler<GetStoryQuery, UserStoryViewModel>
     {
