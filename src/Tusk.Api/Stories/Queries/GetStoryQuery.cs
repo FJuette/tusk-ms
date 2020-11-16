@@ -14,6 +14,7 @@ using Tusk.Api.Persistence;
 namespace Tusk.Api.Stories.Queries
 {
     public record GetStoryQuery(int Id) : IRequest<UserStoryViewModel>;
+    public record UserStoryViewModel(UserStoryDto Story);
 
     public class GetStoryQueryHandler : IRequestHandler<GetStoryQuery, UserStoryViewModel>
     {
@@ -49,7 +50,8 @@ namespace Tusk.Api.Stories.Queries
         }
     }
 
-    // Example Dto
+    // Example Dto - ProjectTo and records not working atm
+    // TODO: user record here
     public class UserStoryDto
     {
         public UserStoryDto(
@@ -95,10 +97,4 @@ namespace Tusk.Api.Stories.Queries
                         c => c.StoryTasks.Select(e => $"[{(e.IsDone ? 'x' : ' ')}] {e.Description}")));
     }
 
-    public class UserStoryViewModel
-    {
-        public UserStoryViewModel(UserStoryDto story) => Story = story;
-
-        public UserStoryDto Story { get; }
-    }
 }

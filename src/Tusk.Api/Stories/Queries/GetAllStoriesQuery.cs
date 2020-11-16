@@ -12,9 +12,8 @@ using Tusk.Api.Persistence;
 
 namespace Tusk.Api.Stories.Queries
 {
-    public class GetAllStoriesQuery : IRequest<UserStoriesViewModel>
-    {
-    }
+    public record GetAllStoriesQuery() : IRequest<UserStoriesViewModel>;
+    public record UserStoriesViewModel(IEnumerable<UserStoriesDto> Data);
 
     public class GetAllStoriesQueryHandler : IRequestHandler<GetAllStoriesQuery, UserStoriesViewModel>
     {
@@ -51,6 +50,7 @@ namespace Tusk.Api.Stories.Queries
     }
 
     // Example Dto
+    // TODO: Use record type here
     public class UserStoriesDto
     {
         public UserStoriesDto(
@@ -77,12 +77,5 @@ namespace Tusk.Api.Stories.Queries
                 .ForMember(d => d.Priority,
                     opt =>
                         opt.MapFrom(c => c.Priority.Value));
-    }
-
-    public class UserStoriesViewModel
-    {
-        public UserStoriesViewModel(List<UserStoriesDto> data) => Data = data;
-
-        public IEnumerable<UserStoriesDto> Data { get; }
     }
 }

@@ -8,24 +8,12 @@ using Tusk.Api.Persistence;
 
 namespace Tusk.Api.Stories.Commands
 {
-    public class CreateStoryCommand : IRequest<int>
+    public record CreateStoryCommand : IRequest<int>
     {
-        public CreateStoryCommand(
-            string title,
-            string text,
-            UserStory.Relevance importance,
-            int businessValue)
-        {
-            Title = title;
-            Text = text;
-            Importance = importance;
-            BusinessValue = businessValue;
-        }
-
-        public string Title { get; }
-        public string Text { get; }
-        public UserStory.Relevance Importance { get; }
-        public int BusinessValue { get; }
+        public string Title { get; init; }
+        public string Text { get; init; }
+        public UserStory.Relevance Importance { get; init; }
+        public int BusinessValue { get; init; }
     }
 
     public class CreateStoryCommandHandler : IRequestHandler<CreateStoryCommand, int>

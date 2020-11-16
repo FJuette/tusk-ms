@@ -8,19 +8,7 @@ using Tusk.Api.Persistence;
 
 namespace Tusk.Api.Stories.Commands
 {
-    public class ToggleDoneCommand : IRequest<bool>
-    {
-        public ToggleDoneCommand(
-            int storyId,
-            int taskId)
-        {
-            StoryId = storyId;
-            TaskId = taskId;
-        }
-
-        public int StoryId { get; }
-        public int TaskId { get; }
-    }
+    public record ToggleDoneCommand(int StoryId, int TaskId) : IRequest<bool>;
 
     public class ToggleDoneCommandHandler : IRequestHandler<ToggleDoneCommand, bool>
     {
