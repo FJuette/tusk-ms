@@ -2,14 +2,18 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>FJuette.Template.WebApi</id>
-    <version>1.0.6</version>
+    <version>2.0.0</version>
     <authors>Fabian Juette</authors>
+    <title>.net 5.0 DDD-WebApi Template</title>
+    <language>en-US</language>
+    <repository type="git" url="https://github.com/NuGet/NuGet.Client.git" branch="dev" commit="e1c65e4524cd70ee6e22abe33e6cb6ec73938cb3" />
     <description>
-      .Net Core 3.1 WebApi template with ddd example model classes.
+      .net 5.0 WebApi template with classes in ddd-style.
       Preconfigured with Automapper, MediatR, FluentValidation, XUnit, FluentAssertations, Health Checks,
-      JwtAuthentication, FxCopAnalyzers, EF Core 3.1, Serilog and Swagger.
+      JwtAuthentication, FxCopAnalyzers, EF Core 5.0, Serilog and Swagger.
       Using Commands and Queries (CQRS) to distinguish between reading or modifing data.
       Includes preconfigures XUnit project to test controller rest-endpoints.
+      Support for .net 5.0 record types and extended pattern machting.
     </description>
     <packageTypes>
       <packageType name="Template" />
@@ -17,9 +21,7 @@
     <projectUrl>https://github.com/FJuette/tusk-ms</projectUrl>
     <license type="expression">Apache-2.0</license>
     <releaseNotes>
-      Apply Resharper code formatting to all *.cs files.
-      Linebreak on every method/constructor paramter for better readability.
-      Apply default CORS rules.
+      Upgrade to .net 5.0 and change some classes to records
     </releaseNotes>
     <copyright>Fabian Juette</copyright>
   </metadata>

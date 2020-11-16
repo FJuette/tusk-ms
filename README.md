@@ -1,19 +1,19 @@
-# C# Web-Api template in DDD-Style for Microservices
+# C# Web-Api template in DDD-Style
 
-My template for new REST-API projects in a microservice style.
+My template for new REST-API projects.
 
 ## Technologies
 
-* .Net Core 3.1
-* EF Core 3.1
-* FluentValidation and .Net Core default validation disabled
+* .Net 5.0
+* EF Core 5.0
+* FluentValidation and .net default validation disabled
 * AutoMapper
-* MediatR for CQRS
+* MediatR to support CQRS
 * Swashbuckle Swagger with xml documention enabled
 * Serilog with default console output
-* Unit and Integration Tests with XUnit
-* DDD-Style Model Classes and Onion Architecture
-* C# 8 Features enabled with nullable compiler checks
+* Unit and integration tests with XUnit
+* DDD-Style model classes and Onion-Architecture
+* C# 9 features enabled with nullable compiler checks
 
 Mainly inspired by <https://github.com/JasonGT/NorthwindTraders> and Vladimir Khorikov (<https://github.com/vkhorikov>)
 
