@@ -6,7 +6,7 @@
     <authors>Fabian Juette</authors>
     <title>.net 5.0 DDD-WebApi Template</title>
     <language>en-US</language>
-    <repository type="git" url="https://github.com/NuGet/NuGet.Client.git" branch="dev" commit="e1c65e4524cd70ee6e22abe33e6cb6ec73938cb3" />
+    <repository type="git" url="https://github.com/FJuette/tusk-ms.git" branch="master" commit="8a136b495d92666f3743e7c190cd2c908669bcc2" />
     <description>
       .net 5.0 WebApi template with classes in ddd-style.
       Preconfigured with Automapper, MediatR, FluentValidation, XUnit, FluentAssertations, Health Checks,
@@ -15,6 +15,7 @@
       Includes preconfigures XUnit project to test controller rest-endpoints.
       Support for .net 5.0 record types and extended pattern machting.
     </description>
+    <tags>.net5.0 RESTApi DDD</tags>
     <packageTypes>
       <packageType name="Template" />
     </packageTypes>
