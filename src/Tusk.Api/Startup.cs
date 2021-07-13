@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Configuration;
@@ -27,7 +28,14 @@ namespace Tusk.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration) => Configuration = configuration;
+        private readonly IWebHostEnvironment _env;
+
+        public Startup(IConfiguration configuration,
+            IWebHostEnvironment env)
+            {
+                Configuration = configuration;
+            _env = env;
+        }
 
         public IConfiguration Configuration { get; }
 
@@ -77,7 +85,7 @@ namespace Tusk.Api
                 //.AddSqlServer(EnvFactory.GetConnectionString()) //TODO Enable if real MSSQL-Server is given
                 .AddCheck<ApiHealthCheck>("api");
 
-            services.AddScoped<TuskDbContext>();
+            services.AddScoped<TuskDbContext>(sp => new TuskDbContext(_env.EnvironmentName, sp.GetService<IGetClaimsProvider>()));
 
             services.AddAutoMapper(typeof(Startup));
 

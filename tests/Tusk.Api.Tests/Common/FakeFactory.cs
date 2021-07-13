@@ -1,13 +1,24 @@
 using System;
+using System.Collections.Generic;
+using AutoMapper;
 using Tusk.Api.Infrastructure;
 
 namespace Tusk.Api.Tests.Common
 {
-    public static class FakeFactory
+    public static class TestFactory
     {
         public static IDateTime GetDtInstance()
         {
             return new TestDateTime();
+        }
+
+        public static Mapper GetMapper(IEnumerable<Profile> profiles)
+        {
+            var configuration = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfiles(profiles);
+            });
+            return new Mapper(configuration);
         }
     }
 

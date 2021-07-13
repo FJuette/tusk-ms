@@ -15,11 +15,17 @@ namespace Tusk.Api.Persistence
     public class TuskDbContext : DbContext
     {
         private static readonly Type[] _enumerationTypes = {typeof(BusinessValue)};
-        private readonly IWebHostEnvironment _env;
+        private readonly string _env;
         private readonly string _userId;
 
+        public TuskDbContext(DbContextOptions<TuskDbContext> options) : base(options)
+        {
+            _env = "Testing";
+            _userId = "Tester";
+        }
+
         public TuskDbContext(
-            IWebHostEnvironment env,
+            string env,
             IGetClaimsProvider userData)
         {
             _env = env;
@@ -33,7 +39,7 @@ namespace Tusk.Api.Persistence
         protected override void OnConfiguring(
             DbContextOptionsBuilder optionsBuilder)
         {
-            if (_env.IsProduction())
+            if (_env == "Production")
             {
                 optionsBuilder.UseSqlServer(EnvFactory.GetConnectionString());
             }
