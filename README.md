@@ -30,10 +30,6 @@ Create a new project from the template
 Remove the template
 > dotnet new -u FJuette.Template.WebApi
 
-## Remarks
-
-I did not added a respository / UoW pattern because in my opinion its to heavy for microservices.
-
 ## References
 
 * <https://medium.com/agilix/entity-framework-core-enums-ee0f8f4063f2>
@@ -44,6 +40,7 @@ I did not added a respository / UoW pattern because in my opinion its to heavy f
 * <https://herbertograca.com/2017/10/19/from-cqs-to-cqrs/>
 * <http://docs.automapper.org/en/stable/Queryable-Extensions.html>
 * <https://herbertograca.com/2017/11/16/explicit-architecture-01-ddd-hexagonal-onion-clean-cqrs-how-i-put-it-all-together/>
+* https://docs.microsoft.com/en-us/ef/core/testing/testing-sample
 
 ## License
 

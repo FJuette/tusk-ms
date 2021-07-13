@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>FJuette.Template.WebApi</id>
-    <version>2.0.0</version>
+    <version>2.1.0</version>
     <authors>Fabian Juette</authors>
     <title>.net 5.0 DDD-WebApi Template</title>
     <language>en-US</language>
@@ -22,7 +22,7 @@
     <projectUrl>https://github.com/FJuette/tusk-ms</projectUrl>
     <license type="expression">Apache-2.0</license>
     <releaseNotes>
-      Upgrade to .net 5.0 and change some classes to records
+      Simplify automatic testing. No more http client requiered. Every tests gets its own database.
     </releaseNotes>
     <copyright>Fabian Juette</copyright>
   </metadata>

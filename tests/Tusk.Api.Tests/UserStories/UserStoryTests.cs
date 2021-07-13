@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using AutoMapper;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Tusk.Api.Exceptions;
-using Tusk.Api.Infrastructure;
 using Tusk.Api.Models;
 using Tusk.Api.Persistence;
 using Tusk.Api.Stories.Commands;
