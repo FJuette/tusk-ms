@@ -5,6 +5,7 @@ using FluentValidation;
 using MediatR;
 using Tusk.Api.Models;
 using Tusk.Api.Persistence;
+using Tusk.Api.Stories.Events;
 
 namespace Tusk.Api.Stories.Commands
 {
@@ -19,10 +20,15 @@ namespace Tusk.Api.Stories.Commands
     public class CreateStoryCommandHandler : IRequestHandler<CreateStoryCommand, int>
     {
         private readonly TuskDbContext _context;
+        private readonly IMediator _mediator;
 
         public CreateStoryCommandHandler(
-            TuskDbContext context) =>
+            TuskDbContext context,
+            IMediator mediator)
+        {
             _context = context;
+            _mediator = mediator;
+        }
 
         public async Task<int> Handle(
             CreateStoryCommand request,
@@ -38,6 +44,10 @@ namespace Tusk.Api.Stories.Commands
             // Prefer attach over add/update
             var result = _context.Stories.Attach(story);
             await _context.SaveChangesAsync(cancellationToken);
+
+            // Example for raising an event ...
+            await _mediator.Publish(new UserStoryAddedEvent(story.Title));
+
             return result.Entity.Id;
         }
     }

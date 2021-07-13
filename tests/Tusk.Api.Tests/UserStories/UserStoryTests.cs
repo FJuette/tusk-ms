@@ -3,7 +3,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using FluentAssertions;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Moq;
 using Tusk.Api.Exceptions;
 using Tusk.Api.Models;
 using Tusk.Api.Persistence;
@@ -66,6 +68,7 @@ namespace Tusk.Api.Tests.Controllers
         {
             // Arrange
             using var context = new TuskDbContext(ContextOptions);
+            var mediator = new Mock<IMediator>();
             var command = new CreateStoryCommand
             {
                 Importance = UserStory.Relevance.CouldHave,
@@ -74,7 +77,7 @@ namespace Tusk.Api.Tests.Controllers
                 BusinessValue = 1
             };
 
-            var handler = new CreateStoryCommandHandler(context);
+            var handler = new CreateStoryCommandHandler(context, mediator.Object);
 
             // Act
             var result = await handler.Handle(command, new System.Threading.CancellationToken());
