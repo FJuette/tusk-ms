@@ -17,20 +17,25 @@ namespace Tusk.Api.Controllers
             Ok(await Mediator.Send(new GetAllStoriesQuery()));
 
         /// <summary>
-        ///     Create a user story
+        /// Create a user story
         /// </summary>
         /// <remarks>
-        ///     Sample request:
+        /// Sample request:
+        ///
+        ///     POST /api/stories
         ///     {
-        ///     "title": "My first story",
-        ///     "text": "This is the very long content of my first story",
-        ///     "importance": 1
+        ///         "title": "My first story",
+        ///         "text": "This is the very long content of my first story",
+        ///         "importance": 1,
+        ///         "businessValue": 1
         ///     }
+        ///
         /// </remarks>
         /// <param name="command"></param>
         /// <returns>Id for the new user story</returns>
         /// <response code="201">Returns the id of the new user story</response>
         /// <response code="400">A request which cannot be handles properly returns a 400 with a detailed error message</response>
+
         [HttpPost("api/stories")]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]

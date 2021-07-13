@@ -40,7 +40,8 @@ Remove the template
 * <https://herbertograca.com/2017/10/19/from-cqs-to-cqrs/>
 * <http://docs.automapper.org/en/stable/Queryable-Extensions.html>
 * <https://herbertograca.com/2017/11/16/explicit-architecture-01-ddd-hexagonal-onion-clean-cqrs-how-i-put-it-all-together/>
-* https://docs.microsoft.com/en-us/ef/core/testing/testing-sample
+* <https://docs.microsoft.com/en-us/ef/core/testing/testing-sample>
+* <https://github.com/MoienTajik/MediatrTutorial/tree/master/MediatrTutorial/Features/Customer>
 
 ## License
 
