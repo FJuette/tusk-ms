@@ -22,6 +22,7 @@ using Newtonsoft.Json.Linq;
 using Tusk.Api.Filters;
 using Tusk.Api.Health;
 using Tusk.Api.Infrastructure;
+using Tusk.Api.Infrastructure.Behaviours;
 using Tusk.Api.Persistence;
 
 namespace Tusk.Api
@@ -100,6 +101,9 @@ namespace Tusk.Api
             // Add my own services here
             services.AddScoped<IGetClaimsProvider, GetClaimsFromUser>();
             services.AddSingleton<IDateTime, MachineDateTime>();
+
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehavior<,>));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(EventLoggerBehavior<,>));
 
             services.AddControllers(options => options.Filters.Add(typeof(CustomExceptionFilter)))
                 .AddFluentValidation(fv =>

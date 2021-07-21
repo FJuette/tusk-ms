@@ -37,7 +37,7 @@ namespace Tusk.Api.Stories.Queries
         {
             // Use async calls if possible
             // Example logging call
-            Log.Information($"Get all Stories called at {_dt.Now:dd.MM.yyyy}");
+            Log.Information($"Get all Stories called at {_dt.Now:dd.MM.yyyy H:mm:ss}");
             // Using the ProjectTo<T> from automapper to optimise the resulting sql query
             var stories = await _ctx.Stories
                 .Include(e => e.StoryTasks) // Include if needed

@@ -13,12 +13,29 @@ namespace Tusk.Api
         [SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "<Pending>")]
         public static int Main(string[] args)
         {
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            var isDevelopment = environment != "Staging" && environment != "Production";
+
+            var logConfig = new LoggerConfiguration()
                 .Enrich.FromLogContext()
-                .WriteTo.Console()
-                .CreateLogger();
+                .WriteTo.Console(theme: Serilog.Sinks.SystemConsole.Themes.AnsiConsoleTheme.Code);
+
+            if (isDevelopment)
+            {
+                // Verbose logging on console
+                logConfig
+                    .MinimumLevel.Debug()
+                    .MinimumLevel.Override("Microsoft", LogEventLevel.Information);
+            }
+            else
+            {
+                // reduced logging in production mode, add more logging (Graylog, Apache Flink, ...) here
+                logConfig
+                    .MinimumLevel.Warning()
+                    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning);
+            }
+
+            Log.Logger = logConfig.CreateLogger();
 
             try
             {

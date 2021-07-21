@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 using Tusk.Api.Exceptions;
 
 namespace Tusk.Api.Filters
@@ -28,8 +29,19 @@ namespace Tusk.Api.Filters
                 NotFoundException _ => HttpStatusCode.NotFound,
                 _ => HttpStatusCode.InternalServerError
             };
+
+            if (code == HttpStatusCode.InternalServerError)
+            {
+                Log.Error("The interanal exception '{ex}' was filtered with stacktace: {trace}.", context.Exception.Message, context.Exception.StackTrace);
+            }
+            else
+            {
+                Log.Information("The exception '{ex}' was filtered an returned status code {code}.", context.Exception.Message, code);
+            }
+
             context.HttpContext.Response.ContentType = "application/json";
             context.HttpContext.Response.StatusCode = (int)code;
+
             if (_env.IsProduction())
             {
                 context.Result = new JsonResult(new {error = new[] {context.Exception.Message}});
