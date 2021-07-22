@@ -25,16 +25,11 @@ namespace Tusk.Api.Stories.Commands
             var story = await _context.Stories
                 .Include(e => e.StoryTasks)
                 .SingleOrDefaultAsync(e => e.Id == request.StoryId, cancellationToken);
-            if (story is null)
-            {
-                throw new NotFoundException("UserStory", request.StoryId);
-            }
+
+            _ = story ?? throw new NotFoundException("UserStory", request.StoryId);
 
             var task = story.StoryTasks.SingleOrDefault(e => e.Id == request.TaskId);
-            if (task is null)
-            {
-                throw new NotFoundException("StoryTask", request.TaskId);
-            }
+            _ = task ?? throw new NotFoundException("StoryTask", request.TaskId);
 
             task.ToggleDone();
             _context.Attach(story);

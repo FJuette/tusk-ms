@@ -33,8 +33,8 @@ namespace Tusk.Api
 
         public Startup(IConfiguration configuration,
             IWebHostEnvironment env)
-            {
-                Configuration = configuration;
+        {
+            Configuration = configuration;
             _env = env;
         }
 
@@ -121,7 +121,7 @@ namespace Tusk.Api
             app.UseCors("Locations");
             app.UseSwaggerDocumentation();
 
-            app.UseHealthChecks("/health", new HealthCheckOptions {ResponseWriter = WriteHealthCheckResponse});
+            app.UseHealthChecks("/health", new HealthCheckOptions { ResponseWriter = WriteHealthCheckResponse });
 
             app.UseRouting();
 #if (!DisableAuthentication)

@@ -40,7 +40,7 @@ namespace Tusk.Api.Stories.Queries
             Log.Information($"Get all Stories called at {_dt.Now:dd.MM.yyyy H:mm:ss}");
             // Using the ProjectTo<T> from automapper to optimise the resulting sql query
             var stories = await _ctx.Stories
-                .Include(e => e.StoryTasks) // Include if needed
+                .Include(e => e.StoryTasks) // Add Includes if needed (eager loading)
                 .ProjectTo<UserStoriesDto>(_mapper.ConfigurationProvider)
                 .AsNoTracking()
                 .ToListAsync(cancellationToken);
@@ -50,23 +50,11 @@ namespace Tusk.Api.Stories.Queries
     }
 
     // Example Dto
-    // TODO: Use record type here
-    public class UserStoriesDto
+    public record UserStoriesDto
     {
-        public UserStoriesDto(
-            int id,
-            string title)
-        {
-            Id = id;
-            Title = title;
-        }
-
-        public int Id { get; }
-
-        public string Title { get; }
-
-        // Not a clean design with setter, but actually I am unable to tell automapper to use my defined mapping in the constructor
-        public int Priority { get; set; }
+        public int Id { get; init; }
+        public string Title { get; init; }
+        public int Priority { get; init; }
     }
 
     // Automapper Profile for this Dto

@@ -50,33 +50,15 @@ namespace Tusk.Api.Stories.Queries
         }
     }
 
-    // Example Dto - ProjectTo and records not working atm
-    // TODO: user record here
-    public class UserStoryDto
+    public record UserStoryDto
     {
-        public UserStoryDto(
-            int id,
-            string title,
-            string text,
-            string acceptanceCriteria,
-            int priority,
-            string businessValue)
-        {
-            Id = id;
-            Title = title;
-            Text = text;
-            AcceptanceCriteria = acceptanceCriteria;
-            Priority = priority;
-            BusinessValue = businessValue;
-        }
-
-        public int Id { get; }
-        public string Title { get; }
-        public string Text { get; }
-        public string AcceptanceCriteria { get; }
-        public int Priority { get; }
-        public string BusinessValue { get; }
-        public List<string>? Tasks { get; private set; }
+        public int Id { get; init; }
+        public string Title { get; init; }
+        public string Text { get; init; }
+        public string AcceptanceCriteria { get; init; }
+        public int Priority { get; init; }
+        public string BusinessValue { get; init; }
+        public IReadOnlyList<string>? Tasks { get; init; }
     }
 
     // Automapper Profile for this Dto
@@ -84,12 +66,10 @@ namespace Tusk.Api.Stories.Queries
     {
         public UserStoryProfile() =>
             CreateMap<UserStory, UserStoryDto>()
-                .ForCtorParam(
-                    "priority",
+                .ForMember(d => d.Priority,
                     opt => opt.MapFrom(
                         c => c.Priority.Value))
-                .ForCtorParam(
-                    "businessValue",
+                .ForMember(d => d.BusinessValue,
                     opt => opt.MapFrom(
                         c => c.BusinessValue.Name))
                 .ForMember(d => d.Tasks,

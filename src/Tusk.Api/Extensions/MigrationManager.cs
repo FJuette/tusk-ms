@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 using Tusk.Api.Persistence;
 
 namespace Tusk.Api.Extensions
@@ -30,8 +31,7 @@ namespace Tusk.Api.Extensions
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                //Log errors or do anything you think it's needed
+                Log.Error("Exception in DB migration with {message} and trace: {trace}", ex.Message, ex.StackTrace);
                 throw;
             }
 

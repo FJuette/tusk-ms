@@ -29,7 +29,7 @@ namespace Tusk.Api
             }
             else
             {
-                // reduced logging in production mode, add more logging (Graylog, Apache Flink, ...) here
+                // Reduced logging in production mode, add more logging (Graylog, Apache Flink, ...) here
                 logConfig
                     .MinimumLevel.Warning()
                     .MinimumLevel.Override("Microsoft", LogEventLevel.Warning);
