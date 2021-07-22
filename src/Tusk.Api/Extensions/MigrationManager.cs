@@ -31,7 +31,6 @@ namespace Tusk.Api.Extensions
             }
             catch (Exception ex)
             {
-                Log.Error("Exception in DB migration with {message} and trace: {trace}", ex.Message, ex.StackTrace);
                 throw;
             }
 

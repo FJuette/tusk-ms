@@ -2,7 +2,7 @@
 
 Feel free to help me improving this template.
 
-## Local Testing
+## Local testing
 
 Local template install (osx, linux)
 > dotnet new -i ./
@@ -15,6 +15,14 @@ Find entry to uninstall
 
 Create example command (-n to provide new name of the solution)
 > dotnet new ddd-webapi -n Magnus
+
+## Local testing with docker
+
+Build the container
+> docker build -t tusk .
+
+Run the container in dev mode
+> docker run --rm -p 5100:80 -e ASPNETCORE_ENVIRONMENT=Development -e JWT_ISSUER=localhost -e JWT_KEY=123456 tusk
 
 ## Packing
 

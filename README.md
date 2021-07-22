@@ -3,8 +3,8 @@
 My template for new REST-API projects.
 
 ## Technologies
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FFJuette%2Ftusk-ms.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FFJuette%2Ftusk-ms?ref=badge_shield)
 
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FFJuette%2Ftusk-ms.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FFJuette%2Ftusk-ms?ref=badge_shield)
 
 * .Net 5.0
 * EF Core 5.0
@@ -43,11 +43,11 @@ Remove the template
 * <http://docs.automapper.org/en/stable/Queryable-Extensions.html>
 * <https://herbertograca.com/2017/11/16/explicit-architecture-01-ddd-hexagonal-onion-clean-cqrs-how-i-put-it-all-together/>
 * <https://docs.microsoft.com/en-us/ef/core/testing/testing-sample>
-* <https://github.com/MoienTajik/MediatrTutorial/tree/master/MediatrTutorial/Features/Customer>
+* <https://github.com/MoienTajik/MediatrTutorial/tree/master/MediatrTutorial>
+* <https://github.com/jbogard/MediatR/wiki/Behaviors>
 
 ## License
 
 This project is licensed under the Apache License - see the [LICENSE](https://github.com/FJuette/tusk-ms/blob/master/LICENSE) file for details.
-
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FFJuette%2Ftusk-ms.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FFJuette%2Ftusk-ms?ref=badge_large)
