@@ -46,9 +46,9 @@ public class TuskDbContext : DbContext
     }
 
     protected override void OnModelCreating(
-        ModelBuilder builder)
+        ModelBuilder modelBuilder)
     {
-        builder?.Entity<UserStory>(b =>
+        modelBuilder?.Entity<UserStory>(b =>
         {
             b.HasKey(e => e.Id);
             b.Property(e => e.Title)
@@ -74,13 +74,13 @@ public class TuskDbContext : DbContext
             b.HasQueryFilter(x => x.OwnedBy == _userId);
         });
 
-        builder?.Entity<StoryTask>(b =>
+        modelBuilder?.Entity<StoryTask>(b =>
         {
             b.Property(e => e.Description)
                 .HasMaxLength(int.MaxValue);
         });
 
-        builder?.Entity<BusinessValue>(b =>
+        modelBuilder?.Entity<BusinessValue>(b =>
         {
             b.Property(p => p.Name);
             b.HasData(new { Id = 1, Name = "Business Value 1000", OwnedBy = "Admin" });

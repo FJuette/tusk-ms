@@ -23,9 +23,9 @@ public static class MigrationManager
 
             new SampleDataSeeder(appContext).SeedAll();
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            throw ex;
+            Environment.Exit(-110);
         }
 
         return webHost;

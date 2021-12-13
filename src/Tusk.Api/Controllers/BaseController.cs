@@ -8,6 +8,7 @@ public abstract class BaseController : ControllerBase
 {
     private readonly Lazy<IMediator> _mediator;
 
+    #nullable disable
     protected BaseController() =>
         _mediator = new Lazy<IMediator>(
             () => HttpContext.RequestServices.GetService<IMediator>(),

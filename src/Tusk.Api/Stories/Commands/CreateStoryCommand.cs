@@ -7,8 +7,8 @@ using Tusk.Api.Stories.Events;
 namespace Tusk.Api.Stories.Commands;
 public record CreateStoryCommand : IRequest<int>
 {
-    public string Title { get; init; }
-    public string Text { get; init; }
+    public string Title { get; init; } = null!;
+    public string Text { get; init; } = null!;
     public UserStory.Relevance Importance { get; init; }
     public int BusinessValue { get; init; }
 }
@@ -42,7 +42,7 @@ public class CreateStoryCommandHandler : IRequestHandler<CreateStoryCommand, int
         await _context.SaveChangesAsync(cancellationToken);
 
         // Example for raising an event ...
-        await _mediator.Publish(new UserStoryAddedEvent(story.Title));
+        await _mediator.Publish(new UserStoryAddedEvent(story.Title), cancellationToken);
 
         return result.Entity.Id;
     }
