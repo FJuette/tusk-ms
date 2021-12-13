@@ -1,14 +1,12 @@
-﻿using System;
+﻿namespace Tusk.Api.Infrastructure;
 
-namespace Tusk.Api.Infrastructure
+public interface IDateTime
 {
-    public interface IDateTime
-    {
-        DateTime Now { get; }
-    }
-
-    public class MachineDateTime : IDateTime
-    {
-        public DateTime Now => DateTime.Now;
-    }
+    DateTime Now { get; }
 }
+
+public class MachineDateTime : IDateTime
+{
+    public DateTime Now => DateTime.Now;
+}
+

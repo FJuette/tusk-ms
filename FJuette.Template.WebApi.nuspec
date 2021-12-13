@@ -2,28 +2,28 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>FJuette.Template.WebApi</id>
-    <version>2.2.0</version>
+    <version>3.1.0</version>
     <authors>Fabian Juette</authors>
-    <title>.net 5.0 DDD-WebApi Template</title>
+    <title>.net 6.0 DDD-WebApi Template</title>
     <language>en-US</language>
     <repository type="git" url="https://github.com/FJuette/tusk-ms.git" branch="master" commit="8a136b495d92666f3743e7c190cd2c908669bcc2" />
     <description>
-      .net 5.0 WebApi template with classes in ddd-style.
+      A .net 6.0 WebApi template with classes in ddd-style.
       Preconfigured with Automapper, MediatR, FluentValidation, XUnit, FluentAssertations, Health Checks,
-      JwtAuthentication, FxCopAnalyzers, EF Core 5.0, Serilog and Swagger.
+      JwtAuthentication, FxCopAnalyzers, EF Core 6.0, Serilog and Swagger.
       Using Commands and Queries (CQRS) to distinguish between reading or modifing data.
-      Includes preconfigures XUnit project to test controller rest-endpoints.
-      Support for .net 5.0 record types and extended pattern machting.
+      Includes preconfigures XUnit project to test MediatR handlers.
+      Support for .net 5.6 and c# 10 language features.
     </description>
-    <tags>.net5.0 RESTApi DDD</tags>
+    <tags>.net6.0 REST RESTApi DDD c#10 Template</tags>
     <packageTypes>
       <packageType name="Template" />
     </packageTypes>
     <projectUrl>https://github.com/FJuette/tusk-ms</projectUrl>
     <license type="expression">Apache-2.0</license>
     <releaseNotes>
-      Switch DTOs to record types. Add Behavior examples. More Logging.
-      Only log >= warnings to console in production mode (better performance).
+      Upgrade to .net 6. Using global 'System' in program.cs.
+      Switch to single line namespace without curly braces.
     </releaseNotes>
     <copyright>Fabian Juette</copyright>
   </metadata>

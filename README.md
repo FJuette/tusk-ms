@@ -6,8 +6,8 @@ My template for new REST-API projects.
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FFJuette%2Ftusk-ms.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FFJuette%2Ftusk-ms?ref=badge_shield)
 
-* .Net 5.0
-* EF Core 5.0
+* .Net 6.0
+* EF Core 6.0
 * FluentValidation and .net default validation disabled
 * AutoMapper
 * MediatR to support CQRS
@@ -15,7 +15,7 @@ My template for new REST-API projects.
 * Serilog with default console output
 * Unit and integration tests with XUnit
 * DDD-Style model classes and Onion-Architecture
-* C# 9 features enabled with nullable compiler checks
+* C# 10 features enabled with nullable compiler checks
 
 Mainly inspired by <https://github.com/JasonGT/NorthwindTraders> and Vladimir Khorikov (<https://github.com/vkhorikov>)
 

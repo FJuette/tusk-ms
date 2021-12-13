@@ -1,28 +1,24 @@
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using Serilog;
 
-namespace Tusk.Api.Infrastructure.Behaviours
+namespace Tusk.Api.Infrastructure.Behaviours;
+public class EventLoggerBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    where TRequest : notnull
+    where TResponse : notnull
 {
-    public class EventLoggerBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : notnull
-        where TResponse : notnull
+    public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
     {
-        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
-        {
-            Log.Information("[{class}] - Before calling next",
-                "EventLoggerBehavior");
+        Log.Information("[{class}] - Before calling next",
+            "EventLoggerBehavior");
 
-            TResponse response = await next();
+        TResponse response = await next();
 
-            var requestName = request.ToString();
-            Log.Information("[{class}] - RequestName: {request}",
-                "EventLoggerBehavior", requestName);
+        var requestName = request.ToString();
+        Log.Information("[{class}] - RequestName: {request}",
+            "EventLoggerBehavior", requestName);
 
-            Log.Information("[{class}] - After calling next, before return",
-                "EventLoggerBehavior");
-            return response;
-        }
+        Log.Information("[{class}] - After calling next, before return",
+            "EventLoggerBehavior");
+        return response;
     }
 }
