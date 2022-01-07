@@ -2,6 +2,18 @@
 
 Feel free to help me improving this template.
 
+## TODOs
+
+- Describe testing strategy (How, Why, When)
+- Example for pushing data into EventStore
+- Example for pushing data into RabbitMq and returning Transaction/Correlation ID + Endpoint for pulling status of the job (Pseudo long running Job)
+- Change Docker Container to tun as non root, e.g.
+
+```Dockerfile
+RUN useradd runner && groupadd runners
+USER runner:runners
+```
+
 ## Local testing
 
 Local template install (osx, linux)
@@ -22,7 +34,7 @@ Build the container
 > docker build -t tusk .
 
 Run the container in dev mode
-> docker run --rm -p 5100:80 -e ASPNETCORE_ENVIRONMENT=Development -e JWT_ISSUER=localhost -e JWT_KEY=123456 tusk
+> docker run --rm -p 5100:8080 -e ASPNETCORE_ENVIRONMENT=Development -e JWT_ISSUER=localhost -e JWT_KEY=123456 tusk
 
 ## Packing
 

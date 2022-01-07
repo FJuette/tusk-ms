@@ -4,16 +4,16 @@
     <id>FJuette.Template.WebApi</id>
     <version>3.0.0</version>
     <authors>Fabian Juette</authors>
-    <title>.net 6.0 DDD-WebApi Template</title>
+    <title>REST-API Template (DDD style)</title>
     <language>en-US</language>
-    <repository type="git" url="https://github.com/FJuette/tusk-ms.git" branch="master" commit="32628e2c592575ec2d5bb3cf18430a778c2a20d8" />
+    <repository type="git" url="https://github.com/FJuette/tusk-ms.git" branch="master" commit="e97256a8e93637cdf042d33ca51ce86842a69da2" />
     <description>
-      A .net 6.0 WebApi template with classes in ddd-style.
+      A .net6.0 WebApi template with classes in ddd-style.
       Preconfigured with Automapper, MediatR, FluentValidation, XUnit, FluentAssertations, Health Checks,
       JwtAuthentication, EF Core 6.0, Serilog and Swagger.
       Using Commands and Queries (CQRS) to distinguish between reading or modifing data.
       Includes preconfigures XUnit project to test MediatR handlers.
-      Support for .net 5.6 and c# 10 language features.
+      Support for .net6.0 and c# 10 language features.
     </description>
     <tags>.net6.0 REST RESTApi DDD c#10 Template</tags>
     <packageTypes>
