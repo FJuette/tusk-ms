@@ -14,11 +14,14 @@ public static class MigrationManager
         try
         {
             var env = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
-            appContext.Database.EnsureCreated();
-            if (env.IsProduction())
+            if (env.IsProduction() || env.IsStaging())
             {
-                // not working with in memory dbs
+                // not working with in memory dbs only relational dbs
                 appContext.Database.Migrate();
+            }
+            else
+            {
+                appContext.Database.EnsureCreated();
             }
 
             new SampleDataSeeder(appContext).SeedAll();

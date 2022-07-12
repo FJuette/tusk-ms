@@ -20,11 +20,11 @@ public class CustomExceptionFilter : ExceptionFilterAttribute
     public override void OnException(
         ExceptionContext context)
     {
-        var code = context.Exception switch
+        var (code, message) = context.Exception switch
         {
-            InvalidOperationException _ => HttpStatusCode.BadRequest,
-            NotFoundException _ => HttpStatusCode.NotFound,
-            _ => HttpStatusCode.InternalServerError
+            InvalidOperationException _ => (HttpStatusCode.BadRequest, "Operation failed"),
+            NotFoundException _ => (HttpStatusCode.NotFound, "Item not found"),
+            _ => (HttpStatusCode.InternalServerError, "Unknown internal error"),
         };
 
         if (code == HttpStatusCode.InternalServerError)
@@ -41,13 +41,20 @@ public class CustomExceptionFilter : ExceptionFilterAttribute
 
         if (_env.IsProduction())
         {
-            context.Result = new JsonResult(new { error = new[] { context.Exception.Message } });
+            context.Result = new JsonResult(new
+            {
+                errors = new[] { context.Exception.Message },
+                title = message,
+                status = code
+            });
         }
         else
         {
             context.Result = new JsonResult(new
             {
-                error = new[] { context.Exception.Message },
+                errors = new[] { context.Exception.Message },
+                title = message,
+                status = code,
                 stackTrace = context.Exception.StackTrace
             });
         }

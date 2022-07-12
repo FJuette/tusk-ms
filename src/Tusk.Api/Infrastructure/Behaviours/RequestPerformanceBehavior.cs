@@ -4,8 +4,7 @@ using Serilog;
 
 namespace Tusk.Api.Infrastructure.Behaviours;
 public class RequestPerformanceBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : notnull
-    where TResponse : notnull
+    where TRequest : IRequest<TResponse>
 {
     public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
     {

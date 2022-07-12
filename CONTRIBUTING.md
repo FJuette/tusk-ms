@@ -4,10 +4,12 @@ Feel free to help me improving this template.
 
 ## TODOs
 
-- Describe testing strategy (How, Why, When)
-- Example for pushing data into EventStore
-- Example for pushing data into RabbitMq and returning Transaction/Correlation ID + Endpoint for pulling status of the job (Pseudo long running Job)
-- Change Docker Container to tun as non root, e.g.
+- [ ] Describe testing strategy (How, Why, When)
+- [ ] Example for pushing data into EventStore
+- [ ] Example for pushing data into RabbitMq and returning Transaction/Correlation ID + Endpoint for pulling status of the job (Pseudo long running Job)
+- [x] Change Docker Container to tun as non root, e.g.
+- [ ] Use 'LoggingLevelSwitch' in 'Program.cs' to set Logging level based on configuration
+- [ ] Add Env-Variables to Configuration Provider and use them in my Factory
 
 ```Dockerfile
 RUN useradd runner && groupadd runners

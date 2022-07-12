@@ -10,8 +10,11 @@ public class SampleDataSeeder
         TuskDbContext context) =>
         _context = context;
 
-    public void SeedAll()
+    public bool SeedAll()
     {
+        if (_context.Stories.Any())
+            return false;
+
         var story = new UserStory(
             "My first story",
             Priority.Create(1).Value,
@@ -34,6 +37,6 @@ public class SampleDataSeeder
                 BusinessValue.BV1000,
                 UserStory.Relevance.MustHave
             ));
-        _context.SaveChanges();
+        return _context.SaveChanges() > 0;
     }
 }

@@ -1,8 +1,10 @@
 using AutoMapper;
+using MediatR;
+using Moq;
 using Tusk.Api.Infrastructure;
 
 namespace Tusk.Api.Tests.Common;
-public static class TestFactory
+public static class FakeFactory
 {
     public static IDateTime GetDtInstance()
     {
@@ -17,9 +19,24 @@ public static class TestFactory
         });
         return new Mapper(configuration);
     }
+
+    public static IMediator GetMediatr()
+    {
+        return new Mock<IMediator>().Object;
+    }
+
+    public static IGetClaimsProvider GetClaimsProvider()
+    {
+        return new TestClaimsProvider();
+    }
 }
 
 public class TestDateTime : IDateTime
 {
     public DateTime Now => new DateTime(2020, 05, 27, 11, 11, 11);
+}
+
+public class TestClaimsProvider : IGetClaimsProvider
+{
+    public string UserId { get; } = "Tester";
 }

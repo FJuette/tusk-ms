@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using FluentAssertions;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Moq;
 using Tusk.Api.Exceptions;
 using Tusk.Api.Models;
 using Tusk.Api.Persistence;
@@ -22,6 +20,8 @@ public abstract class UserStoryTests
     }
     protected DbContextOptions<TuskDbContext> ContextOptions { get; }
 
+    private int _storyId;
+
     private void Seed()
     {
         using var context = new TuskDbContext(ContextOptions);
@@ -38,6 +38,7 @@ public abstract class UserStoryTests
         story.AddTask(task);
         context.Stories.Attach(story);
         context.SaveChanges();
+        _storyId = story.Id;
     }
 
     [Fact]
@@ -49,14 +50,14 @@ public abstract class UserStoryTests
 
         var handler = new GetAllStoriesQueryHandler(
             context,
-            TestFactory.GetMapper(profiles),
-            TestFactory.GetDtInstance());
+            FakeFactory.GetMapper(profiles),
+            FakeFactory.GetDtInstance());
 
         // Act
         var result = await handler.Handle(new GetAllStoriesQuery(), new CancellationToken());
 
         // Assert
-        result.Data.Count().Should().Be(1);
+        result.Data.Count().Should().BeGreaterThanOrEqualTo(1);
     }
 
     [Fact]
@@ -64,7 +65,6 @@ public abstract class UserStoryTests
     {
         // Arrange
         using var context = new TuskDbContext(ContextOptions);
-        var mediator = new Mock<IMediator>();
         var command = new CreateStoryCommand
         {
             Importance = UserStory.Relevance.CouldHave,
@@ -73,7 +73,7 @@ public abstract class UserStoryTests
             BusinessValue = 1
         };
 
-        var handler = new CreateStoryCommandHandler(context, mediator.Object);
+        var handler = new CreateStoryCommandHandler(context, FakeFactory.GetMediatr());
 
         // Act
         var result = await handler.Handle(command, new CancellationToken());
@@ -130,10 +130,10 @@ public abstract class UserStoryTests
         using var context = new TuskDbContext(ContextOptions);
         var profiles = new List<Profile> { new UserStoryProfile() };
 
-        var handler = new GetStoryQueryHandler(context, TestFactory.GetMapper(profiles));
+        var handler = new GetStoryQueryHandler(context, FakeFactory.GetMapper(profiles));
 
         // Act
-        var result = await handler.Handle(new GetStoryQuery(1), new CancellationToken());
+        var result = await handler.Handle(new GetStoryQuery(_storyId), new CancellationToken());
 
         result.Story.Should().NotBeNull();
         result.Story.Tasks.Count().Should().BeGreaterThan(0);
@@ -149,7 +149,7 @@ public abstract class UserStoryTests
         using var context = new TuskDbContext(ContextOptions);
         var profiles = new List<Profile> { new UserStoryProfile() };
 
-        var handler = new GetStoryQueryHandler(context, TestFactory.GetMapper(profiles));
+        var handler = new GetStoryQueryHandler(context, FakeFactory.GetMapper(profiles));
 
         // Act
         Task action() => handler.Handle(new GetStoryQuery(-100), new CancellationToken());

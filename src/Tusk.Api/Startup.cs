@@ -112,7 +112,7 @@ public class Startup
         app.UseCors("Locations");
         app.UseSwaggerDocumentation();
 
-        app.UseHealthChecks("/health", new HealthCheckOptions { ResponseWriter = WriteHealthCheckResponse });
+        app.UseHealthChecks("/api/health", new HealthCheckOptions { ResponseWriter = WriteHealthCheckResponse });
 
         app.UseRouting();
 #if (!DisableAuthentication)

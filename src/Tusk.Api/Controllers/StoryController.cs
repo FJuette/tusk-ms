@@ -1,9 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Tusk.Api.Stories.Commands;
 using Tusk.Api.Stories.Queries;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Tusk.Api.Controllers;
 
+#if !DEBUG
+    [Authorize]
+#endif
 public class StoryController : BaseController
 {
 
@@ -48,15 +52,12 @@ public class StoryController : BaseController
     [HttpGet("api/stories/{id}")]
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]
-    public async Task<ActionResult<UserStoryViewModel>> GetStory(
-        int id) =>
+    public async Task<ActionResult<UserStoryViewModel>> GetStory(int id) =>
         Ok(await Mediator.Send(new GetStoryQuery(id)));
 
     [HttpPut("api/stories/{storyId}/tasks/{taskId}/toggle-done")]
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]
-    public async Task<ActionResult<bool>> ToggleDone(
-        int storyId,
-        int taskId) =>
+    public async Task<ActionResult<bool>> ToggleDone(int storyId, int taskId) =>
         Ok(await Mediator.Send(new ToggleDoneCommand(storyId, taskId)));
 }

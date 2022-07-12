@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Serilog;
+using Serilog.Core;
 using Serilog.Events;
 using Tusk.Api.Extensions;
 
@@ -12,9 +13,13 @@ public static class Program
         var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
         var isDevelopment = environment != "Staging" && environment != "Production";
 
+        var levelSwitch = new LoggingLevelSwitch();
+
         var logConfig = new LoggerConfiguration()
             .Enrich.FromLogContext()
-            .WriteTo.Console(theme: Serilog.Sinks.SystemConsole.Themes.AnsiConsoleTheme.Code);
+            .WriteTo.Console(theme: Serilog.Sinks.SystemConsole.Themes.AnsiConsoleTheme.Code)
+            .MinimumLevel.ControlledBy(levelSwitch)
+            .MinimumLevel.Override("Microsoft", levelSwitch);
 
         if (isDevelopment)
         {
