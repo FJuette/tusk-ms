@@ -9,16 +9,17 @@ using Tusk.Api.Stories.Queries;
 using Tusk.Api.Tests.Common;
 using Xunit;
 
-namespace Tusk.Api.Tests.Controllers;
+namespace Tusk.Api.Tests.UserStories;
 public abstract class UserStoryTests
 {
-    public UserStoryTests(DbContextOptions<TuskDbContext> contextOptions)
+    protected UserStoryTests(DbContextOptions<TuskDbContext> contextOptions)
     {
         ContextOptions = contextOptions;
 
         Seed();
     }
-    protected DbContextOptions<TuskDbContext> ContextOptions { get; }
+
+    private DbContextOptions<TuskDbContext> ContextOptions { get; }
 
     private int _storyId;
 
@@ -45,7 +46,7 @@ public abstract class UserStoryTests
     public async Task Stories_Success_ListOfStories()
     {
         // Arrange
-        using var context = new TuskDbContext(ContextOptions);
+        await using var context = new TuskDbContext(ContextOptions);
         var profiles = new List<Profile> { new UserStoriesProfile() };
 
         var handler = new GetAllStoriesQueryHandler(
@@ -64,7 +65,7 @@ public abstract class UserStoryTests
     public async Task Create_Success_ReturnsStoryId()
     {
         // Arrange
-        using var context = new TuskDbContext(ContextOptions);
+        await using var context = new TuskDbContext(ContextOptions);
         var command = new CreateStoryCommand
         {
             Importance = UserStory.Relevance.CouldHave,
@@ -72,8 +73,9 @@ public abstract class UserStoryTests
             Title = "Demo post",
             BusinessValue = 1
         };
+        var validator = new CreateStoryValidator();
 
-        var handler = new CreateStoryCommandHandler(context, FakeFactory.GetMediatr());
+        var handler = new CreateStoryCommandHandler(context, FakeFactory.GetMediatr(), validator);
 
         // Act
         var result = await handler.Handle(command, new CancellationToken());
@@ -127,7 +129,7 @@ public abstract class UserStoryTests
     public async Task Story_Success_ProjectFound()
     {
         // Arrange
-        using var context = new TuskDbContext(ContextOptions);
+        await using var context = new TuskDbContext(ContextOptions);
         var profiles = new List<Profile> { new UserStoryProfile() };
 
         var handler = new GetStoryQueryHandler(context, FakeFactory.GetMapper(profiles));
@@ -146,7 +148,7 @@ public abstract class UserStoryTests
     public async Task Story_InvalidId_ProjectNotFound()
     {
         // Arrange
-        using var context = new TuskDbContext(ContextOptions);
+        await using var context = new TuskDbContext(ContextOptions);
         var profiles = new List<Profile> { new UserStoryProfile() };
 
         var handler = new GetStoryQueryHandler(context, FakeFactory.GetMapper(profiles));

@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Text;
-using FluentValidation.AspNetCore;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -69,10 +69,10 @@ public class Startup
                     builder.AllowAnyOrigin(); //TODO remove in production and add to origin list
                     }));
 
-        // Add Swagger
+        services.AddHttpContextAccessor();
         services.AddSwaggerDocumentation();
 
-        // Add Health Checks
+        // Default Health Checks
         services.AddHealthChecks()
             //.AddSqlServer(EnvFactory.GetConnectionString()) //TODO Enable if real MSSQL-Server is given
             .AddCheck<ApiHealthCheck>("api");
@@ -89,6 +89,8 @@ public class Startup
             o.MemoryBufferThreshold = int.MaxValue;
         });
 
+        services.AddValidatorsFromAssemblyContaining<Startup>(ServiceLifetime.Transient);
+
         // Add my own services here
         services.AddScoped<IGetClaimsProvider, GetClaimsFromUser>();
         services.AddSingleton<IDateTime, MachineDateTime>();
@@ -97,11 +99,7 @@ public class Startup
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(EventLoggerBehavior<,>));
 
         services.AddControllers(options => options.Filters.Add(typeof(CustomExceptionFilter)))
-            .AddFluentValidation(fv =>
-            {
-                fv.DisableDataAnnotationsValidation = true;
-                fv.RegisterValidatorsFromAssemblyContaining<Startup>();
-            }).AddNewtonsoftJson();
+            .AddNewtonsoftJson();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Serilog;
@@ -22,41 +23,37 @@ public class CustomExceptionFilter : ExceptionFilterAttribute
     {
         var (code, message) = context.Exception switch
         {
-            InvalidOperationException _ => (HttpStatusCode.BadRequest, "Operation failed"),
+            InvalidOperationException or ValidationException _ => (HttpStatusCode.BadRequest, "Operation failed"),
             NotFoundException _ => (HttpStatusCode.NotFound, "Item not found"),
             _ => (HttpStatusCode.InternalServerError, "Unknown internal error"),
         };
 
         if (code == HttpStatusCode.InternalServerError)
         {
-            Log.Error("The interanal exception '{ex}' was filtered with stacktace: {trace}.", context.Exception.Message, context.Exception.StackTrace);
+            Log.Error("The unhandled internal exception '{Ex}' was filtered with stacktrace: {Trace}",
+                context.Exception.Message, context.Exception.StackTrace);
         }
         else
         {
-            Log.Information("The exception '{ex}' was filtered an returned status code {code}.", context.Exception.Message, code);
+            Log.Information("The exception '{Ex}' was filtered an returned status code {Code}",
+                context.Exception.Message, code);
         }
 
         context.HttpContext.Response.ContentType = "application/json";
         context.HttpContext.Response.StatusCode = (int)code;
+        var returnMessage = context.Exception switch
+        {
+            ValidationException ex => new JsonResult(
+                ex.Errors.GroupBy(x => x.PropertyName)
+                    .ToDictionary(
+                        g => g.Key,
+                        g => g.Select(x => x.ErrorMessage).ToArray()
+                    )),
+            _ => new JsonResult(new {error = new[] {context.Exception.Message}})
+        };
 
-        if (_env.IsProduction())
-        {
-            context.Result = new JsonResult(new
-            {
-                errors = new[] { context.Exception.Message },
-                title = message,
-                status = code
-            });
-        }
-        else
-        {
-            context.Result = new JsonResult(new
-            {
-                errors = new[] { context.Exception.Message },
-                title = message,
-                status = code,
-                stackTrace = context.Exception.StackTrace
-            });
-        }
+        context.Result = _env.IsProduction()
+            ? returnMessage
+            : new JsonResult(new {error = returnMessage, stackTrace = context.Exception.StackTrace});
     }
 }

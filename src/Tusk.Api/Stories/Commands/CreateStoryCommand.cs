@@ -17,19 +17,24 @@ public class CreateStoryCommandHandler : IRequestHandler<CreateStoryCommand, int
 {
     private readonly TuskDbContext _context;
     private readonly IMediator _mediator;
+    private readonly IValidator<CreateStoryCommand> _validator;
 
     public CreateStoryCommandHandler(
         TuskDbContext context,
-        IMediator mediator)
+        IMediator mediator,
+        IValidator<CreateStoryCommand> validator)
     {
         _context = context;
         _mediator = mediator;
+        _validator = validator;
     }
 
     public async Task<int> Handle(
         CreateStoryCommand request,
         CancellationToken cancellationToken)
     {
+        await _validator.ValidateAndThrowAsync(request, cancellationToken);
+
         var story = new UserStory(
             request?.Title,
             Priority.Create(1).Value,
