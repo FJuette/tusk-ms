@@ -47,9 +47,9 @@ public class Startup
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = EnvFactory.GetJwtIssuer(),
-                    ValidAudience = EnvFactory.GetJwtIssuer(),
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(EnvFactory.GetJwtKey()))
+                    ValidIssuer = Configuration["jwt:issuer"],
+                    ValidAudience = Configuration["jwt:issuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["jwt:key"]))
                 });
 
         // At least a module claim is required to use any protected endpoint

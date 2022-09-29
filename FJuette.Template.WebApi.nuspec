@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>FJuette.Template.WebApi</id>
-    <version>3.0.1</version>
+    <version>3.1.0</version>
     <authors>Fabian Juette</authors>
     <title>REST-API Template (DDD style)</title>
     <language>en-US</language>
@@ -29,16 +29,16 @@
     <copyright>Fabian Juette</copyright>
   </metadata>
   <files>
-    <file src=".template.config/template.json" target="content/.template.config" />
     <file src="src/**" target="content/src/" exclude="src/Tusk.Api/bin/**;src/Tusk.Api/obj/**" />
     <file src="tests/**" target="content/tests" exclude="tests/Tusk.Api.Tests/bin/**;tests/Tusk.Api.Tests/obj/**" />
     <file src=".dockerignore" target="content/" />
     <file src=".editorconfig" target="content/" />
     <file src=".gitignore" target="content/" />
     <file src="Dockerfile" target="content/" />
-    <file src="README.adoc" target="content/" />
     <file src="LICENSE" target="content/" />
+    <file src="README.adoc" target="content/" />
     <file src="Tusk.sln" target="content/" />
     <file src="update-packages.sh" target="content/" />
+    <file src="VERSIONING.adoc" target="content/" />
   </files>
 </package>
