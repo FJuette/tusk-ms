@@ -7,8 +7,8 @@ image::https://app.fossa.com/api/projects/git%2Bgithub.com%2FFJuette%2Ftusk-ms.s
 
 == Technologies
 
-* .Net 6.0
-* EF Core 6.0
+* .Net 7.0
+* EF Core 7.0
 * FluentValidation and .net default validation disabled
 * AutoMapper
 * MediatR to support CQRS
@@ -16,7 +16,7 @@ image::https://app.fossa.com/api/projects/git%2Bgithub.com%2FFJuette%2Ftusk-ms.s
 * Serilog with default console output
 * Unit and integration tests with XUnit
 * DDD-Style model classes and Onion-Architecture
-* C# 10 features enabled with nullable compiler checks
+* C# 11 features enabled with nullable compiler checks
 
 Mainly inspired by https://github.com/JasonGT/NorthwindTraders and Vladimir Khorikov https://github.com/vkhorikov
 

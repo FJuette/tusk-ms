@@ -30,7 +30,7 @@ Build the container
 > docker build -t tusk .
 
 Run the container in dev mode
-> docker run --rm -p 5100:8080 -e ASPNETCORE_ENVIRONMENT=Development -e JWT_ISSUER=localhost -e JWT_KEY=123456 tusk
+> docker run -p 5400:8080 -e CONNECTION_STRING=dummy -e ASPNETCORE_ENVIRONMENT=Development tusk
 
 == Packing
 

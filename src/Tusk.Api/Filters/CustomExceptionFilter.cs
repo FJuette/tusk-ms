@@ -52,7 +52,7 @@ public class CustomExceptionFilter : ExceptionFilterAttribute
             _ => new JsonResult(new {error = new[] {context.Exception.Message}})
         };
 
-        context.Result = _env.IsProduction()
+        context.Result = _env!.IsProduction()
             ? returnMessage
             : new JsonResult(new {error = returnMessage, stackTrace = context.Exception.StackTrace});
     }

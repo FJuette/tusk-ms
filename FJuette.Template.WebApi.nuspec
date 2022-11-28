@@ -2,29 +2,28 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>FJuette.Template.WebApi</id>
-    <version>3.1.0</version>
+    <version>4.0.0</version>
     <authors>Fabian Juette</authors>
     <title>REST-API Template (DDD style)</title>
     <language>en-US</language>
     <repository type="git" url="https://github.com/FJuette/tusk-ms.git" branch="master" commit="e97256a8e93637cdf042d33ca51ce86842a69da2" />
     <description>
-      A .net6.0 WebApi template with classes in ddd-style.
+      A .net7.0 WebApi template with classes in ddd-style.
       Preconfigured with Automapper, MediatR, FluentValidation, XUnit, FluentAssertations, Health Checks,
-      JwtAuthentication, EF Core 6.0, Serilog and Swagger.
+      JwtAuthentication, EF Core 7.0, Serilog and Swagger.
       Using Commands and Queries (CQRS) to distinguish between reading or modifing data.
       Includes preconfigures XUnit project to test MediatR handlers.
-      Support for .net6.0 and c# 10 language features.
+      Support for .net7.0 and c# 11 language features.
     </description>
-    <tags>.net6.0 REST RESTApi DDD c#10 Template</tags>
+    <tags>.net7.0 REST RESTApi DDD c#11 Template</tags>
     <packageTypes>
       <packageType name="Template" />
     </packageTypes>
     <projectUrl>https://github.com/FJuette/tusk-ms</projectUrl>
     <license type="expression">Apache-2.0</license>
     <releaseNotes>
-      Upgrade to .net6 using global 'System' in Program.cs.
-      Switch to single line namespace without curly braces.
-      Strict mode (treat warnings as errors).
+      Upgrade to .net7. Adding required argument to records and classes where necessary.
+      Update dockerfile to use .net7 base image.
     </releaseNotes>
     <copyright>Fabian Juette</copyright>
   </metadata>

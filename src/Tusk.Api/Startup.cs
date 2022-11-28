@@ -49,7 +49,7 @@ public class Startup
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = Configuration["jwt:issuer"],
                     ValidAudience = Configuration["jwt:issuer"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["jwt:key"]))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["jwt:key"]!))
                 });
 
         // At least a module claim is required to use any protected endpoint
