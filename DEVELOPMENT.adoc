@@ -10,6 +10,7 @@ Feel free to improve this template.
 - [ ] Use 'LoggingLevelSwitch' in 'Program.cs' to set Logging level based on configuration
 - [ ] Add Env-Variables to Configuration Provider and use them in my Factory
 - [ ] Use Application structure, see other project (prohab) for example
+- [ ] Write a better README with https://github.com/hackergrrl/art-of-readme
 
 == Local testing
 
