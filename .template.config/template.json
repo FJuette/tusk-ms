@@ -19,8 +19,8 @@
                     "exclude": [
                         ".vs/**",
                         ".git/**",
-                        "bin/**",
-                        "obj/**",
+                        "*/bin/**",
+                        "*/obj/**",
                         ".idea/**",
                         "*.nupkg",
                         "*.nuspec",
