@@ -22,23 +22,10 @@
     <projectUrl>https://github.com/FJuette/tusk-ms</projectUrl>
     <license type="expression">Apache-2.0</license>
     <releaseNotes>
-      Upgrade to .net 6. Using global 'System' in program.cs.
+      Upgrade to .net6 using global 'System' in Program.cs.
       Switch to single line namespace without curly braces.
       Strict mode (treat warnings as errors).
     </releaseNotes>
     <copyright>Fabian Juette</copyright>
   </metadata>
-  <files>
-    <file src="src/**" target="content/src/" exclude="src/Tusk.Api/bin/**;src/Tusk.Api/obj/**" />
-    <file src="tests/**" target="content/tests" exclude="tests/Tusk.Api.Tests/bin/**;tests/Tusk.Api.Tests/obj/**" />
-    <file src=".dockerignore" target="content/" />
-    <file src=".editorconfig" target="content/" />
-    <file src=".gitignore" target="content/" />
-    <file src="Dockerfile" target="content/" />
-    <file src="LICENSE" target="content/" />
-    <file src="README.adoc" target="content/" />
-    <file src="Tusk.sln" target="content/" />
-    <file src="update-packages.sh" target="content/" />
-    <file src="VERSIONING.adoc" target="content/" />
-  </files>
 </package>

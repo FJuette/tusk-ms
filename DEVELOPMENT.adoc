@@ -42,3 +42,7 @@ Install the nuget package locally
 
 On _DateTimeOffset_ error:
 > nuget locals all -clear
+
+== Sources
+
+- https://raw.githubusercontent.com/dotnet/roslyn/main/.editorconfig
