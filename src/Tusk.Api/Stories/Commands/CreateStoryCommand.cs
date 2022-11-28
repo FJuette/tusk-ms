@@ -7,8 +7,8 @@ using Tusk.Api.Stories.Events;
 namespace Tusk.Api.Stories.Commands;
 public record CreateStoryCommand : IRequest<int>
 {
-    public string Title { get; init; } = null!;
-    public string Text { get; init; } = null!;
+    public required string Title { get; init; }
+    public required string Text { get; init; }
     public UserStory.Relevance Importance { get; init; }
     public int BusinessValue { get; init; }
 }
@@ -36,9 +36,9 @@ public class CreateStoryCommandHandler : IRequestHandler<CreateStoryCommand, int
         await _validator.ValidateAndThrowAsync(request, cancellationToken);
 
         var story = new UserStory(
-            request?.Title,
+            request.Title,
             Priority.Create(1).Value,
-            request?.Text,
+            request.Text,
             "",
             BusinessValue.BV1000);
 
