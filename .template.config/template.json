@@ -25,7 +25,8 @@
                         "*.nupkg",
                         "*.nuspec",
                         "Tusk.v3.ncrunchsolution.user",
-                        "RabbitMQ.adoc"
+                        "RabbitMQ.adoc",
+                        "DEVELOPMENT.adoc"
                     ]
                 }
             ]

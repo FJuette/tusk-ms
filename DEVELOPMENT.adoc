@@ -9,6 +9,7 @@ Feel free to improve this template.
 - [ ] Example for pushing data into RabbitMq and returning Transaction/Correlation ID + Endpoint for pulling status of the job (Pseudo long running Job)
 - [ ] Use 'LoggingLevelSwitch' in 'Program.cs' to set Logging level based on configuration
 - [ ] Add Env-Variables to Configuration Provider and use them in my Factory
+- [ ] Use Application structure, see other project (prohab) for example
 
 == Local testing
 
