@@ -52,8 +52,8 @@ public abstract class EntityBase : IOwnedBy
     }
 
     public static bool operator ==(
-        EntityBase a,
-        EntityBase b)
+        EntityBase? a,
+        EntityBase? b)
     {
         if (a is null && b is null)
         {
