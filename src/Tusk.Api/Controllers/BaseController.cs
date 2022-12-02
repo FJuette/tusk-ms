@@ -11,7 +11,8 @@ public abstract class BaseController : ControllerBase
     #nullable disable
     protected BaseController() =>
         _mediator = new Lazy<IMediator>(
-            () => HttpContext.RequestServices.GetService<IMediator>(),
+            () => HttpContext.RequestServices.GetService<IMediator>() ??
+                      throw new Exception("Cannot get instance of IMediator"),
             true);
 
     protected IMediator Mediator => _mediator.Value;
