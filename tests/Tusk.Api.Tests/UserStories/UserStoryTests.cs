@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using Tusk.Api.Exceptions;
+using Tusk.Application.Exceptions;
 using Tusk.Domain;
 using Tusk.Api.Persistence;
-using Tusk.Api.Stories.Commands;
-using Tusk.Api.Stories.Queries;
+using Tusk.Application.Stories.Commands;
+using Tusk.Application.Stories.Queries;
 using Tusk.Api.Tests.Common;
 using Xunit;
 

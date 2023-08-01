@@ -1,9 +1,10 @@
 ﻿using FluentValidation;
 using MediatR;
-using Tusk.Api.Persistence;
-using Tusk.Api.Stories.Events;
+using Tusk.Application.Persistence;
+using Tusk.Application.Stories.Events;
+using Tusk.Domain;
 
-namespace Tusk.Api.Stories.Commands;
+namespace Tusk.Application.Stories.Commands;
 public record CreateStoryCommand : IRequest<int>
 {
     public required string Title { get; init; }
@@ -14,12 +15,12 @@ public record CreateStoryCommand : IRequest<int>
 
 public class CreateStoryCommandHandler : IRequestHandler<CreateStoryCommand, int>
 {
-    private readonly TuskDbContext _context;
+    private readonly ITuskDbContext _context;
     private readonly IMediator _mediator;
     private readonly IValidator<CreateStoryCommand> _validator;
 
     public CreateStoryCommandHandler(
-        TuskDbContext context,
+        ITuskDbContext context,
         IMediator mediator,
         IValidator<CreateStoryCommand> validator)
     {

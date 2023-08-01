@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Tusk.Api.Persistence;
+using Tusk.Application.Persistence;
 
 namespace Tusk.Api.Extensions;
 public static class MigrationManager
@@ -10,7 +11,7 @@ public static class MigrationManager
         this IHost webHost)
     {
         using var scope = webHost.Services.CreateScope();
-        using var appContext = scope.ServiceProvider.GetRequiredService<TuskDbContext>();
+        using var appContext = scope.ServiceProvider.GetRequiredService<ITuskDbContext>();
         try
         {
             var env = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();

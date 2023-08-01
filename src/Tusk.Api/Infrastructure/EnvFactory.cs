@@ -1,4 +1,4 @@
-﻿using Tusk.Api.Exceptions;
+﻿using Tusk.Application.Exceptions;
 
 namespace Tusk.Api.Infrastructure;
 

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Tusk.Api.Stories.Commands;
-using Tusk.Api.Stories.Queries;
+using Tusk.Application.Stories.Commands;
+using Tusk.Application.Stories.Queries;
 
 namespace Tusk.Api.Controllers;
 

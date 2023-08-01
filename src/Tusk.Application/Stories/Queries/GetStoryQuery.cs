@@ -3,21 +3,22 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-using Tusk.Api.Exceptions;
-using Tusk.Api.Persistence;
+using Tusk.Application.Exceptions;
+using Tusk.Application.Persistence;
+using Tusk.Domain;
 
-namespace Tusk.Api.Stories.Queries;
+namespace Tusk.Application.Stories.Queries;
 
 public record GetStoryQuery(int Id) : IRequest<UserStoryViewModel>;
 public record UserStoryViewModel(UserStoryDto Story);
 
 public class GetStoryQueryHandler : IRequestHandler<GetStoryQuery, UserStoryViewModel>
 {
-    private readonly TuskDbContext _ctx;
+    private readonly ITuskDbContext _ctx;
     private readonly IMapper _mapper;
 
     public GetStoryQueryHandler(
-        TuskDbContext ctx,
+        ITuskDbContext ctx,
         IMapper mapper)
     {
         _ctx = ctx;

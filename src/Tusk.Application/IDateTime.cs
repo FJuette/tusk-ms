@@ -1,4 +1,4 @@
-﻿namespace Tusk.Api.Infrastructure;
+﻿namespace Tusk.Application;
 
 public interface IDateTime
 {

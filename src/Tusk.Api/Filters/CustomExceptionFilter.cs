@@ -4,7 +4,7 @@ using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Serilog;
-using Tusk.Api.Exceptions;
+using Tusk.Application.Exceptions;
 
 namespace Tusk.Api.Filters;
 

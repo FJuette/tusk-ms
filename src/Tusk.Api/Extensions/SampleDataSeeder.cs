@@ -1,12 +1,13 @@
 ﻿using Tusk.Api.Persistence;
+using Tusk.Application.Persistence;
 
 namespace Tusk.Api.Extensions;
 public class SampleDataSeeder
 {
-    private readonly TuskDbContext _context;
+    private readonly ITuskDbContext _context;
 
     public SampleDataSeeder(
-        TuskDbContext context) =>
+        ITuskDbContext context) =>
         _context = context;
 
     public bool SeedAll()

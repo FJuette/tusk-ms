@@ -44,11 +44,7 @@
   </ItemGroup>
 
 <ItemGroup>
-  <Folder Include="Models\" />
-</ItemGroup>
-
-<ItemGroup>
-  <ProjectReference Include="..\Tusk.Domain\Tusk.Domain.csproj" />
+  <ProjectReference Include="..\Tusk.Application\Tusk.Application.csproj" />
 </ItemGroup>
 
   <PropertyGroup>

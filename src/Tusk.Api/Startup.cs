@@ -1,6 +1,6 @@
 ﻿global using Tusk.Domain;
+global using Tusk.Application;
 using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
 using System.Text;
 using FluentValidation;
 using MediatR;
@@ -15,8 +15,9 @@ using Newtonsoft.Json.Linq;
 using Tusk.Api.Filters;
 using Tusk.Api.Health;
 using Tusk.Api.Infrastructure;
-using Tusk.Api.Infrastructure.Behaviours;
 using Tusk.Api.Persistence;
+using Tusk.Application.Behaviours;
+using Tusk.Application.Persistence;
 
 namespace Tusk.Api;
 
@@ -37,7 +38,7 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         // Add MediatR - must be first
-        services.AddMediatR(m => m.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+        services.AddMediatR(m => m.RegisterServicesFromAssemblyContaining<ITuskDbContext>());
 
 #if (!DisableAuthentication)
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -78,10 +79,10 @@ public class Startup
             //.AddSqlServer(EnvFactory.GetConnectionString()) //TODO Enable if real MSSQL-Server is given
             .AddCheck<ApiHealthCheck>("api");
 
-        services.AddScoped<TuskDbContext>(sp =>
+        services.AddScoped<ITuskDbContext ,TuskDbContext>(sp =>
             new TuskDbContext(_env.EnvironmentName, sp.GetService<IGetClaimsProvider>()));
 
-        services.AddAutoMapper(typeof(Startup));
+        services.AddAutoMapper(typeof(ITuskDbContext));
 
         // Avoid the MultiPartBodyLength error
         services.Configure<FormOptions>(o =>
@@ -91,7 +92,7 @@ public class Startup
             o.MemoryBufferThreshold = int.MaxValue;
         });
 
-        services.AddValidatorsFromAssemblyContaining<Startup>(ServiceLifetime.Transient);
+        services.AddValidatorsFromAssemblyContaining<ITuskDbContext>(ServiceLifetime.Transient);
 
         // Add my own services here
         services.AddScoped<IGetClaimsProvider, GetClaimsFromUser>();

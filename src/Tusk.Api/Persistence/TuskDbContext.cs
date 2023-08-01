@@ -1,10 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Tusk.Api.Infrastructure;
+using Tusk.Application.Persistence;
 
 namespace Tusk.Api.Persistence;
 #nullable disable
-public class TuskDbContext : DbContext
+public class TuskDbContext : DbContext, ITuskDbContext
 {
     private static readonly Type[] _enumerationTypes = { typeof(BusinessValue) };
     private readonly string _env;

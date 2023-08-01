@@ -2,6 +2,7 @@ using AutoMapper;
 using MediatR;
 using Moq;
 using Tusk.Api.Infrastructure;
+using Tusk.Application;
 
 namespace Tusk.Api.Tests.Common;
 public static class FakeFactory

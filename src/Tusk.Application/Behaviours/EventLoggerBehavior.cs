@@ -1,7 +1,7 @@
 using MediatR;
 using Serilog;
 
-namespace Tusk.Api.Infrastructure.Behaviours;
+namespace Tusk.Application.Behaviours;
 public class EventLoggerBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
 {

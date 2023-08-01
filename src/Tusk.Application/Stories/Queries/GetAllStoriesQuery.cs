@@ -3,21 +3,21 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-using Tusk.Api.Infrastructure;
-using Tusk.Api.Persistence;
+using Tusk.Application.Persistence;
+using Tusk.Domain;
 
-namespace Tusk.Api.Stories.Queries;
+namespace Tusk.Application.Stories.Queries;
 public record GetAllStoriesQuery() : IRequest<UserStoriesViewModel>;
 public record UserStoriesViewModel(IEnumerable<UserStoriesDto> Data);
 
 public class GetAllStoriesQueryHandler : IRequestHandler<GetAllStoriesQuery, UserStoriesViewModel>
 {
-    private readonly TuskDbContext _ctx;
+    private readonly ITuskDbContext _ctx;
     private readonly IDateTime _dt;
     private readonly IMapper _mapper;
 
     public GetAllStoriesQueryHandler(
-        TuskDbContext ctx,
+        ITuskDbContext ctx,
         IMapper mapper,
         IDateTime dt)
     {

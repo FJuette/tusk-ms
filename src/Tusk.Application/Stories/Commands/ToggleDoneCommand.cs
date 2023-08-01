@@ -1,17 +1,17 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Tusk.Api.Exceptions;
-using Tusk.Api.Persistence;
+using Tusk.Application.Exceptions;
+using Tusk.Application.Persistence;
 
-namespace Tusk.Api.Stories.Commands;
+namespace Tusk.Application.Stories.Commands;
 public record ToggleDoneCommand(int StoryId, int TaskId) : IRequest<bool>;
 
 public class ToggleDoneCommandHandler : IRequestHandler<ToggleDoneCommand, bool>
 {
-    private readonly TuskDbContext _context;
+    private readonly ITuskDbContext _context;
 
     public ToggleDoneCommandHandler(
-        TuskDbContext context) =>
+        ITuskDbContext context) =>
         _context = context;
 
     public async Task<bool> Handle(
