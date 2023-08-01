@@ -1,6 +1,6 @@
 using CSharpFunctionalExtensions;
 
-namespace Tusk.Api.Models;
+namespace Tusk.Domain;
 public sealed class Priority : ValueObject
 {
     private Priority(
@@ -16,7 +16,7 @@ public sealed class Priority : ValueObject
             ? Result.Failure<Priority>("Must be a positive number")
             : Result.Success(new Priority(priority));
 
-    protected override IEnumerable<object> GetEqualityComponents()
+    protected override IEnumerable<IComparable> GetEqualityComponents()
     {
         yield return Value;
     }

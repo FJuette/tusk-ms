@@ -1,4 +1,4 @@
-﻿namespace Tusk.Api.Models;
+﻿namespace Tusk.Domain;
 
 // Example for enumeration pattern class
 #nullable disable

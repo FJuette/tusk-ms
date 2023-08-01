@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿global using Tusk.Domain;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Text;
 using FluentValidation;
@@ -18,6 +19,7 @@ using Tusk.Api.Infrastructure.Behaviours;
 using Tusk.Api.Persistence;
 
 namespace Tusk.Api;
+
 public class Startup
 {
     private readonly IWebHostEnvironment _env;
@@ -32,11 +34,10 @@ public class Startup
     public IConfiguration Configuration { get; }
 
     [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
-    public void ConfigureServices(
-        IServiceCollection services)
+    public void ConfigureServices(IServiceCollection services)
     {
         // Add MediatR - must be first
-        services.AddMediatR(Assembly.GetExecutingAssembly());
+        services.AddMediatR(m => m.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
 #if (!DisableAuthentication)
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -67,7 +68,7 @@ public class Startup
                     builder.AllowAnyMethod();
                     builder.AllowAnyHeader();
                     builder.AllowAnyOrigin(); //TODO remove in production and add to origin list
-                    }));
+                }));
 
         services.AddHttpContextAccessor();
         services.AddSwaggerDocumentation();
@@ -77,7 +78,8 @@ public class Startup
             //.AddSqlServer(EnvFactory.GetConnectionString()) //TODO Enable if real MSSQL-Server is given
             .AddCheck<ApiHealthCheck>("api");
 
-        services.AddScoped<TuskDbContext>(sp => new TuskDbContext(_env.EnvironmentName, sp.GetService<IGetClaimsProvider>()));
+        services.AddScoped<TuskDbContext>(sp =>
+            new TuskDbContext(_env.EnvironmentName, sp.GetService<IGetClaimsProvider>()));
 
         services.AddAutoMapper(typeof(Startup));
 
@@ -110,7 +112,7 @@ public class Startup
         app.UseCors("Locations");
         app.UseSwaggerDocumentation();
 
-        app.UseHealthChecks("/api/health", new HealthCheckOptions { ResponseWriter = WriteHealthCheckResponse });
+        app.UseHealthChecks("/api/health", new HealthCheckOptions {ResponseWriter = WriteHealthCheckResponse});
 
         app.UseRouting();
 #if (!DisableAuthentication)

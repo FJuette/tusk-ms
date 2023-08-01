@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Tusk.Api\Tusk.Api.csproj" />
+    <ProjectReference Include="..\..\src\Tusk.Domain\Tusk.Domain.csproj" />
   </ItemGroup>
 
 </Project>

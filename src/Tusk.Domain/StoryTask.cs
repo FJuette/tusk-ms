@@ -1,4 +1,4 @@
-namespace Tusk.Api.Models;
+namespace Tusk.Domain;
 // Dummy to show 1:n relation with UserStories
 public class StoryTask : EntityBase
 {

@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Tusk.Api.Infrastructure;
-using Tusk.Api.Models;
 
 namespace Tusk.Api.Persistence;
 #nullable disable

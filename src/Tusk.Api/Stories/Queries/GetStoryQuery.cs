@@ -4,7 +4,6 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Tusk.Api.Exceptions;
-using Tusk.Api.Models;
 using Tusk.Api.Persistence;
 
 namespace Tusk.Api.Stories.Queries;

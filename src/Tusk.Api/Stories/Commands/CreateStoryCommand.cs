@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using MediatR;
-using Tusk.Api.Models;
 using Tusk.Api.Persistence;
 using Tusk.Api.Stories.Events;
 

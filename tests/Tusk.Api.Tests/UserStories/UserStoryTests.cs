@@ -2,7 +2,7 @@
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Tusk.Api.Exceptions;
-using Tusk.Api.Models;
+using Tusk.Domain;
 using Tusk.Api.Persistence;
 using Tusk.Api.Stories.Commands;
 using Tusk.Api.Stories.Queries;

@@ -4,6 +4,9 @@ Feel free to improve this template.
 
 == TODOs
 
+- [ ] DDD-Models todos: https://www.youtube.com/watch?v=fO2T5tRu3DE
+- [ ] EF-Core part for this idea: https://www.youtube.com/watch?v=IGVRVO7KTss
+- [ ] General Arch idea: https://www.youtube.com/watch?v=fe4iuaoxGbA
 - [ ] Describe testing strategy (How, Why, When)
 - [ ] Example for pushing data into EventStore
 - [ ] Example for pushing data into RabbitMq and returning Transaction/Correlation ID + Endpoint for pulling status of the job (Pseudo long running Job)

@@ -1,4 +1,4 @@
-namespace Tusk.Api.Models;
+namespace Tusk.Domain;
 
 #nullable disable
 // Aggregate root entity

@@ -1,5 +1,4 @@
-﻿using Tusk.Api.Models;
-using Tusk.Api.Persistence;
+﻿using Tusk.Api.Persistence;
 
 namespace Tusk.Api.Extensions;
 public class SampleDataSeeder

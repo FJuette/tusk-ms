@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
@@ -17,9 +18,11 @@ public static class Program
 
         var logConfig = new LoggerConfiguration()
             .Enrich.FromLogContext()
-            .WriteTo.Console(theme: Serilog.Sinks.SystemConsole.Themes.AnsiConsoleTheme.Code)
+            .WriteTo.Console(theme: Serilog.Sinks.SystemConsole.Themes.AnsiConsoleTheme.Code, formatProvider: CultureInfo.InvariantCulture)
             .MinimumLevel.ControlledBy(levelSwitch)
-            .MinimumLevel.Override("Microsoft", levelSwitch);
+            .MinimumLevel.Override("Microsoft", levelSwitch)
+            .MinimumLevel.Override("Microsoft.EntityFrameworkCore.Database.Command", levelSwitch);
+
 
         if (isDevelopment)
         {
