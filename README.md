@@ -34,6 +34,11 @@ dotnet new ddd-webapi -n Magnus
 dotnet new -u FJuette.Template.WebApi
 ```
 
+## Template Architecture
+
+Onion Style:
+![Architecture](Architecture.png)
+
 ## License
 
 This project is licensed under the Apache License - see the [LICENSE](LICENSE) file for details.

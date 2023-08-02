@@ -4,6 +4,8 @@ Feel free to improve this template.
 
 == TODOs
 
+- [ ] Represent in DDD: Sprint, Backlog, Sprint Backlog // UML Digram?
+- [ ] Create grafic for Onion architecture
 - [ ] Describe testing strategy (How, Why, When)
 - [ ] Example for pushing data into EventStore
 - [ ] Example for pushing data into RabbitMq and returning Transaction/Correlation ID + Endpoint for pulling status of the job (Pseudo long running Job)
