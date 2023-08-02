@@ -1,12 +1,13 @@
-﻿using Tusk.Application.Exceptions;
+﻿using System.Globalization;
+using Tusk.Application.Exceptions;
 
 namespace Tusk.Api.Infrastructure;
 
 public static class EnvFactory
 {
-    public static string GetConnectionString() => TryGetEnv("CONNECTION_STRING");
+    public static string GetConnectionString() => TryGetEnv<string>("CONNECTION_STRING");
 
-    private static string TryGetEnv(
+    private static T TryGetEnv<T>(
         string name)
     {
         var env = Environment.GetEnvironmentVariable(name);
@@ -15,7 +16,7 @@ public static class EnvFactory
             throw new MissingEnvException(name);
         }
 
-        return env;
+        return (T)Convert.ChangeType(env, typeof(T), CultureInfo.InvariantCulture);
     }
 }
 
