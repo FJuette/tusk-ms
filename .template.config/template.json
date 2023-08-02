@@ -25,11 +25,11 @@
                         "*.nupkg",
                         "*.nuspec",
                         "package/**",
-                        "*[Content_Types].xml",
                         "_rels/**",
                         "Tusk.v3.ncrunchsolution.user",
                         "RabbitMQ.adoc",
-                        "DEVELOPMENT.adoc"
+                        "DEVELOPMENT.adoc",
+                        "Architecture.drawio"
                     ]
                 }
             ]
