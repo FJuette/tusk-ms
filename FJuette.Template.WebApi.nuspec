@@ -6,6 +6,7 @@
     <authors>Fabian Juette</authors>
     <title>REST-API Template (kind of DDD style)</title>
     <language>en-US</language>
+    <readme>README.md</readme>
     <repository type="git" url="https://github.com/FJuette/tusk-ms.git" branch="master" commit="e97256a8e93637cdf042d33ca51ce86842a69da2" />
     <description>
       A .net7.0 WebApi template with classes in ddd-style.
