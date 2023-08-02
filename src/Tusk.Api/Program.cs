@@ -14,7 +14,11 @@ public static class Program
         var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
         var isDevelopment = environment != "Staging" && environment != "Production";
 
-        var levelSwitch = new LoggingLevelSwitch();
+        var levelSwitch =
+            // Verbose logging on console (Debug > Information > Warning)
+            isDevelopment ? new LoggingLevelSwitch(LogEventLevel.Information) :
+            // Reduced logging in production mode
+            new LoggingLevelSwitch(LogEventLevel.Warning);
 
         var logConfig = new LoggerConfiguration()
             .Enrich.FromLogContext()
@@ -23,22 +27,14 @@ public static class Program
             .MinimumLevel.Override("Microsoft", levelSwitch)
             .MinimumLevel.Override("Microsoft.EntityFrameworkCore.Database.Command", levelSwitch);
 
-
-        if (isDevelopment)
-        {
-            // Verbose logging on console
-            logConfig
-                .MinimumLevel.Debug()
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Information);
-        }
-        else
-        {
-            // Reduced logging in production mode, add more logging (Graylog, Apache Flink, ...) here
-            logConfig
-                .MinimumLevel.Warning()
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning);
-        }
-
+        // Add more logging (Graylog, Apache Flink, SEQ, Loki, ...) here, example:
+        // if (EnvFactory.UseSeq())
+        // {
+        //     logConfig
+        //         .WriteTo.Seq(EnvFactory.GetSeqUrl())
+        //         .Enrich.WithProperty("App", "AppName");
+        // }
+        
         Log.Logger = logConfig.CreateLogger();
 
         try

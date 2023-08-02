@@ -1,3 +1,5 @@
+// ReSharper disable once RedundantUsingDirective
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tusk.Application.Stories.Commands;
 using Tusk.Application.Stories.Queries;

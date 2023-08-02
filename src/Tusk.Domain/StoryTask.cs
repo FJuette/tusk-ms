@@ -17,7 +17,7 @@ public class StoryTask : EntityBase
         string description) =>
         Description = description;
 
-    public string Description { get; }
+    public string Description { get; private set; }
     public bool IsDone { get; private set; }
 
 }

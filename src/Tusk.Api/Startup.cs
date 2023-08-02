@@ -54,7 +54,7 @@ public class Startup
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["jwt:key"]!))
                 });
 
-        // At least a module claim is required to use any protected endpoint
+        // Optional: At least a module claim is required to use any protected endpoint
         services.AddAuthorization(
             auth => auth.DefaultPolicy = new AuthorizationPolicyBuilder()
                 .RequireClaim("modules", "claim-module-name")
@@ -79,12 +79,12 @@ public class Startup
             //.AddSqlServer(EnvFactory.GetConnectionString()) //TODO Enable if real MSSQL-Server is given
             .AddCheck<ApiHealthCheck>("api");
 
-        services.AddScoped<ITuskDbContext ,TuskDbContext>(sp =>
+        services.AddScoped<ITuskDbContext, TuskDbContext>(sp =>
             new TuskDbContext(_env.EnvironmentName, sp.GetService<IGetClaimsProvider>()));
 
         services.AddAutoMapper(typeof(ITuskDbContext));
 
-        // Avoid the MultiPartBodyLength error
+        // Optional: Avoid the MultiPartBodyLength error
         services.Configure<FormOptions>(o =>
         {
             o.ValueLengthLimit = int.MaxValue;
@@ -98,11 +98,12 @@ public class Startup
         services.AddScoped<IGetClaimsProvider, GetClaimsFromUser>();
         services.AddSingleton<IDateTime, MachineDateTime>();
 
+        // MediatR
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehavior<,>));
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(EventLoggerBehavior<,>));
 
         services.AddControllers(options => options.Filters.Add(typeof(CustomExceptionFilter)))
-            .AddNewtonsoftJson();
+            .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

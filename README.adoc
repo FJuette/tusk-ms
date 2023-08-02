@@ -36,7 +36,7 @@ dotnet new ddd-webapi -n Magnus
 dotnet new -u FJuette.Template.WebApi
 ----
 
-## License
+== License
 
 This project is licensed under the Apache License - see the xref:LICENSE[LICENSE] file for details.
 

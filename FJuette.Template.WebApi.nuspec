@@ -2,9 +2,9 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>FJuette.Template.WebApi</id>
-    <version>4.0.0</version>
+    <version>4.1.0</version>
     <authors>Fabian Juette</authors>
-    <title>REST-API Template (DDD style)</title>
+    <title>REST-API Template (kind of DDD style)</title>
     <language>en-US</language>
     <repository type="git" url="https://github.com/FJuette/tusk-ms.git" branch="master" commit="e97256a8e93637cdf042d33ca51ce86842a69da2" />
     <description>
@@ -15,15 +15,14 @@
       Includes preconfigures XUnit project to test MediatR handlers.
       Support for .net7.0 and c# 11 language features.
     </description>
-    <tags>.net7.0 REST RESTApi DDD c#11 Template</tags>
+    <tags>.net7.0 REST RESTApi API DDD c#11 Template</tags>
     <packageTypes>
       <packageType name="Template" />
     </packageTypes>
     <projectUrl>https://github.com/FJuette/tusk-ms</projectUrl>
     <license type="expression">Apache-2.0</license>
     <releaseNotes>
-      Upgrade to .net7. Adding required argument to records and classes where necessary.
-      Update dockerfile to use .net7 base image.
+      Restructure project to basic onion layers.
     </releaseNotes>
     <copyright>Fabian Juette</copyright>
   </metadata>
