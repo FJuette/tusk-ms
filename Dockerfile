@@ -5,6 +5,7 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /build
 COPY src/. .
+COPY .editorconfig .
 RUN dotnet restore ./Tusk.Api/Tusk.Api.csproj -nowarn:msb3202,nu1503
 RUN dotnet build ./Tusk.Api/Tusk.Api.csproj -c Release -o /app
 
