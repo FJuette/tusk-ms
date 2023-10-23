@@ -29,7 +29,22 @@
                         "Tusk.v3.ncrunchsolution.user",
                         "RabbitMQ.adoc",
                         "DEVELOPMENT.adoc",
-                        "Architecture.drawio"
+                        "*.drawio.*",
+                        "[Content_Types].xml"
+                    ],
+                    "include": [
+                      "**/src/*",
+                      "**/tests/*",
+                      ".dockerignore",
+                      ".editorconfig",
+                      ".gitignore",
+                      ".releaserc",
+                      "Architecture.png",
+                      "Dockerfile",
+                      "VERSIONING.adoc",
+                      "README.md",
+                      "LICENSE",
+                      "*.sln"
                     ]
                 }
             ]

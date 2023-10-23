@@ -7,18 +7,21 @@ Feel free to improve this template.
 - [ ] Represent in DDD: Sprint, Backlog, Sprint Backlog // UML Digram?
 - [ ] Create grafic for Onion architecture
 - [ ] Describe testing strategy (How, Why, When)
-- [ ] Example for pushing data into EventStore
+- [ ] Example for pushing data into EventStore (for all commands as example with middleware)
+    - Add aggregate Root as example
 - [ ] Example for pushing data into RabbitMq and returning Transaction/Correlation ID + Endpoint for pulling status of the job (Pseudo long running Job)
 - [x] Use 'LoggingLevelSwitch' in 'Program.cs' to set Logging level based on configuration
 - [ ] Write a better README with https://github.com/hackergrrl/art-of-readme
+- [ ] Use Guid instead of int id (Protection) where possible
+- [ ]
 
 == Local testing
 
 Local template install (osx, linux)
-> dotnet new -i ./
+> dotnet new install ./
 
 Local template install (Windows)
-> dotnet new -i .\
+> dotnet new install .\
 
 Find entry to uninstall
 > dotnet new -u
@@ -40,7 +43,7 @@ Creating the nuget package
 > nuget pack
 
 Install the nuget package locally
-> dotnet new -i ./FJuette.Template.WebApi.4.1.0.nupkg
+> dotnet new install ./FJuette.Template.WebApi.4.1.1.nupkg
 
 On _DateTimeOffset_ error:
 > nuget locals all -clear
