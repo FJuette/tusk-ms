@@ -14,11 +14,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 		Dockerfile = Dockerfile
 		README.md = README.md
-		update-packages.sh = update-packages.sh
 		VERSIONING.adoc = VERSIONING.adoc
 		LICENSE = LICENSE
-		DEVELOPMENT.adoc = DEVELOPMENT.adoc
 		.releaserc = .releaserc
+		Makefile = Makefile
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{5D8A23AD-0153-434D-8550-F8D76AE760F8}"

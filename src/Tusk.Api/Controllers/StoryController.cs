@@ -13,7 +13,7 @@ public class StoryController : BaseController
 {
 
     [HttpGet("api/stories")]
-    [ProducesResponseType(200)]
+    [ProducesResponseType(typeof(UserStoriesViewModel), 200)]
     public async Task<ActionResult<UserStoriesViewModel>> GetAllStories() =>
         Ok(await Mediator.Send(new GetAllStoriesQuery()));
 
@@ -38,7 +38,7 @@ public class StoryController : BaseController
     /// <response code="400">A request which cannot be handles properly returns a 400 with a detailed error message</response>
 
     [HttpPost("api/stories")]
-    [ProducesResponseType(201)]
+    [ProducesResponseType(typeof(int), 201)]
     [ProducesResponseType(400)]
     public async Task<ActionResult<int>> CreateStory(
         [FromBody] CreateStoryCommand command)
@@ -51,13 +51,13 @@ public class StoryController : BaseController
     }
 
     [HttpGet("api/stories/{id}")]
-    [ProducesResponseType(200)]
+    [ProducesResponseType(typeof(UserStoryViewModel), 200)]
     [ProducesResponseType(404)]
     public async Task<ActionResult<UserStoryViewModel>> GetStory(int id) =>
         Ok(await Mediator.Send(new GetStoryQuery(id)));
 
     [HttpPut("api/stories/{storyId}/tasks/{taskId}/toggle-done")]
-    [ProducesResponseType(200)]
+    [ProducesResponseType(typeof(bool), 200)]
     [ProducesResponseType(404)]
     public async Task<ActionResult<bool>> ToggleDone(int storyId, int taskId) =>
         Ok(await Mediator.Send(new ToggleDoneCommand(storyId, taskId)));

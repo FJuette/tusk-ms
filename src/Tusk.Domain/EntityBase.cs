@@ -79,7 +79,7 @@ public abstract class EntityBase : IOwnedBy
 
     private Type GetRealType()
     {
-        Type type = GetType();
+        var type = GetType();
 
         if (type.ToString().Contains("Castle.Proxies.", StringComparison.InvariantCulture) && type.BaseType != null)
         {

@@ -6,16 +6,16 @@ Template for c# REST-API project.
 
 ## Technologies
 
-* .Net 7.0
-* EF Core 7.0
-* FluentValidation and .net default validation disabled
+* .NET 8
+* EF Core 8
+* FluentValidation and default validation disabled
 * AutoMapper
-* MediatR to support CQRS
-* Swashbuckle Swagger with xml documention enabled
+* MediatR to support CQRS style
+* Swashbuckle Swagger with xml documention
 * Serilog with default console output
 * Unit and integration tests with XUnit
 * DDD-Style model classes and Onion-Architecture
-* C# 11 features enabled with nullable compiler checks
+* C# 12 features enabled with nullable compiler checks
 
 Mainly inspired by <https://github.com/JasonGT/NorthwindTraders> and Vladimir Khorikov <https://github.com/vkhorikov>
 

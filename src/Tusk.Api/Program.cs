@@ -12,7 +12,7 @@ public static class Program
     public static int Main(string[] args)
     {
         var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-        var isDevelopment = environment != "Staging" && environment != "Production";
+        var isDevelopment = environment != "Production";
 
         var levelSwitch =
             // Verbose logging on console (Debug > Information > Warning)
@@ -34,7 +34,7 @@ public static class Program
         //         .WriteTo.Seq(EnvFactory.GetSeqUrl())
         //         .Enrich.WithProperty("App", "AppName");
         // }
-        
+
         Log.Logger = logConfig.CreateLogger();
 
         try

@@ -40,7 +40,7 @@ public class UserStory : EntityBase
     public Relevance Importance { get; }
     public BusinessValue BusinessValue { get; }
 
-    private readonly List<StoryTask> _storyTasks = new List<StoryTask>();
+    private readonly List<StoryTask> _storyTasks = [];
     public IReadOnlyList<StoryTask> StoryTasks => _storyTasks.ToList();
 
     #nullable enable

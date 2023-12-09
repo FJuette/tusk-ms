@@ -15,7 +15,7 @@ public static class SwaggerServiceExtensions
                 {
                     Version = "v1",
                     Title = "Tusk API",
-                    Description = "Microservice REST-API based on .Net Core 7.0"
+                    Description = "Microservice REST-API in CQRS pattern style"
                 });
 
             // Set the comments path for the Swagger JSON and UI.
