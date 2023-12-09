@@ -138,7 +138,7 @@ public abstract class UserStoryTests
         var result = await handler.Handle(new GetStoryQuery(_storyId), new CancellationToken());
 
         result.Story.Should().NotBeNull();
-        result.Story.Tasks.Count().Should().BeGreaterThan(0);
+        result.Story.Tasks.Count.Should().BeGreaterThan(0);
         result.Story.Title.Should().Be("My demo user story");
         result.Story.Priority.Should().Be(1);
         result.Story.BusinessValue.Should().Be("Business Value 900");

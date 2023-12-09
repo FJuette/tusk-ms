@@ -13,6 +13,7 @@ spelling_exclusion_path = SpellingExclusions.dic
 [*.{cs,csx,vb,vbx}]
 indent_size = 4
 insert_final_newline = true
+charset = utf-8-bom
 
 # XML project files
 [*.{csproj,vbproj,vcxproj,vcxproj.filters,proj,projitems,shproj}]
@@ -145,6 +146,10 @@ file_header_template = Licensed to the .NET Foundation under one or more agreeme
 
 # RS0016: Only enable if API files are present
 dotnet_public_api_analyzer.require_api_files = true
+
+# IDE0055: Fix formatting
+# Workaround for https://github.com/dotnet/roslyn/issues/70570
+dotnet_diagnostic.IDE0055.severity = warning
 
 # CSharp code style settings:
 [*.cs]
@@ -280,12 +285,19 @@ dotnet_diagnostic.IDE2006.severity = warning
 # There is a risk of accidentally breaking an internal API that partners rely on though IVT.
 dotnet_code_quality.CA1822.api_surface = private
 
+[src/{VisualStudio}/**/*.{cs,vb}]
+# CA1822: Make member static
+# There is a risk of accidentally breaking an internal API that partners rely on though IVT.
+dotnet_code_quality.CA1822.api_surface = private
+
 # Added by FJuette
 # Ignore errors 
 # CA1305 The behavior of 'DateTime.ToString(string)' could vary based on the current user's locale settings
 # CA1304 The behavior of 'XLCellValue.ToString()' could vary based on the current user's locale settings
 # CA1311 Specify a culture or use an invariant version to avoid implicit dependency on current culture
+# CA1707 No underscore in function names
 [*.{cs,vb}]
 dotnet_diagnostic.CA1305.severity = none
 dotnet_diagnostic.CA1304.severity = none
 dotnet_diagnostic.CA1311.severity = none
+dotnet_diagnostic.CA1707.severity = none
