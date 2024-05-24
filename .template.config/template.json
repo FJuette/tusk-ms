@@ -29,8 +29,11 @@
                         "Tusk.v3.ncrunchsolution.user",
                         "RabbitMQ.adoc",
                         "DEVELOPMENT.adoc",
-                        "*.drawio.*",
-                        "[Content_Types].xml"
+                        "*.xml",
+                        "Architecture.drawio",
+                        ".$Architecture.drawio.bkp",
+                        ".DS_Store",
+                        ".vscode/**"
                     ],
                     "include": [
                       "**/src/*",
@@ -44,7 +47,8 @@
                       "VERSIONING.adoc",
                       "README.md",
                       "LICENSE",
-                      "*.sln"
+                      "*.sln",
+                      "Makefile"
                     ]
                 }
             ]

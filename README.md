@@ -1,6 +1,6 @@
 # C# Web-Api template in DDD-Style
 
-Template for c# REST-API project.
+Template for C# REST-API project.
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FFJuette%2Ftusk-ms.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FFJuette%2Ftusk-ms?ref=badge_shield)
 

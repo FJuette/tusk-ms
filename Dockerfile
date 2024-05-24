@@ -15,8 +15,4 @@ RUN dotnet publish ./Tusk.Api/Tusk.Api.csproj -c Release -o /app
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
-# Running the container as non root user ports < 1000 cannot be used
-ENV ASPNETCORE_URLS=http://*:8080
-RUN addgroup -S runners && adduser -S runner -G runners
-USER runner:runners
 ENTRYPOINT ["dotnet", "Tusk.Api.dll"]

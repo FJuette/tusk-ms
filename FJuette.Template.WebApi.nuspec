@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>FJuette.Template.WebApi</id>
-    <version>4.2.0</version>
+    <version>4.2.1</version>
     <authors>Fabian Juette</authors>
     <title>REST-API Template (kind of DDD style)</title>
     <language>en-US</language>
@@ -23,13 +23,13 @@
     <projectUrl>https://github.com/FJuette/tusk-ms</projectUrl>
     <license type="expression">Apache-2.0</license>
     <releaseNotes>
-      Update to .NET 8 and c# 12
+      Third party library updates
     </releaseNotes>
     <copyright>Fabian Juette</copyright>
   </metadata>
   <files>
     <!-- <file src="src/**" target="content/src/" exclude="src/Tusk.Api/bin/**;src/Tusk.Api/obj/**" />
     <file src="tests/**" target="content/tests" exclude="tests/Tusk.Api.Tests/bin/**;tests/Tusk.Api.Tests/obj/**" /> -->
-    <file src="./" target="" exclude=".DS_Store;Architecture.drawio;[Content_Types].xml;update-packages.sh" />
+    <file src="./" target="" exclude=".vscode/**;Architecture.drawio;*.xml;update-packages.sh;src/Tusk.Api/bin/**;src/Tusk.Api/obj/**;tests/Tusk.Api.Tests/bin/**;tests/Tusk.Api.Tests/obj/**" />
   </files>
 </package>
