@@ -1,13 +1,14 @@
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Tusk.Api.Persistence;
+using Tusk.Application.Persistence;
 
 namespace Tusk.Api.Health;
 public class ApiHealthCheck : IHealthCheck
 {
-    private readonly TuskDbContext _ctx;
+    private readonly ITuskDbContext _ctx;
 
     public ApiHealthCheck(
-        TuskDbContext ctx) =>
+        ITuskDbContext ctx) =>
         _ctx = ctx;
 
     public async Task<HealthCheckResult> CheckHealthAsync(
