@@ -102,7 +102,7 @@ public class Startup
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehavior<,>));
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(EventLoggerBehavior<,>));
 
-        services.AddControllers(options => options.Filters.Add(typeof(CustomExceptionFilter)))
+        services.AddControllers(options => options.Filters.Add<CustomExceptionFilter>())
             .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
     }
 

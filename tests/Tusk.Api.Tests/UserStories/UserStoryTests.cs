@@ -81,7 +81,7 @@ public abstract class UserStoryTests
         var result = await handler.Handle(command, new CancellationToken());
 
         // Assert
-        result.Should().BeGreaterOrEqualTo(0);
+        result.Should().BeGreaterThanOrEqualTo(0);
         context.Stories.Count().Should().Be(2);
     }
 

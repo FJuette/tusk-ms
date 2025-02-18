@@ -2,21 +2,21 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>FJuette.Template.WebApi</id>
-    <version>4.2.1</version>
+    <version>4.3.0</version>
     <authors>Fabian Juette</authors>
     <title>REST-API Template (kind of DDD style)</title>
     <language>en-US</language>
     <readme>README.md</readme>
     <repository type="git" url="https://github.com/FJuette/tusk-ms.git" branch="master" commit="e97256a8e93637cdf042d33ca51ce86842a69da2" />
     <description>
-      A .NET 8 Web-Api template with classes in ddd-style.
+      .net9 webapi template with classes in ddd-style.
       Preconfigured with Automapper, MediatR, FluentValidation, XUnit, FluentAssertations, Health Checks,
-      JwtAuthentication, EF Core 8, Serilog and Swagger.
+      JwtAuthentication, EF Core 9, Serilog and Swagger.
       Using Commands and Queries (CQRS) to distinguish between reading or modifing data.
       Includes preconfigures XUnit project to test MediatR handlers.
-      Support for .NET 8 and c# 12 language features.
+      Support for .net9 and c# 13 language features.
     </description>
-    <tags>.NET 8 REST REST-Api API DDD c# 12 Template</tags>
+    <tags>.net9 REST-Api API DDD c#13 Template</tags>
     <packageTypes>
       <packageType name="Template" />
     </packageTypes>
