@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using Tusk.Application.Exceptions;
+﻿using Tusk.Application.Exceptions;
 
 namespace Tusk.Api.Infrastructure;
 
@@ -16,7 +15,7 @@ public static class EnvFactory
             throw new MissingEnvException(name);
         }
 
-        return (T)Convert.ChangeType(env, typeof(T), CultureInfo.InvariantCulture);
+        return (T)Convert.ChangeType(env, typeof(T));
     }
 }
 

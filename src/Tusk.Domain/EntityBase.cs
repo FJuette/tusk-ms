@@ -75,13 +75,13 @@ public abstract class EntityBase : IOwnedBy
 
     public override int GetHashCode() =>
         (GetRealType().ToString() + Id)
-        .GetHashCode(StringComparison.InvariantCulture);
+        .GetHashCode();
 
     private Type GetRealType()
     {
         var type = GetType();
 
-        if (type.ToString().Contains("Castle.Proxies.", StringComparison.InvariantCulture) && type.BaseType != null)
+        if (type.ToString().Contains("Castle.Proxies.") && type.BaseType != null)
         {
             return type.BaseType;
         }
