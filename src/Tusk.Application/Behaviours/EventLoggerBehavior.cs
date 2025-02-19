@@ -7,16 +7,16 @@ public class EventLoggerBehavior<TRequest, TResponse> : IPipelineBehavior<TReque
 {
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
-        Log.Information("[{class}] - Before calling next",
+        Log.Information("[{Class}] - Before calling next",
             "EventLoggerBehavior");
 
-        TResponse response = await next();
+        var response = await next();
 
         var requestName = request.ToString();
-        Log.Information("[{class}] - RequestName: {request}",
+        Log.Information("[{Class}] - RequestName: {Request}",
             "EventLoggerBehavior", requestName);
 
-        Log.Information("[{class}] - After calling next, before return",
+        Log.Information("[{Class}] - After calling next, before return",
             "EventLoggerBehavior");
         return response;
     }

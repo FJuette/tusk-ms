@@ -17,7 +17,6 @@
     <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="9.0.0"/>
     <PackageReference Include="AutoMapper" Version="14.0.0"/>
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0"/>
-    <PackageReference Include="GenFu" Version="1.6.0"/>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.2"/>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="9.0.2"/>
     <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="9.0.0">

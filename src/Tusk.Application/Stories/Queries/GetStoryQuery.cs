@@ -12,18 +12,10 @@ namespace Tusk.Application.Stories.Queries;
 public record GetStoryQuery(int Id) : IRequest<UserStoryViewModel>;
 public record UserStoryViewModel(UserStoryDto Story);
 
-public class GetStoryQueryHandler : IRequestHandler<GetStoryQuery, UserStoryViewModel>
+public class GetStoryQueryHandler(
+    ITuskDbContext context,
+    IMapper mapper) : IRequestHandler<GetStoryQuery, UserStoryViewModel>
 {
-    private readonly ITuskDbContext _ctx;
-    private readonly IMapper _mapper;
-
-    public GetStoryQueryHandler(
-        ITuskDbContext ctx,
-        IMapper mapper)
-    {
-        _ctx = ctx;
-        _mapper = mapper;
-    }
 
     public async Task<UserStoryViewModel> Handle(
         GetStoryQuery request,
@@ -32,11 +24,11 @@ public class GetStoryQueryHandler : IRequestHandler<GetStoryQuery, UserStoryView
         // Example logging call
         Log.Information("Get single story called");
         // Use async calls if possible
-        var story = await _ctx.Stories
+        var story = await context.Stories
             .Where(e => e.Id == request.Id)
             .Include(e => e.StoryTasks)
             .Include(e => e.BusinessValue)
-            .ProjectTo<UserStoryDto>(_mapper.ConfigurationProvider)
+            .ProjectTo<UserStoryDto>(mapper.ConfigurationProvider)
             .AsNoTracking()
             .SingleOrDefaultAsync(cancellationToken);
 
@@ -46,18 +38,16 @@ public class GetStoryQueryHandler : IRequestHandler<GetStoryQuery, UserStoryView
     }
 }
 
-#nullable disable
 public record UserStoryDto
 {
     public int Id { get; init; }
-    public string Title { get; init; }
-    public string Text { get; init; }
-    public string AcceptanceCriteria { get; init; }
+    public required string Title { get; init; }
+    public required string Text { get; init; }
+    public required string AcceptanceCriteria { get; init; }
     public int Priority { get; init; }
-    public string BusinessValue { get; init; }
-    public IReadOnlyList<string> Tasks { get; init; }
+    public required string BusinessValue { get; init; }
+    public IReadOnlyList<string> Tasks { get; init; } = [];
 }
-#nullable enable
 
 // Automapper Profile for this Dto
 public class UserStoryProfile : Profile

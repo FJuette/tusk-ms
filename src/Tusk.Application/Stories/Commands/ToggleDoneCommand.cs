@@ -6,19 +6,13 @@ using Tusk.Application.Persistence;
 namespace Tusk.Application.Stories.Commands;
 public record ToggleDoneCommand(int StoryId, int TaskId) : IRequest<bool>;
 
-public class ToggleDoneCommandHandler : IRequestHandler<ToggleDoneCommand, bool>
+public class ToggleDoneCommandHandler(ITuskDbContext context) : IRequestHandler<ToggleDoneCommand, bool>
 {
-    private readonly ITuskDbContext _context;
-
-    public ToggleDoneCommandHandler(
-        ITuskDbContext context) =>
-        _context = context;
-
     public async Task<bool> Handle(
         ToggleDoneCommand request,
         CancellationToken cancellationToken)
     {
-        var story = await _context.Stories
+        var story = await context.Stories
             .Include(e => e.StoryTasks)
             .SingleOrDefaultAsync(e => e.Id == request.StoryId, cancellationToken);
 
@@ -28,7 +22,7 @@ public class ToggleDoneCommandHandler : IRequestHandler<ToggleDoneCommand, bool>
         _ = task ?? throw new NotFoundException("StoryTask", request.TaskId);
 
         task.ToggleDone();
-        _context.Attach(story);
-        return await _context.SaveChangesAsync(cancellationToken) > 0;
+        context.Attach(story);
+        return await context.SaveChangesAsync(cancellationToken) > 0;
     }
 }

@@ -13,27 +13,16 @@ public record CreateStoryCommand : IRequest<int>
     public int BusinessValue { get; init; }
 }
 
-public class CreateStoryCommandHandler : IRequestHandler<CreateStoryCommand, int>
+public class CreateStoryCommandHandler(
+    ITuskDbContext context,
+    IMediator mediator,
+    IValidator<CreateStoryCommand> validator) : IRequestHandler<CreateStoryCommand, int>
 {
-    private readonly ITuskDbContext _context;
-    private readonly IMediator _mediator;
-    private readonly IValidator<CreateStoryCommand> _validator;
-
-    public CreateStoryCommandHandler(
-        ITuskDbContext context,
-        IMediator mediator,
-        IValidator<CreateStoryCommand> validator)
-    {
-        _context = context;
-        _mediator = mediator;
-        _validator = validator;
-    }
-
     public async Task<int> Handle(
         CreateStoryCommand request,
         CancellationToken cancellationToken)
     {
-        await _validator.ValidateAndThrowAsync(request, cancellationToken);
+        await validator.ValidateAndThrowAsync(request, cancellationToken);
 
         var story = new UserStory(
             request.Title,
@@ -43,11 +32,11 @@ public class CreateStoryCommandHandler : IRequestHandler<CreateStoryCommand, int
             BusinessValue.BV1000);
 
         // Prefer attach over add/update
-        var result = _context.Stories.Attach(story);
-        await _context.SaveChangesAsync(cancellationToken);
+        var result = context.Stories.Attach(story);
+        await context.SaveChangesAsync(cancellationToken);
 
         // Example for raising an event ...
-        await _mediator.Publish(new UserStoryAddedEvent(story.Title), cancellationToken);
+        await mediator.Publish(new UserStoryAddedEvent(story.Title), cancellationToken);
 
         return result.Entity.Id;
     }

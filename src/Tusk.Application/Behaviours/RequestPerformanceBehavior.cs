@@ -8,22 +8,22 @@ public class RequestPerformanceBehavior<TRequest, TResponse> : IPipelineBehavior
 {
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
-        Stopwatch stopwatch = new Stopwatch();
+        var stopwatch = new Stopwatch();
         stopwatch.Start();
 
-        TResponse response = await next();
+        var response = await next();
 
         stopwatch.Stop();
 
         if (stopwatch.ElapsedMilliseconds > TimeSpan.FromSeconds(5).TotalMilliseconds)
         {
             // This method has taken a long time, So we log that to check it later.
-            Log.Warning("[{class}] - {request} has taken {time}ms to run completely !",
+            Log.Warning("[{Class}] - {Request} has taken {Time}ms to run completely !",
                 "RequestPerformanceBehavior", request, stopwatch.ElapsedMilliseconds);
         }
         else
         {
-            Log.Information("[{class}] - {request} has taken {time}ms to run completely !",
+            Log.Information("[{Class}] - {Request} has taken {Time}ms to run completely !",
                 "RequestPerformanceBehavior", request, stopwatch.ElapsedMilliseconds);
         }
 
