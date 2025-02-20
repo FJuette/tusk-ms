@@ -1,4 +1,5 @@
 namespace Tusk.Domain;
+
 // Dummy to show 1:n relation with UserStories
 public class StoryTask : EntityBase
 {
@@ -8,7 +9,7 @@ public class StoryTask : EntityBase
         return this;
     }
 
-    #nullable disable
+#nullable disable
     protected StoryTask()
     {
     }
@@ -19,5 +20,4 @@ public class StoryTask : EntityBase
 
     public string Description { get; private set; }
     public bool IsDone { get; private set; }
-
 }

@@ -9,13 +9,9 @@ using Tusk.Application.Exceptions;
 namespace Tusk.Api.Filters;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-public class CustomExceptionFilter : ExceptionFilterAttribute
+public class CustomExceptionFilter(IWebHostEnvironment env) : ExceptionFilterAttribute
 {
-    private readonly IWebHostEnvironment? _env;
-
-    public CustomExceptionFilter(
-        IWebHostEnvironment env) =>
-        _env = env;
+    private readonly IWebHostEnvironment? _env = env;
 
     [SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
     public override void OnException(
@@ -49,11 +45,11 @@ public class CustomExceptionFilter : ExceptionFilterAttribute
                         g => g.Key,
                         g => g.Select(x => x.ErrorMessage).ToArray()
                     )),
-            _ => new JsonResult(new {error = new[] {context.Exception.Message}})
+            _ => new JsonResult(new { error = new[] { context.Exception.Message } })
         };
 
         context.Result = _env!.IsProduction()
             ? returnMessage
-            : new JsonResult(new {error = returnMessage, stackTrace = context.Exception.StackTrace});
+            : new JsonResult(new { error = returnMessage, stackTrace = context.Exception.StackTrace });
     }
 }

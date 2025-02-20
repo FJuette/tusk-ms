@@ -2,6 +2,7 @@ using MediatR;
 using Serilog;
 
 namespace Tusk.Application.Stories.Events;
+
 public record UserStoryAddedEvent(string Title) : INotification;
 
 public class UserStoryAddedLoggerHandler : INotificationHandler<UserStoryAddedEvent>

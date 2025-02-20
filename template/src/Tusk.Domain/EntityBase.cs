@@ -1,4 +1,5 @@
 namespace Tusk.Domain;
+
 public interface IOwnedBy
 {
     // This holds the ID of the person/institution who owns the entity

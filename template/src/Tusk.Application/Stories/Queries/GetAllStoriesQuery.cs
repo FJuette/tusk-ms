@@ -7,7 +7,9 @@ using Tusk.Application.Persistence;
 using Tusk.Domain;
 
 namespace Tusk.Application.Stories.Queries;
+
 public record GetAllStoriesQuery : IRequest<UserStoriesViewModel>;
+
 public record UserStoriesViewModel(IEnumerable<UserStoriesDto> Data);
 
 public class GetAllStoriesQueryHandler(
@@ -15,7 +17,6 @@ public class GetAllStoriesQueryHandler(
     IMapper mapper,
     IDateTime dateTime) : IRequestHandler<GetAllStoriesQuery, UserStoriesViewModel>
 {
-
     public async Task<UserStoriesViewModel> Handle(
         GetAllStoriesQuery request,
         CancellationToken cancellationToken)

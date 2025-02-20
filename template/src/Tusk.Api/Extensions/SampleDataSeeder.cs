@@ -1,6 +1,7 @@
 ﻿using Tusk.Application.Persistence;
 
 namespace Tusk.Api.Extensions;
+
 public class SampleDataSeeder
 {
     private readonly ITuskDbContext _context;

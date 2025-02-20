@@ -2,6 +2,7 @@
 using System.Security.Claims;
 
 namespace Tusk.Api.Infrastructure;
+
 public interface IGetClaimsProvider
 {
     string UserId { get; }

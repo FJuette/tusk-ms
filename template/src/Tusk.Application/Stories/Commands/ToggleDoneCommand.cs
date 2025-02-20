@@ -4,6 +4,7 @@ using Tusk.Application.Exceptions;
 using Tusk.Application.Persistence;
 
 namespace Tusk.Application.Stories.Commands;
+
 public record ToggleDoneCommand(int StoryId, int TaskId) : IRequest<bool>;
 
 public class ToggleDoneCommandHandler(ITuskDbContext context) : IRequestHandler<ToggleDoneCommand, bool>

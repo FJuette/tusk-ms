@@ -4,6 +4,7 @@ using Tusk.Api.Persistence;
 using Tusk.Application.Persistence;
 
 namespace Tusk.Api.Extensions;
+
 public static class MigrationManager
 {
     [SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]

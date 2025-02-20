@@ -2,6 +2,7 @@ using System.Reflection;
 using Microsoft.OpenApi.Models;
 
 namespace Tusk.Api.Infrastructure;
+
 public static class SwaggerServiceExtensions
 {
     public static IServiceCollection AddSwaggerDocumentation(
@@ -13,9 +14,7 @@ public static class SwaggerServiceExtensions
             c.SwaggerDoc("v1",
                 new OpenApiInfo
                 {
-                    Version = "v1",
-                    Title = "Tusk API",
-                    Description = "Microservice REST-API in CQRS pattern style"
+                    Version = "v1", Title = "Tusk API", Description = "Microservice REST-API in CQRS pattern style"
                 });
 
             // Set the comments path for the Swagger JSON and UI.
@@ -35,13 +34,13 @@ public static class SwaggerServiceExtensions
                 });
             c.AddSecurityRequirement(new OpenApiSecurityRequirement
             {
+                {
+                    new OpenApiSecurityScheme
                     {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference {Type = ReferenceType.SecurityScheme, Id = "Bearer"}
-                        },
-                        Array.Empty<string>()
-                    }
+                        Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
+                    },
+                    Array.Empty<string>()
+                }
             });
         });
         // explicit opt-in - needs to be placed after AddSwaggerGen()

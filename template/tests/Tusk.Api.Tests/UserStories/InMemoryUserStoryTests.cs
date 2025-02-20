@@ -5,13 +5,6 @@ using Xunit;
 namespace Tusk.Api.Tests.UserStories;
 
 [Collection("Sequential")]
-public class InMemoryUserStoryTests : UserStoryTests
-{
-    public InMemoryUserStoryTests()
-        : base(new DbContextOptionsBuilder<TuskDbContext>()
-            .UseInMemoryDatabase(new Guid().ToString())
-            .Options)
-    {
-
-    }
-}
+public class InMemoryUserStoryTests() : UserStoryTests(new DbContextOptionsBuilder<TuskDbContext>()
+    .UseInMemoryDatabase(Guid.NewGuid().ToString())
+    .Options);

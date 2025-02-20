@@ -43,7 +43,7 @@ public class UserStory : EntityBase
     private readonly List<StoryTask> _storyTasks = [];
     public IReadOnlyList<StoryTask> StoryTasks => _storyTasks.ToList();
 
-    #nullable enable
+#nullable enable
     // Some dummy examples to work with the relational data
     public void AddTask(
         StoryTask storyTask) =>

@@ -5,6 +5,7 @@ using Tusk.Application.Stories.Events;
 using Tusk.Domain;
 
 namespace Tusk.Application.Stories.Commands;
+
 public record CreateStoryCommand : IRequest<int>
 {
     public required string Title { get; init; }

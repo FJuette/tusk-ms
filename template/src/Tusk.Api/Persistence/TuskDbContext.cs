@@ -7,7 +7,7 @@ namespace Tusk.Api.Persistence;
 #nullable disable
 public class TuskDbContext : DbContext, ITuskDbContext
 {
-    private static readonly Type[] _enumerationTypes = { typeof(BusinessValue) };
+    private static readonly Type[] s_enumerationTypes = { typeof(BusinessValue) };
     private readonly string _env;
     private readonly string _userId;
 
@@ -59,16 +59,16 @@ public class TuskDbContext : DbContext, ITuskDbContext
             b.Property(e => e.AcceptanceCriteria)
                 .HasMaxLength(int.MaxValue);
 
-                // 'string' ist possible too, for more see https://medium.com/agilix/entity-framework-core-enums-ee0f8f4063f2
-                b.Property(c => c.Importance)
+            // 'string' ist possible too, for more see https://medium.com/agilix/entity-framework-core-enums-ee0f8f4063f2
+            b.Property(c => c.Importance)
                 .HasConversion<int>();
             b.HasMany(e => e.StoryTasks)
                 .WithOne()
                 .OnDelete(DeleteBehavior.Cascade);
             b.HasOne(e => e.BusinessValue).WithMany();
 
-                // Mapping for ValueObject
-                b.Property(e => e.Priority)
+            // Mapping for ValueObject
+            b.Property(e => e.Priority)
                 .HasConversion(p => p.Value, p => Priority.Create(p).Value);
 
             b.HasQueryFilter(x => x.OwnedBy == _userId);
@@ -106,7 +106,7 @@ public class TuskDbContext : DbContext, ITuskDbContext
     private void MarkEnumTypesAsUnchanged()
     {
         var enumerationEntries =
-            ChangeTracker.Entries().Where(x => _enumerationTypes.Contains(x.Entity.GetType()));
+            ChangeTracker.Entries().Where(x => s_enumerationTypes.Contains(x.Entity.GetType()));
 
         foreach (var enumerationEntry in enumerationEntries)
         {
@@ -123,7 +123,7 @@ public static class ContextExtensions
         string userId)
     {
         foreach (var entityEntry in context.ChangeTracker.Entries()
-            .Where(e => e.State == EntityState.Added))
+                     .Where(e => e.State == EntityState.Added))
         {
             if (entityEntry.Entity is IOwnedBy entityToMark)
             {

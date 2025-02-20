@@ -10,13 +10,13 @@ using Tusk.Domain;
 namespace Tusk.Application.Stories.Queries;
 
 public record GetStoryQuery(int Id) : IRequest<UserStoryViewModel>;
+
 public record UserStoryViewModel(UserStoryDto Story);
 
 public class GetStoryQueryHandler(
     ITuskDbContext context,
     IMapper mapper) : IRequestHandler<GetStoryQuery, UserStoryViewModel>
 {
-
     public async Task<UserStoryViewModel> Handle(
         GetStoryQuery request,
         CancellationToken cancellationToken)

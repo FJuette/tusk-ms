@@ -34,7 +34,7 @@ public static class FakeFactory
 
 public class TestDateTime : IDateTime
 {
-    public DateTime Now => new DateTime(2020, 05, 27, 11, 11, 11);
+    public DateTime Now => new(2020, 05, 27, 11, 11, 11);
 }
 
 public class TestClaimsProvider : IGetClaimsProvider

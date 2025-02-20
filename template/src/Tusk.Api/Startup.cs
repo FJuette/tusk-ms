@@ -21,18 +21,11 @@ using Tusk.Application.Persistence;
 
 namespace Tusk.Api;
 
-public class Startup
+public class Startup(
+    IConfiguration configuration,
+    IWebHostEnvironment env)
 {
-    private readonly IWebHostEnvironment _env;
-
-    public Startup(IConfiguration configuration,
-        IWebHostEnvironment env)
-    {
-        Configuration = configuration;
-        _env = env;
-    }
-
-    public IConfiguration Configuration { get; }
+    public IConfiguration Configuration { get; } = configuration;
 
     [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
     public void ConfigureServices(IServiceCollection services)
@@ -80,7 +73,7 @@ public class Startup
             .AddCheck<ApiHealthCheck>("api");
 
         services.AddScoped<ITuskDbContext, TuskDbContext>(sp =>
-            new TuskDbContext(_env.EnvironmentName, sp.GetService<IGetClaimsProvider>()));
+            new TuskDbContext(env.EnvironmentName, sp.GetService<IGetClaimsProvider>()));
 
         services.AddAutoMapper(typeof(ITuskDbContext));
 
@@ -114,7 +107,7 @@ public class Startup
         app.UseCors("Locations");
         app.UseSwaggerDocumentation();
 
-        app.UseHealthChecks("/api/health", new HealthCheckOptions {ResponseWriter = WriteHealthCheckResponse});
+        app.UseHealthChecks("/api/health", new HealthCheckOptions { ResponseWriter = WriteHealthCheckResponse });
 
         app.UseRouting();
 #if (!DisableAuthentication)

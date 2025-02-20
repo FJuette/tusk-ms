@@ -18,4 +18,3 @@ public static class EnvFactory
         return (T)Convert.ChangeType(env, typeof(T));
     }
 }
-

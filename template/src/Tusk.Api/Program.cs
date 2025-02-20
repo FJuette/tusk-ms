@@ -6,6 +6,7 @@ using Serilog.Events;
 using Tusk.Api.Extensions;
 
 namespace Tusk.Api;
+
 public static class Program
 {
     [SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "<Pending>")]
@@ -16,13 +17,16 @@ public static class Program
 
         var levelSwitch =
             // Verbose logging on console (Debug > Information > Warning)
-            isDevelopment ? new LoggingLevelSwitch(LogEventLevel.Information) :
-            // Reduced logging in production mode
-            new LoggingLevelSwitch(LogEventLevel.Warning);
+            isDevelopment
+                ? new LoggingLevelSwitch(LogEventLevel.Information)
+                :
+                // Reduced logging in production mode
+                new LoggingLevelSwitch(LogEventLevel.Warning);
 
         var logConfig = new LoggerConfiguration()
             .Enrich.FromLogContext()
-            .WriteTo.Console(theme: Serilog.Sinks.SystemConsole.Themes.AnsiConsoleTheme.Code, formatProvider: CultureInfo.InvariantCulture)
+            .WriteTo.Console(theme: Serilog.Sinks.SystemConsole.Themes.AnsiConsoleTheme.Code,
+                formatProvider: CultureInfo.InvariantCulture)
             .MinimumLevel.ControlledBy(levelSwitch)
             .MinimumLevel.Override("Microsoft", levelSwitch)
             .MinimumLevel.Override("Microsoft.EntityFrameworkCore.Database.Command", levelSwitch);

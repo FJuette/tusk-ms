@@ -1,6 +1,7 @@
 using CSharpFunctionalExtensions;
 
 namespace Tusk.Domain;
+
 public sealed class Priority : ValueObject
 {
     private Priority(

@@ -18,5 +18,4 @@ public interface ITuskDbContext : IDisposable
         where TEntity : class;
 
     public DatabaseFacade Database { get; }
-
 }

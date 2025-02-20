@@ -1,17 +1,11 @@
-// ReSharper disable once RedundantUsingDirective
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tusk.Application.Stories.Commands;
 using Tusk.Application.Stories.Queries;
 
 namespace Tusk.Api.Controllers;
 
-#if !DEBUG
-    [Authorize]
-#endif
 public class StoryController : BaseController
 {
-
     [HttpGet("api/stories")]
     [ProducesResponseType(typeof(UserStoriesViewModel), 200)]
     public async Task<ActionResult<UserStoriesViewModel>> GetAllStories() =>
@@ -36,7 +30,6 @@ public class StoryController : BaseController
     /// <returns>Id for the new user story</returns>
     /// <response code="201">Returns the id of the new user story</response>
     /// <response code="400">A request which cannot be handles properly returns a 400 with a detailed error message</response>
-
     [HttpPost("api/stories")]
     [ProducesResponseType(typeof(int), 201)]
     [ProducesResponseType(400)]
