@@ -37,11 +37,11 @@ dotnet new -u FJuette.Template.WebApi
 ## Template Architecture
 
 Onion Style:
-![Architecture](Architecture.png)
+![Architecture](template/Architecture.png)
 
 ## License
 
-This project is licensed under the Apache License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache License - see the [LICENSE](template/LICENSE) file for details.
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FFJuette%2Ftusk-ms.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FFJuette%2Ftusk-ms?ref=badge_large)
 
