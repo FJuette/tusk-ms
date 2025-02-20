@@ -13,6 +13,7 @@
   <ItemGroup>
     <Content Include="template\**\*" Exclude="**\bin\**\*;**\obj\**\*" />
     <Compile Remove="**\*" />
+    <None Include="README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
   <PropertyGroup>
@@ -30,6 +31,7 @@
       Includes preconfigures XUnit project to test MediatR handlers.
       Support for .net9 and c# 13 language features.
     </Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>.net9;rest-api;api;ddd;c#13;template</PackageTags>
     <PackageCopyright>Fabian Juette</PackageCopyright>
     <PackageProjectUrl>https://github.com/FJuette/tusk-ms</PackageProjectUrl>
