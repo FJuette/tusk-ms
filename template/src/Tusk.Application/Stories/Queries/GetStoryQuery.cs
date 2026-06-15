@@ -1,6 +1,5 @@
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using MediatR;
+using DispatchR.Abstractions.Send;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Tusk.Application.Exceptions;
@@ -9,15 +8,15 @@ using Tusk.Domain;
 
 namespace Tusk.Application.Stories.Queries;
 
-public record GetStoryQuery(int Id) : IRequest<UserStoryViewModel>;
+public record GetStoryQuery(int Id) : IRequest<GetStoryQuery, ValueTask<UserStoryViewModel>>;
 
 public record UserStoryViewModel(UserStoryDto Story);
 
 public class GetStoryQueryHandler(
     ITuskDbContext context,
-    IMapper mapper) : IRequestHandler<GetStoryQuery, UserStoryViewModel>
+    TypeAdapterConfig mapConfig) : IRequestHandler<GetStoryQuery, ValueTask<UserStoryViewModel>>
 {
-    public async Task<UserStoryViewModel> Handle(
+    public async ValueTask<UserStoryViewModel> Handle(
         GetStoryQuery request,
         CancellationToken cancellationToken)
     {
@@ -28,7 +27,7 @@ public class GetStoryQueryHandler(
             .Where(e => e.Id == request.Id)
             .Include(e => e.StoryTasks)
             .Include(e => e.BusinessValue)
-            .ProjectTo<UserStoryDto>(mapper.ConfigurationProvider)
+            .ProjectToType<UserStoryDto>(mapConfig)
             .AsNoTracking()
             .SingleOrDefaultAsync(cancellationToken);
 
@@ -49,18 +48,12 @@ public record UserStoryDto
     public IReadOnlyList<string> Tasks { get; init; } = [];
 }
 
-// Automapper Profile for this Dto
-public class UserStoryProfile : Profile
+// Mapster register for this Dto
+public class UserStoryRegister : IRegister
 {
-    public UserStoryProfile() =>
-        CreateMap<UserStory, UserStoryDto>()
-            .ForMember(d => d.Priority,
-                opt => opt.MapFrom(
-                    c => c.Priority.Value))
-            .ForMember(d => d.BusinessValue,
-                opt => opt.MapFrom(
-                    c => c.BusinessValue.Name))
-            .ForMember(d => d.Tasks,
-                opt => opt.MapFrom(
-                    c => c.StoryTasks.Select(e => $"[{(e.IsDone ? 'x' : ' ')}] {e.Description}")));
+    public void Register(TypeAdapterConfig config) =>
+        config.NewConfig<UserStory, UserStoryDto>()
+            .Map(d => d.Priority, c => c.Priority.Value)
+            .Map(d => d.BusinessValue, c => c.BusinessValue.Name)
+            .Map(d => d.Tasks, c => c.StoryTasks.Select(e => $"[{(e.IsDone ? 'x' : ' ')}] {e.Description}"));
 }

@@ -1,4 +1,4 @@
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Tusk.Api.Infrastructure;
 using Tusk.Application.Persistence;
@@ -32,14 +32,17 @@ public class TuskDbContext : DbContext, ITuskDbContext
     protected override void OnConfiguring(
         DbContextOptionsBuilder optionsBuilder)
     {
-        if (_env == "Production")
+        if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseSqlServer(EnvFactory.GetConnectionString());
-        }
-        else
-        {
-            optionsBuilder.UseInMemoryDatabase(new Guid().ToString());
-            optionsBuilder.EnableSensitiveDataLogging();
+            if (_env == "Production")
+            {
+                optionsBuilder.UseSqlServer(EnvFactory.GetConnectionString());
+            }
+            else
+            {
+                optionsBuilder.UseInMemoryDatabase(Guid.Empty.ToString());
+                optionsBuilder.EnableSensitiveDataLogging();
+            }
         }
 
         base.OnConfiguring(optionsBuilder);

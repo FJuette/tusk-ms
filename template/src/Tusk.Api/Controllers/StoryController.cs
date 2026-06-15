@@ -8,8 +8,8 @@ public class StoryController : BaseController
 {
     [HttpGet("api/stories")]
     [ProducesResponseType(typeof(UserStoriesViewModel), 200)]
-    public async Task<ActionResult<UserStoriesViewModel>> GetAllStories() =>
-        Ok(await Mediator.Send(new GetAllStoriesQuery()));
+    public async Task<ActionResult<UserStoriesViewModel>> GetAllStories(CancellationToken cancellationToken) =>
+        Ok(await Mediator.Send(new GetAllStoriesQuery(), cancellationToken));
 
     /// <summary>
     /// Create a user story
@@ -27,6 +27,7 @@ public class StoryController : BaseController
     ///
     /// </remarks>
     /// <param name="command"></param>
+    /// <param name="cancellationToken"></param>
     /// <returns>Id for the new user story</returns>
     /// <response code="201">Returns the id of the new user story</response>
     /// <response code="400">A request which cannot be handles properly returns a 400 with a detailed error message</response>
@@ -34,9 +35,10 @@ public class StoryController : BaseController
     [ProducesResponseType(typeof(int), 201)]
     [ProducesResponseType(400)]
     public async Task<ActionResult<int>> CreateStory(
-        [FromBody] CreateStoryCommand command)
+        [FromBody] CreateStoryCommand command,
+        CancellationToken cancellationToken)
     {
-        var storyId = await Mediator.Send(command);
+        var storyId = await Mediator.Send(command, cancellationToken);
         return CreatedAtAction(
             "GetStory",
             new { id = storyId },
@@ -46,12 +48,12 @@ public class StoryController : BaseController
     [HttpGet("api/stories/{id}")]
     [ProducesResponseType(typeof(UserStoryViewModel), 200)]
     [ProducesResponseType(404)]
-    public async Task<ActionResult<UserStoryViewModel>> GetStory(int id) =>
-        Ok(await Mediator.Send(new GetStoryQuery(id)));
+    public async Task<ActionResult<UserStoryViewModel>> GetStory(int id, CancellationToken cancellationToken) =>
+        Ok(await Mediator.Send(new GetStoryQuery(id), cancellationToken));
 
     [HttpPut("api/stories/{storyId}/tasks/{taskId}/toggle-done")]
     [ProducesResponseType(typeof(bool), 200)]
     [ProducesResponseType(404)]
-    public async Task<ActionResult<bool>> ToggleDone(int storyId, int taskId) =>
-        Ok(await Mediator.Send(new ToggleDoneCommand(storyId, taskId)));
+    public async Task<ActionResult<bool>> ToggleDone(int storyId, int taskId, CancellationToken cancellationToken) =>
+        Ok(await Mediator.Send(new ToggleDoneCommand(storyId, taskId), cancellationToken));
 }

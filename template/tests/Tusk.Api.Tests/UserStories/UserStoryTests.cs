@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using FluentAssertions;
+﻿using FluentAssertions;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
 using Tusk.Application.Exceptions;
 using Tusk.Domain;
@@ -47,11 +47,9 @@ public abstract class UserStoryTests
     {
         // Arrange
         await using var context = new TuskDbContext(ContextOptions);
-        var profiles = new List<Profile> { new UserStoriesProfile() };
-
         var handler = new GetAllStoriesQueryHandler(
             context,
-            FakeFactory.GetMapper(profiles),
+            FakeFactory.GetMapper([new UserStoriesRegister()]),
             FakeFactory.GetDtInstance());
 
         // Act
@@ -83,6 +81,9 @@ public abstract class UserStoryTests
         // Assert
         result.Should().BeGreaterThanOrEqualTo(0);
         context.Stories.Count().Should().Be(2);
+        var created = context.Stories.Include(s => s.BusinessValue).Single(s => s.Id == result);
+        created.Importance.Should().Be(command.Importance);
+        created.BusinessValue.Id.Should().Be(command.BusinessValue);
     }
 
     [Fact]
@@ -130,9 +131,7 @@ public abstract class UserStoryTests
     {
         // Arrange
         await using var context = new TuskDbContext(ContextOptions);
-        var profiles = new List<Profile> { new UserStoryProfile() };
-
-        var handler = new GetStoryQueryHandler(context, FakeFactory.GetMapper(profiles));
+        var handler = new GetStoryQueryHandler(context, FakeFactory.GetMapper([new UserStoryRegister()]));
 
         // Act
         var result = await handler.Handle(new GetStoryQuery(_storyId), new CancellationToken());
@@ -149,12 +148,10 @@ public abstract class UserStoryTests
     {
         // Arrange
         await using var context = new TuskDbContext(ContextOptions);
-        var profiles = new List<Profile> { new UserStoryProfile() };
-
-        var handler = new GetStoryQueryHandler(context, FakeFactory.GetMapper(profiles));
+        var handler = new GetStoryQueryHandler(context, FakeFactory.GetMapper([new UserStoryRegister()]));
 
         // Act
-        Task action() => handler.Handle(new GetStoryQuery(-100), new CancellationToken());
+        Task action() => handler.Handle(new GetStoryQuery(-100), new CancellationToken()).AsTask();
 
         // Assert
         await Assert.ThrowsAsync<NotFoundException>(action);

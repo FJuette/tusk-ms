@@ -1,6 +1,5 @@
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using MediatR;
+using DispatchR.Abstractions.Send;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Tusk.Application.Persistence;
@@ -8,26 +7,25 @@ using Tusk.Domain;
 
 namespace Tusk.Application.Stories.Queries;
 
-public record GetAllStoriesQuery : IRequest<UserStoriesViewModel>;
+public record GetAllStoriesQuery : IRequest<GetAllStoriesQuery, ValueTask<UserStoriesViewModel>>;
 
 public record UserStoriesViewModel(IEnumerable<UserStoriesDto> Data);
 
 public class GetAllStoriesQueryHandler(
     ITuskDbContext context,
-    IMapper mapper,
-    IDateTime dateTime) : IRequestHandler<GetAllStoriesQuery, UserStoriesViewModel>
+    TypeAdapterConfig mapConfig,
+    IDateTime dateTime) : IRequestHandler<GetAllStoriesQuery, ValueTask<UserStoriesViewModel>>
 {
-    public async Task<UserStoriesViewModel> Handle(
+    public async ValueTask<UserStoriesViewModel> Handle(
         GetAllStoriesQuery request,
         CancellationToken cancellationToken)
     {
         // Use async calls if possible
         // Example logging call
         Log.Information("Get all Stories called at {Now}", dateTime.Now);
-        // Using the ProjectTo<T> from automapper to optimise the resulting sql query
         var stories = await context.Stories
             .Include(e => e.StoryTasks) // Add Includes if needed (eager loading)
-            .ProjectTo<UserStoriesDto>(mapper.ConfigurationProvider)
+            .ProjectToType<UserStoriesDto>(mapConfig)
             .AsNoTracking()
             .ToListAsync(cancellationToken);
 
@@ -43,12 +41,10 @@ public record UserStoriesDto
     public int Priority { get; init; }
 }
 
-// Automapper Profile for this Dto
-public class UserStoriesProfile : Profile
+// Mapster register for this Dto
+public class UserStoriesRegister : IRegister
 {
-    public UserStoriesProfile() =>
-        CreateMap<UserStory, UserStoriesDto>()
-            .ForMember(d => d.Priority,
-                opt =>
-                    opt.MapFrom(c => c.Priority.Value));
+    public void Register(TypeAdapterConfig config) =>
+        config.NewConfig<UserStory, UserStoriesDto>()
+            .Map(d => d.Priority, c => c.Priority.Value);
 }

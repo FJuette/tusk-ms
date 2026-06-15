@@ -1,5 +1,5 @@
-using AutoMapper;
-using MediatR;
+using DispatchR;
+using Mapster;
 using Moq;
 using Tusk.Api.Infrastructure;
 using Tusk.Application;
@@ -12,13 +12,12 @@ public static class FakeFactory
         return new TestDateTime();
     }
 
-    public static Mapper GetMapper(IEnumerable<Profile> profiles)
+    public static TypeAdapterConfig GetMapper(IEnumerable<IRegister> registers)
     {
-        var configuration = new MapperConfiguration(cfg =>
-        {
-            cfg.AddProfiles(profiles);
-        });
-        return new Mapper(configuration);
+        var config = new TypeAdapterConfig();
+        foreach (var register in registers)
+            register.Register(config);
+        return config;
     }
 
     public static IMediator GetMediatr()

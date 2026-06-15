@@ -50,6 +50,6 @@ public class CustomExceptionFilter(IWebHostEnvironment env) : ExceptionFilterAtt
 
         context.Result = _env!.IsProduction()
             ? returnMessage
-            : new JsonResult(new { error = returnMessage, stackTrace = context.Exception.StackTrace });
+            : new JsonResult(new { error = returnMessage.Value, stackTrace = context.Exception.StackTrace });
     }
 }

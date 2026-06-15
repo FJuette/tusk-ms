@@ -1,25 +1,26 @@
-using MediatR;
+using DispatchR.Abstractions.Send;
 using Serilog;
 
 namespace Tusk.Application.Behaviours;
 
-public class EventLoggerBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : IRequest<TResponse>
+public class EventLoggerBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, ValueTask<TResponse>>
+    where TRequest : class, IRequest<TRequest, ValueTask<TResponse>>
 {
-    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next,
-        CancellationToken cancellationToken)
+    public required IRequestHandler<TRequest, ValueTask<TResponse>> NextPipeline { get; set; }
+
+    public async ValueTask<TResponse> Handle(TRequest request, CancellationToken cancellationToken)
     {
         Log.Information("[{Class}] - Before calling next",
-            "EventLoggerBehavior");
+            nameof(EventLoggerBehavior<TRequest, TResponse>));
 
-        var response = await next();
+        var response = await NextPipeline.Handle(request, cancellationToken);
 
         var requestName = request.ToString();
         Log.Information("[{Class}] - RequestName: {Request}",
-            "EventLoggerBehavior", requestName);
+            nameof(EventLoggerBehavior<TRequest, TResponse>), requestName);
 
         Log.Information("[{Class}] - After calling next, before return",
-            "EventLoggerBehavior");
+            nameof(EventLoggerBehavior<TRequest, TResponse>));
         return response;
     }
 }

@@ -19,7 +19,8 @@ public class GetClaimsFromUser : IGetClaimsProvider
             .SingleOrDefault(x => x.Type == ClaimTypes.Name)
             ?.Value;
 
-        UserId = string.IsNullOrEmpty(username) ? "Admin" : username;
+        // Fall back to empty string so the OwnedBy query filter returns zero rows for unauthenticated callers
+        UserId = string.IsNullOrEmpty(username) ? string.Empty : username;
     }
 
     public string UserId { get; }

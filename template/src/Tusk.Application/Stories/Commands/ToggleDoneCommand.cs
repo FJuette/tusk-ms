@@ -1,15 +1,15 @@
-﻿using MediatR;
+﻿using DispatchR.Abstractions.Send;
 using Microsoft.EntityFrameworkCore;
 using Tusk.Application.Exceptions;
 using Tusk.Application.Persistence;
 
 namespace Tusk.Application.Stories.Commands;
 
-public record ToggleDoneCommand(int StoryId, int TaskId) : IRequest<bool>;
+public record ToggleDoneCommand(int StoryId, int TaskId) : IRequest<ToggleDoneCommand, ValueTask<bool>>;
 
-public class ToggleDoneCommandHandler(ITuskDbContext context) : IRequestHandler<ToggleDoneCommand, bool>
+public class ToggleDoneCommandHandler(ITuskDbContext context) : IRequestHandler<ToggleDoneCommand, ValueTask<bool>>
 {
-    public async Task<bool> Handle(
+    public async ValueTask<bool> Handle(
         ToggleDoneCommand request,
         CancellationToken cancellationToken)
     {
@@ -23,7 +23,6 @@ public class ToggleDoneCommandHandler(ITuskDbContext context) : IRequestHandler<
         _ = task ?? throw new NotFoundException("StoryTask", request.TaskId);
 
         task.ToggleDone();
-        context.Attach(story);
         return await context.SaveChangesAsync(cancellationToken) > 0;
     }
 }

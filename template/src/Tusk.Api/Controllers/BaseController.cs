@@ -1,4 +1,4 @@
-using MediatR;
+using DispatchR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Tusk.Api.Controllers;

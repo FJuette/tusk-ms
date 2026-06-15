@@ -2,8 +2,8 @@
 global using Tusk.Application;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using Mapster;
 using FluentValidation;
-using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -12,11 +12,11 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using DispatchR.Extensions;
 using Tusk.Api.Filters;
 using Tusk.Api.Health;
 using Tusk.Api.Infrastructure;
 using Tusk.Api.Persistence;
-using Tusk.Application.Behaviours;
 using Tusk.Application.Persistence;
 
 namespace Tusk.Api;
@@ -30,8 +30,8 @@ public class Startup(
     [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
     public void ConfigureServices(IServiceCollection services)
     {
-        // Add MediatR - must be first
-        services.AddMediatR(m => m.RegisterServicesFromAssemblyContaining<ITuskDbContext>());
+        // Add DispatchR - must be first
+        services.AddDispatchR(typeof(ITuskDbContext).Assembly, withPipelines: true, withNotifications: true);
 
 #if (!DisableAuthentication)
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -58,10 +58,16 @@ public class Startup(
             options.AddPolicy("Locations",
                 builder =>
                 {
-                    builder.WithOrigins("http://localhost:4200");
                     builder.AllowAnyMethod();
                     builder.AllowAnyHeader();
-                    builder.AllowAnyOrigin(); //TODO remove in production and add to origin list
+                    if (env.IsDevelopment())
+                    {
+                        builder.AllowAnyOrigin();
+                    }
+                    else
+                    {
+                        builder.WithOrigins("http://localhost:4200"); //TODO add production origins
+                    }
                 }));
 
         services.AddHttpContextAccessor();
@@ -75,7 +81,8 @@ public class Startup(
         services.AddScoped<ITuskDbContext, TuskDbContext>(sp =>
             new TuskDbContext(env.EnvironmentName, sp.GetService<IGetClaimsProvider>()));
 
-        services.AddAutoMapper(typeof(ITuskDbContext));
+        TypeAdapterConfig.GlobalSettings.Scan(typeof(ITuskDbContext).Assembly);
+        services.AddSingleton(TypeAdapterConfig.GlobalSettings);
 
         // Optional: Avoid the MultiPartBodyLength error
         services.Configure<FormOptions>(o =>
@@ -90,10 +97,6 @@ public class Startup(
         // Add my own services here
         services.AddScoped<IGetClaimsProvider, GetClaimsFromUser>();
         services.AddSingleton<IDateTime, MachineDateTime>();
-
-        // MediatR
-        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehavior<,>));
-        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(EventLoggerBehavior<,>));
 
         services.AddControllers(options => options.Filters.Add<CustomExceptionFilter>())
             .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);

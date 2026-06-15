@@ -1,12 +1,13 @@
-﻿using FluentValidation;
-using MediatR;
+﻿using DispatchR;
+using DispatchR.Abstractions.Send;
+using FluentValidation;
 using Tusk.Application.Persistence;
 using Tusk.Application.Stories.Events;
 using Tusk.Domain;
 
 namespace Tusk.Application.Stories.Commands;
 
-public record CreateStoryCommand : IRequest<int>
+public record CreateStoryCommand : IRequest<CreateStoryCommand, ValueTask<int>>
 {
     public required string Title { get; init; }
     public required string Text { get; init; }
@@ -17,20 +18,23 @@ public record CreateStoryCommand : IRequest<int>
 public class CreateStoryCommandHandler(
     ITuskDbContext context,
     IMediator mediator,
-    IValidator<CreateStoryCommand> validator) : IRequestHandler<CreateStoryCommand, int>
+    IValidator<CreateStoryCommand> validator) : IRequestHandler<CreateStoryCommand, ValueTask<int>>
 {
-    public async Task<int> Handle(
+    public async ValueTask<int> Handle(
         CreateStoryCommand request,
         CancellationToken cancellationToken)
     {
         await validator.ValidateAndThrowAsync(request, cancellationToken);
+
+        var businessValue = await context.BusinessValues.FindAsync([request.BusinessValue], cancellationToken);
 
         var story = new UserStory(
             request.Title,
             Priority.Create(1).Value,
             request.Text,
             "",
-            BusinessValue.BV1000);
+            businessValue!,
+            request.Importance);
 
         // Prefer attach over add/update
         var result = context.Stories.Attach(story);
