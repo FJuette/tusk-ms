@@ -10,8 +10,8 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using DispatchR.Extensions;
 using Tusk.Api.Filters;
 using Tusk.Api.Health;
@@ -71,7 +71,7 @@ public class Startup(
                 }));
 
         services.AddHttpContextAccessor();
-        services.AddSwaggerDocumentation();
+        services.AddApiDocumentation();
 
         // Default Health Checks
         services.AddHealthChecks()
@@ -98,8 +98,9 @@ public class Startup(
         services.AddScoped<IGetClaimsProvider, GetClaimsFromUser>();
         services.AddSingleton<IDateTime, MachineDateTime>();
 
-        services.AddControllers(options => options.Filters.Add<CustomExceptionFilter>())
-            .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+        services.AddControllers(options => options.Filters.Add<CustomExceptionFilter>());
+        services.ConfigureHttpJsonOptions(o =>
+            o.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -108,7 +109,6 @@ public class Startup(
         IApplicationBuilder app)
     {
         app.UseCors("Locations");
-        app.UseSwaggerDocumentation();
 
         app.UseHealthChecks("/api/health", new HealthCheckOptions { ResponseWriter = WriteHealthCheckResponse });
 
@@ -117,30 +117,35 @@ public class Startup(
         app.UseAuthentication();
         app.UseAuthorization();
 #endif
-        app.UseEndpoints(endpoints => endpoints.MapControllers());
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.UseApiDocumentation();
+            endpoints.MapControllers();
+        });
     }
+
+    private static readonly JsonSerializerOptions IndentedJsonOptions = new() { WriteIndented = true };
 
     private static Task WriteHealthCheckResponse(
         HttpContext httpContext,
         HealthReport result)
     {
         httpContext.Response.ContentType = "application/json";
-        var json = new JObject(
-            new JProperty("status", result.Status.ToString()),
-            new JProperty("results", new JObject(
-                result.Entries.Select(pair =>
-                    new JProperty(pair.Key, new JObject(
-                        new JProperty("status", pair.Value.Status.ToString()),
-                        new JProperty("exception", pair.Value.Exception?.Message),
-                        new JProperty("description", pair.Value.Description),
-                        new JProperty("data", new JObject(pair.Value.Data.Select(
-                            p => new JProperty(p.Key, p.Value)))
-                        )
-                    )))
-            ))
-        );
+        var payload = new
+        {
+            status = result.Status.ToString(),
+            results = result.Entries.ToDictionary(
+                pair => pair.Key,
+                pair => new
+                {
+                    status = pair.Value.Status.ToString(),
+                    exception = pair.Value.Exception?.Message,
+                    description = pair.Value.Description,
+                    data = pair.Value.Data
+                })
+        };
         return httpContext.Response.WriteAsync(
-            json.ToString(Formatting.Indented)
+            JsonSerializer.Serialize(payload, IndentedJsonOptions)
         );
     }
 }

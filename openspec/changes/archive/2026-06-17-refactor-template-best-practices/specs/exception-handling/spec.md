@@ -1,3 +1,5 @@
+## MODIFIED Requirements
+
 ### Requirement: Non-production error responses serialize the error payload, not a JsonResult wrapper
 In non-production environments, `CustomExceptionFilter` SHALL include the error content (dictionary or message) and the stack trace in the HTTP response body as a flat JSON object. It SHALL NOT serialize a `JsonResult` C# object as the `error` field. The serializer used SHALL be `System.Text.Json` (`JsonResult` delegates to the configured serializer; no Newtonsoft.Json types SHALL be imported in the filter).
 

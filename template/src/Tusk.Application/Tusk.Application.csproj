@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <LangVersion>13.0</LangVersion>
         <Nullable>enable</Nullable>
@@ -15,11 +15,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Mapster" Version="7.4.0" />
+      <PackageReference Include="Mapster" Version="10.0.8" />
       <PackageReference Include="DispatchR.Mediator" Version="2.3.0" />
-      <PackageReference Include="FluentValidation" Version="11.3.0" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.2" />
-      <PackageReference Include="Serilog" Version="4.2.0" />
+      <PackageReference Include="FluentValidation" Version="12.1.1" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.9" />
+      <PackageReference Include="Serilog" Version="4.3.1" />
     </ItemGroup>
 
 </Project>
