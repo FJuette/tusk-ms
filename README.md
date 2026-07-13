@@ -6,8 +6,8 @@ Template for C# REST-API project.
 
 ## Technologies
 
-* .net9
-* EF Core 9
+* .net10
+* EF Core 10
 * FluentValidation and default validation disabled
 * AutoMapper
 * MediatR to support CQRS style
@@ -38,6 +38,12 @@ dotnet new -u FJuette.Template.WebApi
 
 Onion Style:
 ![Architecture](template/Architecture.png)
+
+## Devbox
+
+```bash
+devbox run start
+```
 
 ## License
 

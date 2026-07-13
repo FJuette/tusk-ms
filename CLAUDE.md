@@ -6,6 +6,23 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A `dotnet new` project template for C# REST APIs in DDD/Onion-Architecture style. The root contains packaging config; all actual template source lives under `template/`.
 
+## Development environment
+
+[devbox](https://www.jetify.com/devbox/docs/installing_devbox/) provides a hermetic shell with the correct .NET SDK, Node.js, and Claude CLI — no manual tool installation needed.
+
+```bash
+# One-time: install devbox
+curl -fsSL https://get.jetify.com/devbox | bash
+
+# Enter the dev shell (installs Claude CLI on first run)
+devbox shell
+
+# Inside the shell, all tools are pinned:
+dotnet --version   # 9.0.x
+node --version     # 22.x
+claude --version   # latest @anthropic-ai/claude-code
+```
+
 ## Commands
 
 All commands run from `template/` unless noted.
